@@ -11,7 +11,7 @@ export default function Dashboard() {
     } else if (action === 'Inserir Código') {
       navigate('/join-home');
     } else if (action === 'Ver Perfil') {
-      navigate('/perfil');
+      navigate('/verperfil');
     } else if (action === 'Logout') {
       localStorage.clear();
       navigate('/login');

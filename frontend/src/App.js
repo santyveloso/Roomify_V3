@@ -6,6 +6,7 @@ import CreateHome from "./pages/CreateHome";
 import JoinHome from "./pages/JoinHome";
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import VerPerfil from './pages/VerPerfil';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/join-home" element={<JoinHome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verperfil" element={<VerPerfil />} />
+
       </Routes>
     </Router>
   );
