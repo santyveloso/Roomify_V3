@@ -1,3 +1,6 @@
+import HouseSwitcher from '../components/HouseSwitcher';
+  
+
 export default function JoinHome() {
     return (
       <div>
