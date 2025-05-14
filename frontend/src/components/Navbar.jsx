@@ -40,18 +40,18 @@ export default function Navbar() {
         {/* Ações */}
         <div className="navbar-actions">
           <Link
-            to="/login"
+            to="/join-home"
             className="sign-in-button"
             scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
           >
             Entrar
           </Link>
           <Link
-            to="/register"
+            to="/create-home"
             className="navbar-cta-button"
             scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
           >
-            Começar
+            Criar Casa
           </Link>
         </div>
       </div>

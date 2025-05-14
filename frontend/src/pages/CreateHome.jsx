@@ -1,18 +1,36 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import LoginForm from '../components/LoginForm';
-import CreateHomeForm from '../components/CreateHomeForm';
+import { useNavigate } from "react-router-dom";
+import keyImg from "../images/home-key.png";
+import "../index.css";
+import Navbar from "../components/Navbar";
 
-function CreateHome() {
+
+export default function CreateHome() {
+  const nav = useNavigate();
+
   return (
-    <div className="page-wrapper">
-      <main className="login-container">
-        <CreateHomeForm />
-      </main>
-      <Footer />
-    </div>
-  );
-}
+      <> 
+      <Navbar/>
+    <div className="create-home-wrapper">
+      <img
+        src={keyImg}
+        alt="Landing"
+        className="create-home-img"
+      />
 
-export default CreateHome;
+      <h1 className="create-home-title">
+        Criar Uma Nova Casa
+      </h1>
+      <p className="create-home-sub">
+      Cria uma nova casa e convida os teus Roomies! 
+      </p>
+
+      <button
+        className="primary-btn"
+        onClick={() => nav("/create-or-join")}
+      >
+        Criar Nova Casa
+      </button>
+    </div>
+    </>
+  );
+} 
