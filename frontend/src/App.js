@@ -6,6 +6,7 @@ import Onboarding from "./pages/Onboarding";
 import CreateOrJoin from "./pages/CreateOrJoin";
 import CreateHome from "./pages/CreateHome";
 import JoinHome from "./pages/JoinHome";
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/create-home" element={<CreateHome />} />
         <Route path="/join-home" element={<JoinHome />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Router>
   );
