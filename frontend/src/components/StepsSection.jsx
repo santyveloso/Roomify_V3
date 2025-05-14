@@ -14,19 +14,19 @@ function StepsSection() {
       icon: <Home size={24} />, 
       label: 'Adicionar Casa',
       description: 'Configura a tua casa partilhada',
-      link: '/add-house'  // <- página que vais criar
+      link: '/register'  // <- página que vais criar
     },
     { 
       icon: <CircleCheck size={24} />, 
       label: 'Definir Tarefas',
       description: 'Organiza as tarefas domésticas',
-      link: '/tasks'  // <- página que vais criar
+      link: '/register'  // <- página que vais criar
     },
     { 
       icon: <Rocket size={24} />, 
       label: 'Começar a Usar',
       description: 'Aproveita todas as funcionalidades',
-      link: '/dashboard'  // <- ou qualquer página inicial da app
+      link: '/register'  // <- ou qualquer página inicial da app
     }
   ];
 

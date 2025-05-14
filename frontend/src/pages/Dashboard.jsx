@@ -1,28 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import CreateHomeForm from '../components/CreateHomeForm';
 
-const Dashboard = () => {
+export default function Dashboard() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login'); // Redireciona se não estiver logado
+  const handleClick = (action) => {
+    if (action === 'Criar Casa') {
+      navigate('create-home');
+    } else if (action === 'Inserir Código') {
+      navigate('/join-home');
+    } else if (action === 'Ver Perfil') {
+      navigate('/perfil');
+    } else if (action === 'Logout') {
+      localStorage.clear();
+      navigate('/login');
     }
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
   };
 
   return (
-    <div>
-      <h2>Bem-vindo ao RoomiFy!</h2>
-      <p>Conseguiste fazer login yupi.</p>
-      <button onClick={handleLogout}>Logout</button>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F4F6', padding: '24px' }}>
+      <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '32px' }}>Dashboard</h1>
+      <div style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <button onClick={() => handleClick('Criar Casa')}>Criar Casa</button>
+        <button onClick={() => handleClick('Inserir Código')}>Inserir Código</button>
+        <button onClick={() => handleClick('Ver Perfil')}>Ver Perfil</button>
+        <button onClick={() => handleClick('Logout')}>Logout</button>
+      </div>
     </div>
   );
-};
-
-export default Dashboard;
+}

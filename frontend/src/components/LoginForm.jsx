@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para redirecionamento após login
+import { Link } from 'react-router-dom';
+
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -72,7 +74,11 @@ const LoginForm = () => {
           />
         </div>
 
-        <button type="submit">Entrar</button>
+
+        <Link to="/dashboard">
+          <button>Entrar</button>
+        </Link>
+
       </form>
       {message && <p>{message}</p>} {/* Exibe a mensagem de sucesso ou erro */}
     </div>
