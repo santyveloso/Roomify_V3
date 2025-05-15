@@ -10,6 +10,8 @@ import VerPerfil from './pages/VerPerfil';
 import CreateExpenseForm from './components/CreateExpenseForm';
 import Ups from './pages/Ups';
 import EditarPerfil from './components/EditarPerfilComp';
+import CriarTarefa from './pages/CriarTarefa';
+import CriarDespesa from './pages/CriarDespesa';
 
 function App() {
   return (
@@ -27,7 +29,8 @@ function App() {
         <Route path="/verperfil" element={<VerPerfil />} />
         <Route path="/ups" element={<Ups />} />
         <Route path="/editarperfil" element={<EditarPerfil />} />
-
+        <Route path="/criartarefa" element={<CriarTarefa />} />
+        <Route path="/criardespesa" element={<CreateExpenseForm />} />
 
 
         // Isto foi só pra testar n é suposto estar aqui nas pages
