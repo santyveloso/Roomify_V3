@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     USER_TYPES = [
-        ('lider', 'Líder'),
+        ('leader', 'Líder'),
         ('roomie', 'Roomie'),
     ]
     email = models.EmailField('Email', unique=True) 

@@ -8,6 +8,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import VerPerfil from './pages/VerPerfil';
 import CreateExpenseForm from './components/CreateExpenseForm';
+import Ups from './pages/Ups';
+import EditarPerfil from './components/EditarPerfilComp';
 
 function App() {
   return (
@@ -23,6 +25,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/verperfil" element={<VerPerfil />} />
+        <Route path="/ups" element={<Ups />} />
+        <Route path="/editarperfil" element={<EditarPerfil />} />
+
 
 
         // Isto foi só pra testar n é suposto estar aqui nas pages

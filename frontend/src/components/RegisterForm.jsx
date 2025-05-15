@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const RegisterForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
+  const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [userType, setUserType] = useState('roomie'); // ADICIONADO
   const [message, setMessage] = useState(''); // Para mostrar mensagens
@@ -15,7 +15,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     // Verificar se as senhas são iguais
-    if (password1 !== password2) {
+    if (password !== password2) {
       setMessage('As senhas não coincidem!');
       return;
     }
@@ -23,13 +23,12 @@ const RegisterForm = () => {
     const data = {
         username,
         email,
-        password1,
-        password2,
+        password,
         user_type: userType  // ADICIONADO
     };
     try {
         // Enviar o formulário para a API de registo (ajuste o URL conforme necessário)
-        const response = await fetch('http://localhost:8000/api/auth/registration/', {
+        const response = await fetch('http://localhost:8000/backend/users/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -80,8 +79,8 @@ const RegisterForm = () => {
             <label>Password</label>
             <input
               type="password"
-              value={password1}
-              onChange={(e) => setPassword1(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>

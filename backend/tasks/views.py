@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Task, TaskCompletion
+from .models import Task
 from .serializers import TaskSerializer, TaskCompletionSerializer
 from django.utils import timezone
 

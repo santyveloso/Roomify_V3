@@ -84,7 +84,7 @@ const UserProfile = () => {
         <button
           className="primary-btn"
           style={{ marginTop: '1rem', width: '100%' }}
-          onClick={() => navigate('/editar-perfil')}
+          onClick={() => navigate('/editarperfil')}
         >
           Editar Perfil
         </button>

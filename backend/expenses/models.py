@@ -1,12 +1,12 @@
 from django.db import models
 from houses.models import House
-from django.contrib.auth.models import User
+from django.conf import settings  
 
 # vamos ignorar as despesas recorrentes pfv 
 
 class Expense(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='expenses')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='expenses')
     title = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
@@ -25,6 +25,6 @@ class Expense(models.Model):
 # tabela associativa entre o user e a expense (porque dissemos que ia ser dinamico quanto pagam e divisoes)
 class ExpenseShare(models.Model):
     expense = models.ForeignKey(Expense, on_delete=models.CASCADE, related_name='assigned_roomies')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     amount_due = models.DecimalField(max_digits=10, decimal_places=2)
     paid = models.BooleanField(default=False)

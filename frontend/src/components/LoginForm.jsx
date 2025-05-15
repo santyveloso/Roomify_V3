@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password1, setPassword1] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Hook para navegação
@@ -14,13 +14,13 @@ const LoginForm = () => {
     e.preventDefault();
 
     const data = {
-      username,
+      email,
       password: password1,
     };
 
     try {
       // Enviar o formulário para a API de login
-      const response = await fetch('http://localhost:8000/api/auth/login/', {
+      const response = await fetch('http://localhost:8000/backend/token/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,15 +31,12 @@ const LoginForm = () => {
       const result = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', result.key);
-        localStorage.setItem('userType', result.user_type);        setMessage('Login bem-sucedido!');
+        localStorage.setItem('token', result.access);
+        localStorage.setItem('userType', result.user_type);        
+        setMessage('Login bem-sucedido!');
         // Redireciona para a página desejada após login
-        if (result.user_type === 'leader') {
-          navigate('/dashboard-leader');
-        } else {
-          navigate('/dashboard-roomie');
-        }      } 
-        else {
+        navigate('/dashboard');
+
           let errorMsg = 'Ocorreu um erro no login.';
         if (result && typeof result === 'object') {
           errorMsg = Object.values(result).flat().join(' ');
@@ -56,11 +53,11 @@ const LoginForm = () => {
       <h2>Entrar na sua Conta de utilizador</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username</label>
+          <label>E-mail</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -75,9 +72,7 @@ const LoginForm = () => {
         </div>
 
 
-        <Link to="/dashboard">
-          <button>Entrar</button>
-        </Link>
+        <button type="submit">Entrar</button>
 
       </form>
       {message && <p>{message}</p>} {/* Exibe a mensagem de sucesso ou erro */}

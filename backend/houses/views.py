@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import House, HouseMembership, Invitation
-from .serializers import HouseSerializer, HouseMembershipSerializer, InvitationSerializer
+from .models import House, Invitation
+from .serializers import HouseSerializer, InvitationSerializer
 from django.utils import timezone
 from datetime import timedelta
 import uuid
