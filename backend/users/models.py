@@ -6,7 +6,6 @@ from django.utils import timezone
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    house = models.ForeignKey('houses.House', on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
 
     USER_TYPES = [
         ('leader', 'Líder'),

@@ -15,8 +15,8 @@ function HeroSection() {
         </p>
         
         <div className="hero-buttons">
-          <Link to="/create-home" className="hero-cta-button">
-            Criar Casa
+          <Link to="/register" className="hero-cta-button">
+            Começar
           </Link>
         </div>
       </div>
