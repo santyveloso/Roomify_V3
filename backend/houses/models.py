@@ -2,6 +2,10 @@ from django.db import models
 from django.conf import settings
 import uuid
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
+from datetime import timedelta
 
 # Para obter os membros de uma casa, fazemos house.members.all().
 
@@ -22,13 +26,6 @@ class House(models.Model):
         related_name='administered_houses'
     )
 
-    invite_code = models.CharField(max_length=10, unique=True, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if not self.invite_code:
-            self.invite_code = str(uuid.uuid4())[:10]
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return self.name
 
@@ -42,7 +39,26 @@ class Invitation(models.Model):
 
     def __str__(self):
         return f"Convite para {self.house.name} ({self.code})"
+    
 
+def generate_unique_invitation_code():
+    new_code = str(uuid.uuid4().hex)[:10] # .hex é melhor que converter o uuid todo para str
+    while Invitation.objects.filter(code=new_code).exists(): # Garante unicidade
+        new_code = str(uuid.uuid4().hex)[:10]
+    return new_code
+
+
+@receiver(post_save, sender=House)
+def create_initial_invitation_for_new_house(sender, instance, created, **kwargs):
+    """
+    Cria um convite inicial quando uma nova casa é criada.
+    """
+    if created:
+        Invitation.objects.create(
+            house=instance,
+            code=generate_unique_invitation_code(),
+            expires_at=timezone.now() + timedelta(days=30)
+        )
 
 
 
