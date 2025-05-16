@@ -13,11 +13,12 @@ class HouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
         fields = ['id', 'name', 'address', 'description', 'rules', 'created_at', 'updated_at', 'admin', 'invite_code']
+class InvitationSerializer(serializers.ModelSerializer):
+    house = HouseSerializer()  # Exibe os dados da casa relacionada
 
-
-
-
-
+    class Meta:
+        model = Invitation
+        fields = ['id', 'house', 'code', 'created_at', 'expires_at', 'is_used']
 
 # # Serializer para a associação de membros da casa
 # class HouseMembershipSerializer(serializers.ModelSerializer):
@@ -29,9 +30,3 @@ class HouseSerializer(serializers.ModelSerializer):
 #         fields = ['user', 'house', 'joined_at']
 
 # Serializer para o convite (ns se isto vai ser preciso)
-class InvitationSerializer(serializers.ModelSerializer):
-    house = HouseSerializer()  # Exibe os dados da casa relacionada
-
-    class Meta:
-        model = Invitation
-        fields = ['id', 'house', 'code', 'created_at', 'expires_at', 'is_used']

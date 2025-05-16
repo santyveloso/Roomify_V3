@@ -65,16 +65,6 @@ def house_detail(request, house_id):
         house.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# -------- MEMBERSHIPS --------
-
-# @api_view(['GET'])
-# def house_members(request, house_id):
-#     membros = HouseMembership.objects.filter(house__id=house_id)
-#     serializer = HouseMembershipSerializer(membros, many=True)
-#     return Response(serializer.data)
-
-
-
 @api_view(['GET'])
 def house_members(request, house_id):
     try:
@@ -171,4 +161,14 @@ def join_house(request):
     # Responder com os dados da casa
     serializer = HouseSerializer(house)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+# -------- MEMBERSHIPS --------
+
+# @api_view(['GET'])
+# def house_members(request, house_id):
+#     membros = HouseMembership.objects.filter(house__id=house_id)
+#     serializer = HouseMembershipSerializer(membros, many=True)
+#     return Response(serializer.data)
 
