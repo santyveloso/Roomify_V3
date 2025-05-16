@@ -51,21 +51,28 @@
 
 .detailsColumn {
   flex-basis: 50%;
+  width: 50%; /* Reforçar a largura */
   display: flex;
   flex-direction: column;
   background-color: var(--light-background); /* Adicionar um fundo leve para destacar a coluna */
   padding: 15px;
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  min-width: 0; /* Permitir encolher se necessário */
 }
 
 .membersColumn,
 .inviteColumn {
   flex-basis: 25%;
+  width: 25%; /* Reforçar a largura */
   background-color: var(--light-background); /* Adicionar um fundo leve */
   padding: 15px;
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  min-width: 0; /* Permitir encolher se necessário */
+  /* Adicionar flex-grow e flex-shrink pode ser uma opção se isto não resolver */
+  /* flex-grow: 0; */
+  /* flex-shrink: 0; */
 }
 
 .formInput,
@@ -197,4 +204,51 @@
   font-weight: 500;
   border: 1px solid #FBC2C2;
   text-align: center;
-} 
+}
+
+/* Estilos para o Modal de Confirmação */
+.modalOverlay {
+  position: fixed; /* Cobrir a tela inteira */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
+  display: flex;
+  align-items: center; /* Centralizar verticalmente */
+  justify-content: center; /* Centralizar horizontalmente */
+  z-index: 1000; /* Garantir que fica por cima de outros conteúdos */
+}
+
+.modalContent {
+  background-color: var(--background-color);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 90%;
+  max-width: 450px; /* Largura máxima para o modal */
+  text-align: center;
+}
+
+.modalContent h4 {
+  font-family: var(--font-primary);
+  color: var(--text-color);
+  font-size: 1.5rem; /* Tamanho do título do modal */
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.modalContent p {
+  font-family: var(--font-secondary);
+  color: var(--light-text);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end; /* Alinhar botões à direita */
+  gap: 1rem; /* Espaço entre os botões */
+  margin-top: 1.5rem;
+}
+

@@ -56,9 +56,9 @@ const FeedAdminComp = ({ houseId }) => {
 
     const getCurrentTimeOfDayGreeting = () => {
       const currentHour = new Date().getHours();
-      if (currentHour >= 5 && currentHour < 12) {
+      if (currentHour >= 6 && currentHour < 12) {
         return 'Bom dia';
-      } else if (currentHour >= 12 && currentHour < 18) {
+      } else if (currentHour >= 12 && currentHour < 20) {
         return 'Boa tarde';
       } else {
         return 'Boa noite';
