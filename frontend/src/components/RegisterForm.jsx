@@ -150,8 +150,14 @@ const RegisterForm = () => {
         </div>
         {previewUrl && <img src={previewUrl} alt="Preview" height="100px" />}
 
-        <button type="submit">Registar</button>
-        <Link to='/login'>Já tens conta? Clica aqui para fazer login</Link>
+        <div className="auth-redirect-link">
+          <Link to='/login'>Já tens conta? Clica aqui para fazer login</Link>
+        </div>
+
+        <div className="button-container">
+          <button type="submit">Registar</button>
+        </div>
+
       </form>
       {message && <p>{message}</p>} {/* Exibe a mensagem de sucesso ou erro */}
     </div>
