@@ -1,33 +1,31 @@
-# users/serializers.py
 
-from django.contrib.auth import get_user_model
+
 from rest_framework import serializers
+from users.models import CustomUser
 
-User = get_user_model()
+class CustomUserSerializer(serializers.ModelSerializer):
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    # campos que temos que ir buscar ao user
+    username = serializers.CharField(source='user.username')
+    email = serializers.EmailField(source='user.email')
 
     class Meta:
-        model  = User
-        fields = [
-            'id', 'username', 'email',
-            'user_type', 'phone', 'profile_picture',
-            'password'
-        ]
+        model = CustomUser
+        fields = ['username', 'email', 'phone', 'user_type', 'profile_picture', 'house']
 
-    def create(self, validated_data):
-        pwd  = validated_data.pop('password')
-        user = User(**validated_data)
-        user.set_password(pwd)
+    def update(self, instance, validated_data):
+        # Separar os dados do user
+        user_data = validated_data.pop('user', {})
+
+        # Atualiza os dados do CustomUser
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        # Atualiza os dados do utilizador associado
+        user = instance.user
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
         user.save()
-        return user
-    
-    def update(self, request, *args, **kwargs):
-        partial = True  # <- isto é essencial
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
 
+        instance.save()
+        return instance

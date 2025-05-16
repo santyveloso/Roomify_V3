@@ -10,6 +10,7 @@ import VerPerfil from './pages/VerPerfil';
 import CreateExpenseForm from './components/CreateExpenseForm';
 import Ups from './pages/Ups';
 import EditarPerfil from './components/EditarPerfilComp';
+import VerEditarPerfil from './components/VerEditarPerfil';
 
 function App() {
   return (
@@ -24,18 +25,19 @@ function App() {
         <Route path="/join-home" element={<JoinHome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/verperfil" element={<VerPerfil />} />
+        {/* <Route path="/verperfil" element={<VerPerfil />} /> */}
+        <Route path="/verperfil" element={<VerEditarPerfil />} />
         <Route path="/ups" element={<Ups />} />
         <Route path="/editarperfil" element={<EditarPerfil />} />
 
 
 
-        // Isto foi só pra testar n é suposto estar aqui nas pages
+        {/* // Isto foi só pra testar n é suposto estar aqui nas pages
         <Route path="/teste-expense" element={<CreateExpenseForm houseId={1} roomies={[
           { id: 1, username: 'Ana' },
           { id: 2, username: 'João' },
           { id: 3, username: 'Maria' }
-        ]} />} />
+        ]} />} /> */}
 
 
       </Routes>

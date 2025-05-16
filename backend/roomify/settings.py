@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt',
+    #'rest_framework_simplejwt',
     'users',
     'houses',
     'tasks',
@@ -48,25 +50,11 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser'
+#AUTH_USER_MODEL = 'users.CustomUser'
 
 
 
 
-
-#######POWERPOINT STOR USERS
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000",
- "http://127.0.0.1:3000"]
-
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
-# Django REST Framework Settings
-REST_FRAMEWORK = {
- 'DEFAULT_AUTHENTICATION_CLASSES': [
- 'rest_framework.authentication.SessionAuthentication',
- ],
-}
-############################
 
 
 
@@ -83,11 +71,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-#CORS_ALLOWED_ORIGINS = [
- #   "http://localhost:3000",  # onde o React vai correr localmente
-#]
-# CORS_ALLOW_ALL_ORIGINS = True  # <- para testes~
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'roomify.urls'
 
@@ -162,23 +145,46 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ],
+# }
+
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+#     'ROTATE_REFRESH_TOKENS': False,
+#     'BLACKLIST_AFTER_ROTATION': False,
+# }
+
+
+## ISTO É O QUE FUNCIONA PARA OS USERS (DO PPT)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000",
+ "http://127.0.0.1:3000"]
+# Django REST Framework Settings
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
+ 'DEFAULT_AUTHENTICATION_CLASSES': [
+ 'rest_framework.authentication.SessionAuthentication',
+ ],
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
-}
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
-ACCOUNT_LOGIN_METHOD = 'username'
-ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
-ACCOUNT_EMAIL_REQUIRED = False  # opcional, se quiseres mesmo garantir que o email é pedido
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # ou 'mandatory' se quiseres confirmação por email
+# ACCOUNT_LOGIN_METHOD = 'username'
+# ACCOUNT_SIGNUP_FIELDS = ['username', 'email', 'password1', 'password2']
+# ACCOUNT_EMAIL_REQUIRED = False  # opcional, se quiseres mesmo garantir que o email é pedido
+# ACCOUNT_EMAIL_VERIFICATION = 'none'  # ou 'mandatory' se quiseres confirmação por email
 
-REST_AUTH_REGISTER_SERIALIZER = 'users.serializers.CustomRegisterSerializer'
+# REST_AUTH_REGISTER_SERIALIZER = 'users.serializers.CustomRegisterSerializer'
 
+
+
+
+#PARA ACEITAR AS FOTOS DE PERFIL
+MEDIA_URL = '/profile_pics/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pics')
