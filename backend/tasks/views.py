@@ -18,7 +18,9 @@ from django.utils import timezone
 @api_view(['GET', 'POST'])
 def tasks(request):
     if request.method == 'GET':
-        tasks = Task.objects.all()
+        # tasks = Task.objects.all()\
+        #tasks = Task.objects.filter(house__in=request.user.houses.all())  # ou um método alternativo
+        tasks = Task.objects.filter(house=request.user.house)
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
 

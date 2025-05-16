@@ -21,6 +21,8 @@ import Suporte from './pages/Suporte';
 import Funcionalidades from './pages/Funcionalidades';
 import Sobre from './pages/Sobre';
 import CriarPost from './pages/CriarPost';
+import TasksPage from './pages/TasksPage';
+
 
 function App() {
   return (
@@ -50,6 +52,9 @@ function App() {
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/criarpost" element={<CriarPost />} />
 
+
+        <Route path="/tasks" element={<TasksPage />} />
+        {/* <Route path="/tasks/create" element={<CriarTarefaForm />} /> */}
 
 
 

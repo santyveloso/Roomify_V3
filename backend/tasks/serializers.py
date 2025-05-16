@@ -8,9 +8,10 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = [
             'id', 'title', 'description', 'house', 'assigned_to', 
-            'created_by', 'status', 'task_type', 'due_date', 'recurrence', 
-            'created_at', 'updated_at', 'completed_at'
+            'created_by', 'status', 'due_date', 
+            'created_at', 'updated_at', 'completed_at', 'completed_by'
         ]
+        read_only_fields = ['id', 'created_by', 'created_at', 'updated_at', 'completed_at', 'completed_by']
 
 class TaskCompletionSerializer(serializers.ModelSerializer):
     class Meta:

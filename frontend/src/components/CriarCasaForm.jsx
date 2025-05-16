@@ -40,13 +40,6 @@ const CriarCasaForm = () => {
       });
 
 
-
-
-
-
-
-
-
       // 2. Ir buscar o perfil atualizado (que deve já incluir a casa criada)
       const res = await axios.get('http://localhost:8000/backend/users/profile/', {
         withCredentials: true,
@@ -67,16 +60,6 @@ const CriarCasaForm = () => {
 
         //setMessage(`Casa criada, mas não foi possível obter o ID da casa associada. (${casaId})`);
       }
-
-
-
-
-
-
-
-
-
-
 
       // setMessage('Casa criada com sucesso!');
       // navigate('/dashboard');

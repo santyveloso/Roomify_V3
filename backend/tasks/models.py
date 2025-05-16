@@ -50,15 +50,13 @@ class Task(models.Model):
     )
 
 
-   
-
-
-
-    status = models.CharField(max_length=15, choices=TASK_STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=15, choices=TASK_STATUS_CHOICES, default='to_do')
 
 
     # se simplificarmos adicionamos isto (ver user ns)
-    completed_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    
+    completed_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='completed_tasks')
+
    # task_type = models.CharField(max_length=15, choices=TASK_TYPE_CHOICES, default='one_time')
     due_date = models.DateTimeField(null=True, blank=True)
     #recurrence = models.CharField(max_length=15, choices=RECURRENCE_CHOICES, null=True, blank=True)

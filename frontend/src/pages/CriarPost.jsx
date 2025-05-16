@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 import CriarPostForm from '../components/CriarPostForm';
 
 function CriarPost() {
-   const location = useLocation();
-   const houseId = location.state?.houseId;
+  const location = useLocation();
+  const houseId = location.state?.houseId;
 
   return (
     <div className="page-wrapper">
