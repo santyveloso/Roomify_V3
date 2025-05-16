@@ -6,7 +6,7 @@ function DashboardComp() {
 
   const handleClick = (action) => {
     if (action === 'Criar Casa') {
-      navigate('/create-home');
+      navigate('/create-home-prev');
     } else if (action === 'Inserir Código') {
       navigate('/join-home');
     } else if (action === 'Ver Perfil') {

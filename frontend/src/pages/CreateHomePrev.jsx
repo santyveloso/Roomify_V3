@@ -4,7 +4,7 @@ import "../index.css";
 import Navbar from "../components/Navbar";
 
 
-export default function CreateHome() {
+export default function CreateHomePrev() {
   const nav = useNavigate();
 
   return (
@@ -26,7 +26,7 @@ export default function CreateHome() {
 
       <button
         className="primary-btn"
-        onClick={() => nav("/create-or-join")}
+        onClick={() => nav("/criarcasa")}
       >
         Criar Nova Casa
       </button>
