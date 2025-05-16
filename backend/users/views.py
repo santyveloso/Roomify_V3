@@ -62,7 +62,7 @@ def login_view(request):
             if customUser.house:
                 house_info = {
                     'id': customUser.house.id,
-                    'nome': customUser.house.nome,
+                    'nome': customUser.house.name,
                     'is_admin': customUser.user_type == 'ADMIN'
                 }
 
