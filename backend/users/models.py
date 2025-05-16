@@ -1,32 +1,42 @@
-import uuid
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-from django.conf import settings
-from django.utils import timezone
+"""
+Implementação do Sistema de Utilizadores para o RoomiFy
+- Criação de utilizadores normais e administradores
+- Login e logout
+- Perfil de utilizador com avatar e estado
+- Configuração de permissões (admin da casa vs roomie)
+"""
 
-class CustomUser(AbstractUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+# models.py - Modelos de dados para utilizadores e perfis
+from django.db import models
+from django.contrib.auth.models import User
+
+from houses.models import House
+
+
+
+class CustomUser(models.Model):
+    """
+    Perfil de utilizador com informações adicionais além do User padrão do Django.
+    Inclui avatar, estado e preferências do utilizador.
+    """
 
     USER_TYPES = [
-        ('leader', 'Líder'),
-        ('roomie', 'Roomie'),
+        ('ADMIN', 'Administrador'),
+        ('ROOMIE', 'Roomie'),
     ]
-    email = models.EmailField('Email', unique=True) 
-    user_type = models.CharField('Tipo de Utilizador', max_length=10, choices=USER_TYPES, default='roomie')
-    phone = models.CharField('Telefone', max_length=20, blank=True)
-    profile_picture = models.ImageField('Foto de Perfil', upload_to='profile_pics/', blank=True, null=True)
 
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
-    updated_at = models.DateTimeField(auto_now=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user_type = models.CharField('Tipo de Utilizador', max_length=10, choices=USER_TYPES, default='ROOMIE')
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    profile_picture = models.ImageField('Foto de Perfil', upload_to='profile_pics/', blank=True, null=True,  default='default_avatar.png')
+    #data_nascimento = models.DateField(null=True, blank=True)
+    phone = models.CharField('Telefone', max_length=20, blank=True, null=True)
+
+    # tem qeue estar aqui pq ele só pode ter uma
+    house = models.ForeignKey(House, on_delete=models.SET_NULL, null=True, blank=True, related_name='membros')
+    data_entrada = models.DateTimeField(auto_now=True)
+
     
-    class Meta:
-        verbose_name = 'Utilizador'
-        verbose_name_plural = 'Utilizadores'
-        ordering = ['username']
-
     def __str__(self):
-        return f"{self.username} ({self.user_type})"
-
+        return f"Perfil de {self.user.username}"
+    

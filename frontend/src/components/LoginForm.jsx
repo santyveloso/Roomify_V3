@@ -1,51 +1,64 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para redirecionamento após login
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Hook para navegação
+
+
+
+  function getCSRFToken() {
+    return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+  }
 
   // Definição da função handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
-      email,
-      password: password1,
+      username,
+      password: password,
     };
 
+
+    // Enviar o formulário para a API de login
+
     try {
-      // Enviar o formulário para a API de login
-      const response = await fetch('http://localhost:8000/backend/token/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        'http://localhost:8000/backend/users/login/',
+        {
+          username,
+          password: password,
         },
-        body: JSON.stringify(data),
-      });
+        {
+          headers: { 'X-CSRFToken': getCSRFToken() },
+          withCredentials: true
+        }
+      );
 
-      const result = await response.json();
+      // Sucesso
+      setMessage('Login bem-sucedido!');
+      navigate('/dashboard');
 
-      if (response.ok) {
-        localStorage.setItem('token', result.access);
-        localStorage.setItem('userType', result.user_type);        
-        setMessage('Login bem-sucedido!');
-        // Redireciona para a página desejada após login
-        navigate('/dashboard');
 
-          let errorMsg = 'Ocorreu um erro no login.';
-        if (result && typeof result === 'object') {
+    } catch (error) {
+      if (error.response && error.response.data) {
+        const result = error.response.data;
+        let errorMsg = 'Erro no login.';
+        if (typeof result === 'object') {
           errorMsg = Object.values(result).flat().join(' ');
         }
         setMessage(errorMsg);
+      } else {
+        setMessage('Erro ao conectar ao servidor.');
       }
-    } catch (error) {
-      setMessage('Erro ao conectar ao servidor.');
     }
+
   };
 
   return (
@@ -56,8 +69,8 @@ const LoginForm = () => {
           <label>E-mail</label>
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
@@ -65,8 +78,8 @@ const LoginForm = () => {
           <label>Password</label>
           <input
             type="password"
-            value={password1}
-            onChange={(e) => setPassword1(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
