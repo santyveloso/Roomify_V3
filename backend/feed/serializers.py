@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Post, Comment
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 # n vi nada disto VER COMO É SUPOSTO APARECER
 
@@ -20,9 +21,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
+    house = serializers.PrimaryKeyRelatedField(read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = ['id', 'house', 'author', 'content', 'is_announcement', 'created_at', 'updated_at', 'comments']
+        fields = ['id', 'house', 'author', 'content', 'is_aviso', 'created_at', 'updated_at', 'comments']
         read_only_fields = ['author', 'created_at', 'updated_at', 'comments']

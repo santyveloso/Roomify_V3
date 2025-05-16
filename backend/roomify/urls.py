@@ -31,7 +31,8 @@ urlpatterns = [
     path('backend/users/', include('users.urls')),
     path('backend/houses/', include('houses.urls')),
     path('backend/tasks/', include('tasks.urls')),
-    
+    path('backend/', include('feed.urls')),
+
     #path('expenses/', include('expenses.urls')),
     #path('feed/', include('feed.urls')),
    

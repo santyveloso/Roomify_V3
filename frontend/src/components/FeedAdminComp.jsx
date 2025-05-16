@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './FeedAdminComp.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const FeedAdminComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
@@ -14,6 +15,9 @@ const FeedAdminComp = ({ houseId }) => {
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
   const [timeOfDayGreeting, setTimeOfDayGreeting] = useState('');
+
+
+  const navigate = useNavigate();
 
   const BASE_URL = 'http://localhost:8000/backend';
 
@@ -208,6 +212,11 @@ const FeedAdminComp = ({ houseId }) => {
           </div>
           {message && <p className={styles.messageText}>{message}</p>}
         </div>
+      <button onClick={() => navigate('/criarpost', { state: { houseId } })}>
+            Criar Post
+          </button>
+
+
       </div>
     </div>
   );

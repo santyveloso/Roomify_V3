@@ -20,6 +20,7 @@ import FeedRoomie from './pages/FeedRoomie';
 import Suporte from './pages/Suporte';
 import Funcionalidades from './pages/Funcionalidades';
 import Sobre from './pages/Sobre';
+import CriarPost from './pages/CriarPost';
 
 function App() {
   return (
@@ -47,6 +48,8 @@ function App() {
         <Route path="/suporte" element={<Suporte />} />
         <Route path="/funcionalidades" element={<Funcionalidades />} />
         <Route path="/sobre" element={<Sobre />} />
+        <Route path="/criarpost" element={<CriarPost />} />
+
 
 
 

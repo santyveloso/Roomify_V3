@@ -2,10 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Post, Comment
+from .models import Post, Comment, House
 from .serializers import PostSerializer, CommentSerializer
-
-
 
 # Posts
 
@@ -20,14 +18,14 @@ def post_list_create(request, house_id):
 
     # Criar novo post na casa
     elif request.method == 'POST':
-        data = request.data.copy()
-        data['house'] = house_id
-        data['author'] = request.user.id
-        serializer = PostSerializer(data=data)
+        print("POST recebido:", request.data) 
+        serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            house = House.objects.get(pk=house_id)  # Podes também usar get_object_or_404
+            serializer.save(author=request.user, house=house)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
