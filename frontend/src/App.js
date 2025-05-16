@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
-import CreateHome from "./pages/CreateHome";
+import CreateHome from "./pages/CreateHomePrev";
 import JoinHome from "./pages/JoinHome";
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -11,6 +11,10 @@ import CreateExpenseForm from './components/CreateExpenseForm';
 import Ups from './pages/Ups';
 import EditarPerfil from './components/EditarPerfilComp';
 import VerEditarPerfil from './components/VerEditarPerfil';
+import CriarTarefa from './pages/CriarTarefa';
+import CriarDespesa from './pages/CriarDespesa';
+import CreateHomePrev from './pages/CreateHomePrev';
+import CriarCasa from './pages/CriarCasa';
 
 function App() {
   return (
@@ -21,7 +25,7 @@ function App() {
         */
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/create-home" element={<CreateHome />} />
+        <Route path="/create-home-prev" element={<CreateHomePrev />} />
         <Route path="/join-home" element={<JoinHome />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
@@ -29,6 +33,9 @@ function App() {
         <Route path="/verperfil" element={<VerEditarPerfil />} />
         <Route path="/ups" element={<Ups />} />
         <Route path="/editarperfil" element={<EditarPerfil />} />
+        <Route path="/criartarefa" element={<CriarTarefa />} />
+        <Route path="/criardespesa" element={<CreateExpenseForm />} />
+        <Route path="/criarcasa" element={<CriarCasa />} />
 
 
 
