@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
+import DashboardAdmin from './pages/DashboardAdmin';
+import DashboardRoomie from './pages/DashboardRoomie';
 import CreateHome from "./pages/CreateHomePrev";
 import JoinHome from "./pages/JoinHome";
 import LoginPage from './pages/LoginPage';
@@ -29,6 +31,10 @@ function App() {
         <Route path="/create-home-prev" element={<CreateHomePrev />} />
         <Route path="/join-home" element={<JoinHome />} />
         <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/dashboard-admin" element={<DashboardAdmin />} />
+        <Route path="/dashboard-roomie" element={<DashboardRoomie />} />
+
         <Route path="/login" element={<LoginPage />} />
         {/* <Route path="/verperfil" element={<VerPerfil />} /> */}
         <Route path="/verperfil" element={<VerEditarPerfil />} />
