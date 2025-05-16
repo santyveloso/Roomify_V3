@@ -252,10 +252,3 @@
   margin-top: 1.5rem;
 }
 
-/* O botão de remover na lista pode ter um estilo um pouco diferente agora */
-.openModalButton {
-  /* Se precisar de estilos específicos para o botão que abre o modal, coloque aqui */
-  /* Por exemplo, pode querer que pareça menos agressivo que o botão de confirmação final */
-  /* background-color: var(--light-text); */
-  /* color: var(--background-color); */
-} 
