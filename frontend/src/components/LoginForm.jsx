@@ -66,7 +66,7 @@ const LoginForm = () => {
       <h2>Entrar na sua Conta de utilizador</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>E-mail</label>
+          <label>Username</label>
           <input
             type="text"
             value={username}

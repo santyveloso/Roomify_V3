@@ -146,7 +146,6 @@ const RegisterForm = () => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            required
           />
         </div>
         {previewUrl && <img src={previewUrl} alt="Preview" height="100px" />}
