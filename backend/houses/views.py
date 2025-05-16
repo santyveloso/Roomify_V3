@@ -6,6 +6,8 @@ from .serializers import HouseSerializer, InvitationSerializer
 from django.utils import timezone
 from datetime import timedelta
 import uuid
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 def is_house_admin(house, user):
@@ -23,7 +25,15 @@ def houses(request):
         serializer = HouseSerializer(data=request.data)
         if serializer.is_valid():
             #serializer.save()
-            serializer.save(admin=request.user) # isto ta a ir buscar o user acho
+
+            house = serializer.save(admin=request.user)
+    
+            # associar a casa criada ao utilizador autenticado
+            request.user.profile.house = house
+           # request.user.profile.user_type = 'ADMIN'  # se quiseres definir o tipo
+            request.user.profile.save()
+
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -57,11 +67,27 @@ def house_detail(request, house_id):
 
 # -------- MEMBERSHIPS --------
 
+# @api_view(['GET'])
+# def house_members(request, house_id):
+#     membros = HouseMembership.objects.filter(house__id=house_id)
+#     serializer = HouseMembershipSerializer(membros, many=True)
+#     return Response(serializer.data)
+
+
+
 @api_view(['GET'])
 def house_members(request, house_id):
-    membros = HouseMembership.objects.filter(house__id=house_id)
-    serializer = HouseMembershipSerializer(membros, many=True)
-    return Response(serializer.data)
+    try:
+        house = House.objects.get(pk=house_id)
+    except House.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    users = User.objects.filter(house=house)
+
+    # ns o q por aqui
+    data = [{"id": user.id, "username": user.username, "email": user.email} for user in users]
+    return Response(data)
+
 
 #Remover membro da casa
 @api_view(['DELETE'])
@@ -75,14 +101,15 @@ def remove_member(request, house_id, user_id):
         return Response({"detail": "Apenas o administrador pode remover membros."}, status=status.HTTP_403_FORBIDDEN)
 
     try:
-        membership = HouseMembership.objects.get(house=house, user_id=user_id)
-    except HouseMembership.DoesNotExist:
+        member = User.objects.get(pk=user_id, house=house)
+    except User.DoesNotExist:
         return Response({"detail": "Membro não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
-    if membership.user == house.admin:
+    if member == house.admin:
         return Response({"detail": "Não é possível remover o administrador da casa."}, status=status.HTTP_400_BAD_REQUEST)
 
-    membership.delete()
+    member.house = None
+    member.save()
     return Response({"detail": "Membro removido com sucesso."}, status=status.HTTP_204_NO_CONTENT)
 
 
@@ -127,11 +154,15 @@ def join_house(request):
         return Response({"detail": "Convite inválido ou expirado."}, status=status.HTTP_400_BAD_REQUEST)
 
     house = invitation.house
-    if HouseMembership.objects.filter(user=request.user, house=house).exists():
+    if request.user.house == house:
         return Response({"detail": "Você já é membro desta casa."}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Adicionar utilizador à casa
-    HouseMembership.objects.create(user=request.user, house=house)
+    if request.user.house is not None:
+        return Response({"detail": "Você já pertence a outra casa."}, status=status.HTTP_400_BAD_REQUEST)
+
+    request.user.house = house
+    request.user.save()
+
 
     # Marcar convite como usado
     invitation.is_used = True

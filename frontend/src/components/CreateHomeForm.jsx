@@ -13,17 +13,17 @@ function CreateHomeForm() {
   const navigate = useNavigate();
 
   const handleClick = (action) => {
-  if (action === 'Criar Casa') {
-    navigate('/'); // abre o componente interno
-  } else if (action === 'Inserir Código') {
-    navigate('/inserir-codigo'); // muda de página
-  } else if (action === 'Ver Perfil') {
-    navigate('/perfil');
-  } else if (action === 'Logout') {
-    localStorage.clear(); // ou remove token se necessário
-    navigate('/login');
-  }
-};
+    if (action === 'Criar Casa') {
+      navigate('/'); // abre o componente interno
+    } else if (action === 'Inserir Código') {
+      navigate('/inserir-codigo'); // muda de página
+    } else if (action === 'Ver Perfil') {
+      navigate('/perfil');
+    } else if (action === 'Logout') {
+      localStorage.clear(); // ou remove token se necessário
+      navigate('/login');
+    }
+  };
 
   const [message, setMessage] = useState('');
   const [inviteCode, setInviteCode] = useState(null);

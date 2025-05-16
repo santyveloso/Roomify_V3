@@ -15,6 +15,7 @@ import CriarTarefa from './pages/CriarTarefa';
 import CriarDespesa from './pages/CriarDespesa';
 import CreateHomePrev from './pages/CreateHomePrev';
 import CriarCasa from './pages/CriarCasa';
+import AdminTesteViews from './pages/AdminTesteViews';
 
 function App() {
   return (
@@ -36,6 +37,11 @@ function App() {
         <Route path="/criartarefa" element={<CriarTarefa />} />
         <Route path="/criardespesa" element={<CreateExpenseForm />} />
         <Route path="/criarcasa" element={<CriarCasa />} />
+        <Route path="/houses/:houseId" element={<AdminTesteViews />} />
+
+
+        //testeeee
+        <Route path="/admintesteviews" element={<AdminTesteViews />} />
 
 
 

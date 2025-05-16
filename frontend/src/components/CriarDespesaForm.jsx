@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+function getCSRFToken() {
+  return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+}
+
 const CriarDespesaForm = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -112,16 +116,16 @@ const CriarDespesaForm = () => {
 
         <label>Divisão entre Roomies</label>
         {Array.isArray(roomies) && roomies.map((r, i) => (
-        <div key={r.id} style={{ marginBottom: '10px' }}>
+          <div key={r.id} style={{ marginBottom: '10px' }}>
             <strong>{r.username}</strong> – €{' '}
             <input
-            type="number"
-            step="0.01"
-            value={assignedRoomies[i]?.amount_due || ''}
-            onChange={(e) => handleRoomieChange(i, e.target.value)}
-            required
+              type="number"
+              step="0.01"
+              value={assignedRoomies[i]?.amount_due || ''}
+              onChange={(e) => handleRoomieChange(i, e.target.value)}
+              required
             />
-        </div>
+          </div>
         ))}
 
 

@@ -2,16 +2,22 @@
 
 from rest_framework import serializers
 from users.models import CustomUser
+from houses.serializers import HouseSerializer  # importa o serializer da house
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
 
     # campos que temos que ir buscar ao user
     username = serializers.CharField(source='user.username')
     email = serializers.EmailField(source='user.email')
+    house = HouseSerializer(read_only=True)
 
     class Meta:
         model = CustomUser
+        
+
         fields = ['username', 'email', 'phone', 'user_type', 'profile_picture', 'house']
+       # fields = ['username', 'email', 'phone', 'user_type', 'profile_picture', 'house']
 
     def update(self, instance, validated_data):
         # Separar os dados do user
