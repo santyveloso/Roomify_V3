@@ -43,21 +43,33 @@ const LoginForm = () => {
 
       // Sucesso
       setMessage('Login bem-sucedido!');
-      const profileRes = await axios.get('http://localhost:8000/backend/users/profile/', {
-      withCredentials: true,
-      });
       
-      const userType = profileRes.data.user_type;
+      // 2. Vai buscar o perfil
+      const profileRes = await axios.get('http://localhost:8000/backend/users/profile/', {
+        withCredentials: true,
+      });
 
+      const userType = profileRes.data.user_type;
+      const house = profileRes.data.house;
+      const houseId = house?.id;
+
+      // 3. Redirecionamento conforme tipo de utilizador
       if (userType === 'ADMIN') {
-        navigate('/dashboard-admin');
+        if (houseId) {
+          navigate(`/houses/${houseId}`);
+        } else {
+          navigate('/dashboard-admin');
+        }
       } else if (userType === 'ROOMIE') {
-        navigate('/dashboard-roomie');
+        if (houseId) {
+          navigate(`/houses/${houseId}/roomie`);
+        } else {
+          navigate('/dashboard-roomie');
+        }
       } else {
         setMessage('Tipo de utilizador desconhecido.');
       }
-
-      
+  
     } catch (error) {
       if (error.response && error.response.data) {
         const result = error.response.data;
