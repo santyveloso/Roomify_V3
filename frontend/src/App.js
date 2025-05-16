@@ -17,6 +17,9 @@ import CriarCasa from './pages/CriarCasa';
 import AdminTesteViews from './pages/AdminTesteViews';
 import FeedAdmin from './pages/FeedAdmin';
 import FeedRoomie from './pages/FeedRoomie';
+import Suporte from './pages/Suporte';
+import Funcionalidades from './pages/Funcionalidades';
+import Sobre from './pages/Sobre';
 
 function App() {
   return (
@@ -27,10 +30,7 @@ function App() {
         */
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        {/* <Route path="/create-home-prev" element={<CreateHomePrev />} /> */}
         <Route path="/join-home" element={<JoinHome />} />
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-
         <Route path="/dashboard-admin" element={<DashboardAdmin />} />
         <Route path="/dashboard-roomie" element={<DashboardRoomie />} />
 
@@ -44,6 +44,10 @@ function App() {
         <Route path="/criarcasa" element={<CriarCasa />} />
         <Route path="/houses/:houseId" element={<FeedAdmin />} />
         <Route path="/houses/:houseId/roomie" element={<FeedRoomie />} />
+        <Route path="/suporte" element={<Suporte />} />
+        <Route path="/funcionalidades" element={<Funcionalidades />} />
+        <Route path="/sobre" element={<Sobre />} />
+
 
 
 

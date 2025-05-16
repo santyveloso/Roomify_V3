@@ -6,9 +6,9 @@ import perfilImg from '../images/perfil.png'; // import da imagem de perfil
 
 export default function Navbar() {
   const navLinks = [
-    { label: 'Sobre', to: '/#sobre' },
-    { label: 'Funcionalidades', to: '/#funcionalidades' },
-    { label: 'Suporte', to: '/#suporte' },
+    { label: 'Sobre', to: '/sobre' },
+    { label: 'Funcionalidades', to: '/funcionalidades' },
+    { label: 'Suporte', to: '/suporte' },
   ];
 
   return (

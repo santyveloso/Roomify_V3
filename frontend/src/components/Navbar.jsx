@@ -5,9 +5,9 @@ import navbarLogo from '../images/navbar-logo.png';
 
 export default function Navbar() {
   const navLinks = [
-    { label: 'Sobre',           to: '/#sobre' },
-    { label: 'Funcionalidades', to: '/#funcionalidades' },
-    { label: 'Suporte',         to: '/#suporte' },
+    { label: 'Sobre',           to: '/sobre' },
+    { label: 'Funcionalidades', to: '/funcionalidades' },
+    { label: 'Suporte',         to: '/suporte' },
   ];
 
   return (
