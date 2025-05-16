@@ -1,7 +1,6 @@
-// src/pages/JoinHome.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import codeImg from "../images/numpad.png";     // se quiseres manter a mesma imagem
+import codeImg from "../images/numpad.png";
 import "../JoinHome.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
@@ -17,21 +16,31 @@ export default function JoinHome() {
 
   const handleJoin = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/backend/houses/join/",  // adapta a tua URL se necessário
+      // 1. Tentar entrar na casa com o código
+      await axios.post(
+        "http://localhost:8000/backend/houses/join/",
         { code: inviteKey },
         {
-          headers: {
-            "X-CSRFToken": getCSRFToken(),
-          },
+          headers: { "X-CSRFToken": getCSRFToken() },
           withCredentials: true,
         }
       );
 
-      setMessage("Entraste com sucesso!");
-      nav("/dashboard");
+      // 2. Buscar o perfil atualizado (já deve incluir a casa associada)
+      const res = await axios.get("http://localhost:8000/backend/users/profile/", {
+        withCredentials: true,
+      });
+
+      const casaId = res.data.house?.id;
+
+      if (casaId) {
+        nav(`/houses/${casaId}`);
+      } else {
+        setMessage("Entraste, mas não conseguimos encontrar a casa associada.");
+      }
+
     } catch (error) {
-      if (error.response && error.response.data) {
+      if (error.response?.data) {
         const result = error.response.data;
         let errorMsg = "Erro ao entrar na casa.";
         if (typeof result === "object") {
@@ -48,7 +57,7 @@ export default function JoinHome() {
     <>
       <Navbar />
 
-      <div className="create-home-wrapper"> {/* reaproveita o wrapper do CreateHome */}
+      <div className="create-home-wrapper">
         <img
           src={codeImg}
           alt="Chave de convite"
@@ -65,9 +74,9 @@ export default function JoinHome() {
         <input
           type="text"
           value={inviteKey}
-          onChange={e => setInviteKey(e.target.value)}
-          placeholder="Your key"
-          className="form-input"   /* podes criar este estilo no teu CSS */
+          onChange={(e) => setInviteKey(e.target.value)}
+          placeholder="Código de convite"
+          className="form-input"
         />
 
         <button
@@ -75,8 +84,10 @@ export default function JoinHome() {
           disabled={inviteKey.length === 0}
           onClick={handleJoin}
         >
-          Join Home
+          Entrar na Casa
         </button>
+
+        {message && <p className="form-message">{message}</p>}
       </div>
     </>
   );

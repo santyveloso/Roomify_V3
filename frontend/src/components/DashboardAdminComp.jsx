@@ -6,7 +6,7 @@ function DashboardAdminComp() {
 
   const handleClick = (action) => {
     if (action === 'Criar Casa') {
-      navigate('create-home-prev');
+      navigate('/create-home-prev');
     }
   };
 

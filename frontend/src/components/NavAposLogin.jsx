@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import navbarLogo from '../images/navbar-logo.png';
+import perfilImg from '../images/perfil.png'; // import da imagem de perfil
 
 export default function Navbar() {
   const navLinks = [
@@ -37,14 +38,19 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Ações */}
+        {/* Ícone do Perfil */}
         <div className="navbar-actions">
           <Link
             to="/verperfil"
-            className="navbar-cta-button"
+            className="navbar-profile-icon"
             scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
+            aria-label="Ver perfil"
           >
-            Ver Perfil
+            <img
+              src={perfilImg}
+              alt="Perfil"
+              style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+            />
           </Link>
         </div>
       </div>
