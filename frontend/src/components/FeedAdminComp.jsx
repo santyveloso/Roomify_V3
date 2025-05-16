@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styles from './FeedAdminComp.module.css';
 
 const FeedAdminComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
@@ -11,6 +12,8 @@ const FeedAdminComp = ({ houseId }) => {
   const [houseDescription, setHouseDescription] = useState('');
   const [houseRules, setHouseRules] = useState('');
   const [message, setMessage] = useState('');
+  const [userName, setUserName] = useState('');
+  const [timeOfDayGreeting, setTimeOfDayGreeting] = useState('');
 
   const BASE_URL = 'http://localhost:8000/backend';
 
@@ -19,7 +22,7 @@ const FeedAdminComp = ({ houseId }) => {
   };
 
   useEffect(() => {
-    const fetchHouse = async () => {
+    const fetchHouseData = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/`, { withCredentials: true });
         setHouse(res.data);
@@ -28,7 +31,7 @@ const FeedAdminComp = ({ houseId }) => {
         setHouseDescription(res.data.description || '');
         setHouseRules(res.data.rules || '');
       } catch {
-        setMessage('Erro ao carregar a casa.');
+        setMessage('Erro ao carregar os dados da casa.');
       }
     };
 
@@ -41,8 +44,32 @@ const FeedAdminComp = ({ houseId }) => {
       }
     };
 
-    fetchHouse();
+    const fetchUserProfile = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
+        setUserName(res.data.username || 'Utilizador');
+      } catch {
+        setUserName('Utilizador');
+        console.error('Erro ao carregar o perfil do utilizador.');
+      }
+    };
+
+    const getCurrentTimeOfDayGreeting = () => {
+      const currentHour = new Date().getHours();
+      if (currentHour >= 5 && currentHour < 12) {
+        return 'Bom dia';
+      } else if (currentHour >= 12 && currentHour < 18) {
+        return 'Boa tarde';
+      } else {
+        return 'Boa noite';
+      }
+    };
+
+    fetchHouseData();
     fetchMembers();
+    fetchUserProfile();
+    setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
+
   }, [houseId]);
 
   const generateInvite = async () => {
@@ -110,67 +137,78 @@ const FeedAdminComp = ({ houseId }) => {
   if (!house) return <div>A carregar...</div>;
 
   return (
-    <div>
-      <h1>Feed da Casa</h1>
+    <div className={styles.feedContainer}>
+      <h1 className={styles.dynamicGreeting}>
+        {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName}</span>!
+      </h1>
 
-      {editMode ? (
-        <div>
-          <div>
-            <label>Nome:</label>
-            <input type="text" value={houseName} onChange={e => setHouseName(e.target.value)} />
-          </div>
-          <div>
-            <label>Endereço:</label>
-            <textarea value={houseAddress} onChange={e => setHouseAddress(e.target.value)} />
-          </div>
-          <div>
-            <label>Descrição:</label>
-            <textarea value={houseDescription} onChange={e => setHouseDescription(e.target.value)} />
-          </div>
-          <div>
-            <label>Regras:</label>
-            <textarea value={houseRules} onChange={e => setHouseRules(e.target.value)} />
-          </div>
-          <button onClick={saveHouseEdit}>Guardar</button>
-          <button onClick={() => setEditMode(false)}>Cancelar</button>
+      <h2>Feed da Casa</h2>
+
+      <div className={styles.columnsWrapper}>
+        {/* Coluna 1: Detalhes da Casa */}
+        <div className={styles.detailsColumn}>
+          {editMode ? (
+            <div>
+              <h3>Editar Casa</h3>
+              <div>
+                <label htmlFor={`houseName-${houseId}`} className={styles.formLabel}>Nome:</label>
+                <input id={`houseName-${houseId}`} className={styles.formInput} type="text" value={houseName} onChange={e => setHouseName(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor={`houseAddress-${houseId}`} className={styles.formLabel}>Endereço:</label>
+                <textarea id={`houseAddress-${houseId}`} className={styles.formTextarea} value={houseAddress} onChange={e => setHouseAddress(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor={`houseDescription-${houseId}`} className={styles.formLabel}>Descrição:</label>
+                <textarea id={`houseDescription-${houseId}`} className={styles.formTextarea} value={houseDescription} onChange={e => setHouseDescription(e.target.value)} />
+              </div>
+              <div>
+                <label htmlFor={`houseRules-${houseId}`} className={styles.formLabel}>Regras:</label>
+                <textarea id={`houseRules-${houseId}`} className={styles.formTextarea} value={houseRules} onChange={e => setHouseRules(e.target.value)} />
+              </div>
+              <div className={styles.buttonGroup}>
+                <button onClick={saveHouseEdit} className={styles.primaryButton}>Guardar</button>
+                <button onClick={() => setEditMode(false)} className={styles.secondaryButton}>Cancelar</button>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2>{house.name}</h2>
+              <p><strong>Endereço:</strong> {house.address}</p>
+              <p><strong>Descrição:</strong> {house.description}</p>
+              <p><strong>Regras:</strong> {house.rules}</p>
+              <p><strong>Criada a:</strong> {new Date(house.created_at).toLocaleString()}</p>
+              <p><strong>Última atualização:</strong> {new Date(house.updated_at).toLocaleString()}</p>
+              <button onClick={() => setEditMode(true)} className={styles.primaryButton}>Editar Casa</button>
+            </div>
+          )}
         </div>
-      ) : (
-        <div>
-          <h2>{house.name}</h2>
-          <p><strong>Endereço:</strong> {house.address}</p>
-          <p><strong>Descrição:</strong> {house.description}</p>
-          <p><strong>Regras:</strong> {house.rules}</p>
-          <p><strong>Criada a:</strong> {new Date(house.created_at).toLocaleString()}</p>
-          <p><strong>Última atualização:</strong> {new Date(house.updated_at).toLocaleString()}</p>
-          <button onClick={() => setEditMode(true)}>Editar Casa</button>
+
+        {/* Coluna 2: Membros */}
+        <div className={styles.membersColumn}>
+          <h3>Membros</h3>
+          <ul className={styles.membersList}>
+            {members.map(member => (
+              <li key={member.id} className={styles.memberItem}>
+                <span>{member.username} ({member.email})</span>
+                <button onClick={() => removeMember(member.id)} className={styles.removeButton}>Remover</button>
+              </li>
+            ))}
+          </ul>
         </div>
-      )}
 
-      <hr />
-
-      <div>
-        <h3>Membros</h3>
-        <ul>
-          {members.map(member => (
-            <li key={member.id}>
-              {member.username} ({member.email})
-              <button onClick={() => removeMember(member.id)}>Remover</button>
-            </li>
-          ))}
-        </ul>
+        {/* Coluna 3: Gerar Convite & Mensagens */}
+        <div className={styles.inviteColumn}>
+          <div>
+            <h3>Gerar Convite</h3>
+            <button onClick={generateInvite} className={styles.primaryButton}>Gerar Código</button>
+            {newInviteCode && (
+              <p>Código do convite: <strong>{newInviteCode}</strong></p>
+            )}
+          </div>
+          {message && <p className={styles.messageText}>{message}</p>}
+        </div>
       </div>
-
-      <hr />
-
-      <div>
-        <h3>Gerar Convite</h3>
-        <button onClick={generateInvite}>Gerar Código</button>
-        {newInviteCode && (
-          <p>Código do convite: <strong>{newInviteCode}</strong></p>
-        )}
-      </div>
-
-      {message && <p style={{ color: 'darkred' }}>{message}</p>}
     </div>
   );
 };
