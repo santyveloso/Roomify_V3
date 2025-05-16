@@ -63,7 +63,7 @@ const LoginForm = () => {
 
   return (
     <div className="login-form">
-      <h2>Entrar na sua Conta de utilizador</h2>
+      <h2>Entrar na sua Conta de Utilizador</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
@@ -85,7 +85,9 @@ const LoginForm = () => {
         </div>
 
 
-        <button type="submit">Entrar</button>
+        <div className="button-container">
+          <button type="submit">Entrar</button>
+        </div>
 
       </form>
       {message && <p>{message}</p>} {/* Exibe a mensagem de sucesso ou erro */}
