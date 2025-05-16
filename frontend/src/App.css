@@ -8,6 +8,7 @@
   --background-color: #FFFFFF;
   --light-background: #F3F4F6;
   --border-color: #E5E7EB;
+  --navbar-height: 70px; /* DEFAULT NAVBAR HEIGHT - AJUSTAR SE NECESSÁRIO */
   
   /* Tipografia */
   --font-primary: 'EB Garamond', serif;
@@ -35,6 +36,17 @@
   }
 }
 
+@keyframes fadeInUpScale {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Reset e estilos base */
 body, html, #root {
   margin: 0;
@@ -45,87 +57,84 @@ body, html, #root {
   background-color: var(--background-color);
 }
 
+/* Formulário de Registo */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  scroll-margin-top: 100px; /* Previne sobreposição quando se navega com #register */
+}
 
+.register-form {
+  background-color: var(--background-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  animation: fadeIn 0.8s ease-out;
+  z-index: 2;
+}
 
-  /* Formulário de Registo */
-  .register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 0 1rem;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    scroll-margin-top: 100px; /* Previne sobreposição quando se navega com #register */
-  }
+.register-form h2 {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--text-color);
+}
 
-  .register-form {
-    background-color: var(--background-color);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    max-width: 500px;
-    width: 100%;
-    animation: fadeIn 0.8s ease-out;
-    z-index: 2;
-  }
+.register-form input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-family: var(--font-secondary);
+  color: var(--text-color);
+  background-color: var(--light-background);
+  transition: border 0.3s ease;
+}
 
-  .register-form h2 {
-    font-family: var(--font-primary);
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: var(--text-color);
-  }
+.register-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
 
-  .register-form input {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.375rem;
-    font-size: 1rem;
-    font-family: var(--font-secondary);
-    color: var(--text-color);
-    background-color: var(--light-background);
-    transition: border 0.3s ease;
-  }
+.register-form button {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-  .register-form input:focus {
-    border-color: var(--primary-color);
-    outline: none;
-  }
+.register-form button:hover {
+  background-color: #909ACA;
+}
 
-  .register-form button {
-    width: 100%;
-    padding: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 0.375rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.register-form .forgot-password {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-top: 1rem;
+}
 
-  .register-form button:hover {
-    background-color: #909ACA;
-  }
-
-  .register-form .forgot-password {
-    text-align: center;
-    font-size: 0.875rem;
-    color: var(--primary-color);
-    text-decoration: none;
-    margin-top: 1rem;
-  }
-
-  .register-form .forgot-password:hover {
-    text-decoration: underline;
-  }
-
+.register-form .forgot-password:hover {
+  text-decoration: underline;
+}
 
 /*Pagina de Login*/
 .login-container {
@@ -199,7 +208,6 @@ body, html, #root {
   margin-top: 1rem;
   color: var(--text-color);
 }
-
 
 /* Navbar */
 .navbar {
@@ -598,5 +606,246 @@ body, html, #root {
   text-align: center;
   opacity: 0.8;
   font-size: 0.875rem;
+}
+
+.primary-btn {
+  display: inline-block;
+  background: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.primary-btn:hover {
+  filter: brightness(0.9);
+  transform: translateY(-2px);
+}
+
+/* --- Criar Tarefa Page (igual ao estilo do register-form) --- */
+.task-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--background-color);
+  text-align: center;
+}
+
+.task-form-wrapper h2 {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+}
+
+.task-form-wrapper form {
+  background: var(--light-background);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.task-form-wrapper form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.task-form-wrapper label {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.task-form-wrapper input,
+.task-form-wrapper textarea,
+.task-form-wrapper select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+}
+
+.task-form-wrapper .primary-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.task-form-wrapper .form-message {
+  margin-top: 1rem;
+  color: darkred;
+  text-align: center;
+}
+
+/* --- CreateHome Page --- */
+.create-home-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background: var(--background-color);
+}
+
+.create-home-img {
+  width: 260px;
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.create-home-title {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary-color);
+}
+
+.create-home-sub {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: var(--light-text);
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+/* --- CreateOrJoin Page --- */
+.create-or-join-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+  background: var(--background-color);
+}
+
+.create-or-join-title {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+/* --- HouseSwitcher Component --- */
+.house-switcher {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  background: var(--light-background);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+}
+
+.switcher-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.switcher-buttons button {
+  flex: 1;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  color: var(--text-color);
+}
+
+.switcher-buttons button.active {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: #fff;
+}
+
+.form-container {
+  text-align: left;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 480px) {
+  .create-home-wrapper,
+  .create-or-join-wrapper {
+    padding: 1rem;
+  }
+  .switcher-buttons {
+    flex-direction: column;
+  }
+}
+
+/* --- JoinHome Page Styles (Movido de JoinHome.css) --- */
+.join-home-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  margin-top: var(--navbar-height);        /* Espaço para a Navbar fixa */
+  min-height: calc(100vh - var(--navbar-height));
+  box-sizing: border-box;
+  background: var(--background-color);
+}
+
+.join-home-wrapper > * {
+  /* margin-top: calc(var(--navbar-height) - 20px); REMOVIDO - Pode causar espaçamento duplo se a navbar já empurra o conteúdo */
+  margin-bottom: 1.5rem;                   /* Espaçamento padrão */
+}
+
+.join-home-img {
+  width: 300px;
+  max-width: 60%;
+  height: auto;
+}
+
+.join-home-title {
+  font-family: var(--font-primary);
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.join-home-sub {
+  font-size: 1rem;
+  color: var(--light-text);
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Estilo para o botão primário especificamente dentro do join-home-wrapper */
+.join-home-wrapper .primary-btn {
+  width: 100%;
+  max-width: 200px;
+  /* padding: 0.75rem; Não necessário se o .primary-btn global já tem padding adequado */
+  /* font-size: 1rem; Não necessário se o .primary-btn global já tem font-size adequado */
+  /* border-radius: 0.5rem; Não necessário se o .primary-btn global já tem border-radius adequado */
+  margin-top: 1rem; /* Mantido se for específico para este contexto */
+}
+
+.info-box { /* Movido de JoinHome.css */
+  max-width: 360px;
+  padding: 1rem;
+  background: var(--light-background);
+  border-radius: 0.5rem;
+  color: var(--text-color);
+  line-height: 1.5;
+  text-align: left;
 }
   

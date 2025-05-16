@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import codeImg from "../images/numpad.png";
-import "../JoinHome.css";
-import Navbar from "../components/Navbar";
-import axios from "axios";
+import Navbar from '../components/NavAposLogin';
 
 export default function JoinHome() {
   const [inviteKey, setInviteKey] = useState("");

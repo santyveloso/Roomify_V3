@@ -1,9 +1,11 @@
-body {
+body, html, #root {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: var(--font-secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--light-background);
+  background-color: var(--background-color);
   color: var(--text-color);
 }
 
