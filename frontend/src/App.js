@@ -43,11 +43,13 @@ function App() {
         <Route path="/criartarefa" element={<CriarTarefa />} />
         <Route path="/criardespesa" element={<CreateExpenseForm />} />
         <Route path="/criarcasa" element={<CriarCasa />} />
-        <Route path="/houses/:houseId" element={<AdminTesteViews />} />
+
+
 
 
         //testeeee
         <Route path="/admintesteviews" element={<AdminTesteViews />} />
+        <Route path="/houses/:houseId" element={<AdminTesteViews />} />
 
 
 
