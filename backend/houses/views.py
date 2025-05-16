@@ -53,7 +53,7 @@ def house_detail(request, house_id):
         if not is_house_admin(house, request.user):
             return Response({"detail": "Apenas o administrador pode editar a casa."}, status=status.HTTP_403_FORBIDDEN)
 
-        serializer = HouseSerializer(house, data=request.data)
+        serializer = HouseSerializer(house, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -72,7 +72,8 @@ def house_members(request, house_id):
     except House.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    users = User.objects.filter(house=house)
+    #users = User.objects.filter(house=house)
+    users = User.objects.filter(profile__house=house)
 
     # ns o q por aqui
     data = [{"id": user.id, "username": user.username, "email": user.email} for user in users]
@@ -91,16 +92,33 @@ def remove_member(request, house_id, user_id):
         return Response({"detail": "Apenas o administrador pode remover membros."}, status=status.HTTP_403_FORBIDDEN)
 
     try:
-        member = User.objects.get(pk=user_id, house=house)
+        member = User.objects.get(pk=user_id)
+        if member.profile.house != house:
+            return Response({"detail": "O utilizador não pertence a esta casa."}, status=status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
         return Response({"detail": "Membro não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
     if member == house.admin:
         return Response({"detail": "Não é possível remover o administrador da casa."}, status=status.HTTP_400_BAD_REQUEST)
 
-    member.house = None
-    member.save()
+    member.profile.house = None
+    member.profile.save()
     return Response({"detail": "Membro removido com sucesso."}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+    # try:
+    #     member = User.objects.get(pk=user_id, house=house)
+    # except User.DoesNotExist:
+    #     return Response({"detail": "Membro não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+    # if member == house.admin:
+    #     return Response({"detail": "Não é possível remover o administrador da casa."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # member.house = None
+    # member.save()
+    # return Response({"detail": "Membro removido com sucesso."}, status=status.HTTP_204_NO_CONTENT)
 
 
 # -------- INVITATIONS --------
@@ -144,14 +162,14 @@ def join_house(request):
         return Response({"detail": "Convite inválido ou expirado."}, status=status.HTTP_400_BAD_REQUEST)
 
     house = invitation.house
-    if request.user.house == house:
+    if request.user.profile.house == house:
         return Response({"detail": "Você já é membro desta casa."}, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.user.house is not None:
+    if request.user.profile.house is not None:
         return Response({"detail": "Você já pertence a outra casa."}, status=status.HTTP_400_BAD_REQUEST)
 
-    request.user.house = house
-    request.user.save()
+    request.user.profile.house = house
+    request.user.profile.save()
 
 
     # Marcar convite como usado

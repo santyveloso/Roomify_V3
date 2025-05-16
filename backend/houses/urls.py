@@ -8,5 +8,6 @@ urlpatterns = [
     path('<int:house_id>/members/', views.house_members, name='house_members'),
     path('<int:house_id>/generate_invite/', views.generate_invite, name='generate_invite'),
     path('join/', views.join_house, name='join'),
-    path('<int:house_id>/remove_member/', views.remove_member, name='remove_member'),
+    path('<int:house_id>/members/<int:user_id>/remove_member/', views.remove_member, name='remove_member'),
+
 ]

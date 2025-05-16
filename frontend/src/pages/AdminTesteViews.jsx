@@ -13,6 +13,9 @@ const AdminTesteViews = () => {
     const [editMode, setEditMode] = useState(false);
     const [houseName, setHouseName] = useState('');
     const [message, setMessage] = useState('');
+    const [houseAddress, setHouseAddress] = useState('');
+    const [houseDescription, setHouseDescription] = useState('');
+    const [houseRules, setHouseRules] = useState('');
 
     const BASE_URL = 'http://localhost:8000/backend';
 
@@ -30,22 +33,25 @@ const AdminTesteViews = () => {
                 const res = await axios.get(`${BASE_URL}/houses/${houseId}/`, { withCredentials: true });
                 setHouse(res.data);
                 setHouseName(res.data.name);
+                setHouseAddress(res.data.address);
+                setHouseDescription(res.data.description || '');
+                setHouseRules(res.data.rules || '');
             } catch (err) {
                 setMessage('Erro ao carregar a casa.');
             }
         };
 
-        // const fetchMembers = async () => {
-        //     try {
-        //         const res = await axios.get(`${BASE_URL}/houses/${houseId}/members/`, { withCredentials: true });
-        //         setMembers(res.data);
-        //     } catch (err) {
-        //         setMessage('Erro ao carregar os membros.');
-        //     }
-        // };
+        const fetchMembers = async () => {
+            try {
+                const res = await axios.get(`${BASE_URL}/houses/${houseId}/members/`, { withCredentials: true });
+                setMembers(res.data);
+            } catch (err) {
+                setMessage('Erro ao carregar os membros.');
+            }
+        };
 
         fetchHouse();
-        // fetchMembers();
+        fetchMembers();
     }, [houseId]);
 
     // Gerar convite
@@ -53,7 +59,7 @@ const AdminTesteViews = () => {
         setMessage('');
         try {
             const res = await axios.post(
-                `${BASE_URL}/houses/${houseId}/invite/`,
+                `${BASE_URL}/houses/${houseId}/generate_invite/`,
                 {},
                 {
                     withCredentials: true,
@@ -71,7 +77,7 @@ const AdminTesteViews = () => {
     const removeMember = async (userId) => {
         setMessage('');
         try {
-            await axios.delete(`${BASE_URL}/houses/${houseId}/members/${userId}/remove/`, {
+            await axios.delete(`${BASE_URL}/houses/${houseId}/members/${userId}/remove_member/`, {
                 withCredentials: true,
                 headers: { 'X-CSRFToken': getCSRFToken() },
             });
@@ -88,7 +94,12 @@ const AdminTesteViews = () => {
         try {
             const res = await axios.put(
                 `${BASE_URL}/houses/${houseId}/`,
-                { name: houseName },
+                {
+                    name: houseName,
+                    address: houseAddress,
+                    description: houseDescription,
+                    rules: houseRules
+                },
                 {
                     withCredentials: true,
                     headers: { 'X-CSRFToken': getCSRFToken() },
@@ -98,10 +109,15 @@ const AdminTesteViews = () => {
             setEditMode(false);
             setMessage('Casa atualizada com sucesso.');
         } catch (err) {
-            setMessage('Erro ao atualizar a casa.');
+            if (err.response?.data?.detail) {
+                setMessage(err.response.data.detail);
+            } else if (err.response?.data) {
+                setMessage(JSON.stringify(err.response.data));
+            } else {
+                setMessage('Erro ao atualizar a casa.');
+            }
         }
     };
-
     if (!house) return <div>Carregando...</div>;
 
     return (
@@ -110,18 +126,47 @@ const AdminTesteViews = () => {
 
             {editMode ? (
                 <div>
-                    <input
-                        type="text"
-                        value={houseName}
-                        onChange={e => setHouseName(e.target.value)}
-                    />
+                    <div>
+                        <label>Nome:</label>
+                        <input
+                            type="text"
+                            value={houseName}
+                            onChange={e => setHouseName(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label>Endereço:</label>
+                        <textarea
+                            value={houseAddress}
+                            onChange={e => setHouseAddress(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label>Descrição:</label>
+                        <textarea
+                            value={houseDescription}
+                            onChange={e => setHouseDescription(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label>Regras:</label>
+                        <textarea
+                            value={houseRules}
+                            onChange={e => setHouseRules(e.target.value)}
+                        />
+                    </div>
                     <button onClick={saveHouseEdit}>Guardar</button>
                     <button onClick={() => setEditMode(false)}>Cancelar</button>
                 </div>
             ) : (
                 <div>
                     <h2>{house.name}</h2>
-                    <button onClick={() => setEditMode(true)}>Editar Nome</button>
+                    <p><strong>Endereço:</strong> {house.address}</p>
+                    <p><strong>Descrição:</strong> {house.description}</p>
+                    <p><strong>Regras:</strong> {house.rules}</p>
+                    <p><strong>Criada a:</strong> {new Date(house.created_at).toLocaleString()}</p>
+                    <p><strong>Última atualização:</strong> {new Date(house.updated_at).toLocaleString()}</p>
+                    <button onClick={() => setEditMode(true)}>Editar Casa</button>
                 </div>
             )}
 
@@ -146,7 +191,7 @@ const AdminTesteViews = () => {
                 <button onClick={generateInvite}>Gerar Código</button>
                 {newInviteCode && (
                     <p>
-                        Código do convite: <strong>{newInviteCode}</strong>
+                        Código do convite (único enviado pro user?): <strong>{newInviteCode}</strong>
                     </p>
                 )}
             </div>
