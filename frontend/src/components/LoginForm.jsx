@@ -43,9 +43,21 @@ const LoginForm = () => {
 
       // Sucesso
       setMessage('Login bem-sucedido!');
-      navigate('/dashboard');
+      const profileRes = await axios.get('http://localhost:8000/backend/users/profile/', {
+      withCredentials: true,
+      });
+      
+      const userType = profileRes.data.user_type;
 
+      if (userType === 'ADMIN') {
+        navigate('/dashboard-admin');
+      } else if (userType === 'ROOMIE') {
+        navigate('/dashboard-roomie');
+      } else {
+        setMessage('Tipo de utilizador desconhecido.');
+      }
 
+      
     } catch (error) {
       if (error.response && error.response.data) {
         const result = error.response.data;
