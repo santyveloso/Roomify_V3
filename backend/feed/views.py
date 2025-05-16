@@ -21,7 +21,7 @@ def post_list_create(request, house_id):
         print("POST recebido:", request.data) 
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            house = House.objects.get(pk=house_id)  # Podes também usar get_object_or_404
+            house = House.objects.get(pk=house_id) 
             serializer.save(author=request.user, house=house)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

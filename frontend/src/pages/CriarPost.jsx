@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import NavAposLogin from '../components/NavAposLogin';
 import Footer from '../components/Footer';
 import { useLocation } from 'react-router-dom';
-import CriarPostForm from '../components/PostForm';
+import CriarPostForm from '../components/CriarPostForm';
 
 function CriarPost() {
    const location = useLocation();

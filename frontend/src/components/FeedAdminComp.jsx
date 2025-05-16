@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './FeedAdminComp.module.css';
 import { useNavigate } from 'react-router-dom';
+import Post from './Post';
 
 const FeedAdminComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
@@ -107,6 +108,22 @@ const FeedAdminComp = ({ houseId }) => {
       setMessage('Erro ao remover membro.');
     }
   };
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/houses/${houseId}/posts/`, { withCredentials: true });
+        setPosts(res.data);
+      } catch {
+        console.error('Erro ao carregar os posts.');
+      }
+    };
+
+    fetchPosts();
+  }, [houseId]);
+
 
   const saveHouseEdit = async () => {
     setMessage('');
@@ -217,6 +234,16 @@ const FeedAdminComp = ({ houseId }) => {
           </button>
 
 
+      </div>
+
+
+      <div className={styles.postsColumn}>
+        <h3>Posts da Casa</h3>
+        {posts.length === 0 ? (
+          <p>Sem posts ainda.</p>
+        ) : (
+          posts.map((p) => <Post key={p.id} post={p} />)
+        )}
       </div>
     </div>
   );
