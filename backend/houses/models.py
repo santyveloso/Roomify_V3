@@ -3,6 +3,9 @@ from django.conf import settings
 import uuid
 from django.contrib.auth import get_user_model
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 # Para obter os membros de uma casa, fazemos house.members.all().
 
 # Para saber a casa de um utilizador, user.house.
@@ -16,11 +19,7 @@ class House(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    admin = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='administered_houses'
-    )
+    admin = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='casa_administrada')
 
     invite_code = models.CharField(max_length=10, unique=True, blank=True, null=True)
 

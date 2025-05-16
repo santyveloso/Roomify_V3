@@ -1,12 +1,17 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
-#admin.site.register(CustomUser, UserAdmin)
-
-# Registrando o modelo CustomUser no painel de administração
-@admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'user_type')  # Campos que você deseja exibir na lista
-    search_fields = ('username', 'email')  # Campos para pesquisar
-    list_filter = ('user_type',)  # Filtro para o campo 'user_type'
+    list_display = ('get_username', 'get_email', 'user_type', 'phone')
+
+    def get_username(self, obj):
+        return obj.user.username
+    get_username.short_description = 'Username'
+    get_username.admin_order_field = 'user__username'  # para ordenar por username no admin
+
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.short_description = 'Email'
+    get_email.admin_order_field = 'user__email'  # para ordenar por email no admin
+
+admin.site.register(CustomUser, CustomUserAdmin)
