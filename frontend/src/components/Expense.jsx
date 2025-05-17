@@ -32,19 +32,19 @@ const Expense = ({ expense, onDelete, isAdmin }) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="post-wrapper">
+      <div className="post-header" style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h3>{title || 'Sem título'}</h3>
         <span>{formatDate(date)}</span>
       </div>
 
-      <p>{category || 'Sem categoria'}</p>
-      <p>€ {Number(amount).toFixed(2)}</p>
-      {description && <p>{description}</p>}
+      <p><strong>Categoria:</strong> {category || 'Sem categoria'}</p>
+      <p><strong>Valor:</strong> € {Number(amount).toFixed(2)}</p>
+      {description && <p><strong>Descrição:</strong> {description}</p>}
 
       {assigned_roomies && assigned_roomies.length > 0 && (
         <div>
-          <p>Divisão entre roomies:</p>
+          <p><strong>Divisão entre roomies:</strong></p>
           <ul>
             {assigned_roomies.map(({ user, amount_due }) => (
               <li key={user?.id || user}>
@@ -53,15 +53,39 @@ const Expense = ({ expense, onDelete, isAdmin }) => {
             ))}
           </ul>
         </div>
-      )}
+          )}
 
-      {/* ✅ Só mostra o botão se for admin */}
-      {isAdmin && (
-        <button onClick={handleDelete} style={{ marginTop: '10px', backgroundColor: '#e74c3c', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}>
-          Apagar Despesa
-        </button>
-      )}
-    </div>
+          {isAdmin && (
+              <button
+                  onClick={handleDelete}
+                  style={{
+                      marginTop: '10px',
+                      backgroundColor: '#fcebea',
+                      color: '#c0392b',
+                      border: '1px solid #c0392b',
+                      padding: '6px 12px',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontWeight: '500',
+                      transition: 'all 0.2s ease-in-out',
+                  }}
+                  onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#f8d7da';
+                      e.target.style.transform = 'translateY(-1px)';
+                      e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = '#fcebea';
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = 'none';
+                  }}
+              >
+                  Apagar Despesa
+              </button>
+          )}
+
+
+      </div>
   );
 };
 

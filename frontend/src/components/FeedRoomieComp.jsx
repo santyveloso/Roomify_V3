@@ -146,9 +146,10 @@ const FeedRoomieComp = ({ houseId }) => {
               <li key={member.id} className={styles.memberItem}>
                 <span>
                   {member.username} ({member.email})
-                  {member.id === house.admin ? ' [admin]' : ' [roomie]'}
-                  {member.id === userId ? ' (you)' : ''}
+                  {member.username === house.admin ? ' [admin]' : ' [roomie]'}
+                  {member.id === userId && ' [you]'}
                 </span>
+
               </li>
             ))}
           </ul>

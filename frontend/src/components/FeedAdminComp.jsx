@@ -34,6 +34,8 @@ const FeedAdminComp = ({ houseId }) => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/`, { withCredentials: true });
         setHouse(res.data);
+        console.log('ADMIN DA CASA:', res.data.admin);
+
         setHouseName(res.data.name);
         setHouseAddress(res.data.address);
         setHouseDescription(res.data.description || '');
@@ -42,6 +44,7 @@ const FeedAdminComp = ({ houseId }) => {
         setMessage('Erro ao carregar os dados da casa.');
       }
     };
+
 
     const fetchMembers = async () => {
       try {
@@ -122,6 +125,10 @@ const FeedAdminComp = ({ houseId }) => {
     fetchPosts();
   }, [houseId]);
 
+  const handleDeletePost = (id) => {
+    setPosts(prev => prev.filter(post => post.id !== id));
+  };
+
   const [tasks, setTasks] = useState([]);
   useEffect(() => {
     const fetchTasks = async () => {
@@ -137,8 +144,9 @@ const FeedAdminComp = ({ houseId }) => {
 
 
   const handleDeleteTask = (deletedId) => {
-  setTasks(prevTasks => prevTasks.filter(task => task.id !== deletedId));
-};
+    setTasks(prevTasks => prevTasks.filter(task => task.id !== deletedId));
+  };
+
 
 
   const [expenses, setExpenses] = useState([]);
@@ -221,10 +229,39 @@ const FeedAdminComp = ({ houseId }) => {
               <li key={member.id} className={styles.memberItem}>
                 <span>
                   {member.username} ({member.email})
-                  {member.id === house.admin ? ' [admin]' : ' [roomie]'}
-                  {member.id === userId ? ' (You)' : ''}
+                  {member.username === house.admin ? ' [admin]' : ' [roomie]'}
+                  {Number(member.id) === Number(userId) && ' [you]'}
                 </span>
-                <button onClick={() => removeMember(member.id)} className={styles.removeButton}>Remover</button>
+
+
+
+
+                <button
+                  onClick={() => removeMember(member.id)}
+                  style={{
+                    backgroundColor: '#fcebea',
+                    color: '#c0392b',
+                    border: '1px solid #c0392b',
+                    padding: '6px 10px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontWeight: '500',
+                    transition: 'all 0.2s ease-in-out',
+                    marginLeft: '10px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#f8d7da';
+                    e.target.style.transform = 'translateY(-1px)';
+                    e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#fcebea';
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                >
+                  Remover
+                </button>
               </li>
             ))}
           </ul>
@@ -290,7 +327,14 @@ const FeedAdminComp = ({ houseId }) => {
         {posts.length === 0 ? (
           <p>Sem posts ainda.</p>
         ) : (
-          posts.map((p) => <Post key={p.id} post={p} />)
+          posts.map((p) => (
+            <Post
+              key={p.id}
+              post={p}
+              isAdmin={userId === house.admin.id}
+              onDelete={handleDeletePost}
+            />
+          ))
         )}
       </div>
 
