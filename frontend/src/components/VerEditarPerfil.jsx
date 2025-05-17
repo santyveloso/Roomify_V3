@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 const VerEditarPerfil = () => {
@@ -8,6 +8,8 @@ const VerEditarPerfil = () => {
     const [profile_picture, setProfilePic] = useState(null);
     const [previewUrl, setPreviewUrl] = useState('');
     const [message, setMessage] = useState('');
+
+    const fileInputRef = useRef(null);
 
     const PROFILE_URL = 'http://localhost:8000/backend/users/profile/';
 
@@ -70,6 +72,69 @@ const VerEditarPerfil = () => {
             <h2 className="create-or-join-title">Editar Perfil</h2>
 
             <form onSubmit={handleSubmit} className="register-form" encType="multipart/form-data">
+
+                {/* <div className="form-group">
+                    <label>Foto de Perfil</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                </div> */}
+
+                <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '30px' }}>
+
+
+                    {/* Bolinha clicável */}
+                    <div
+                        onClick={() => fileInputRef.current.click()}
+                        style={{
+                            position: 'relative',
+                            width: 120,
+                            height: 120,
+                            borderRadius: '50%',
+                            backgroundColor: '#ddd',
+                            backgroundImage: previewUrl ? `url(${previewUrl})` : 'url(https://cdn-icons-png.flaticon.com/512/1077/1077114.png)', // boneco default
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            cursor: 'pointer',
+                            border: '2px solid #aaa',
+                        }}
+                    >
+                        {/* "+" na bolinha */}
+                        <div
+                            style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                right: 0,
+                                width: 32,
+                                height: 32,
+                                backgroundColor: '#909ACA',
+                                borderRadius: '50%',
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 24,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                border: '2px solid white',
+                            }}
+                        >
+                            +
+                        </div>
+                    </div>
+
+                    {/* Input file escondido */}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        onChange={handleImageChange}
+                        style={{ display: 'none' }}
+                    />
+                </div>
+
+
                 <div className="form-group">
                     <label>Username</label>
                     <input
@@ -103,24 +168,8 @@ const VerEditarPerfil = () => {
                     />
                 </div>
 
-                <div className="form-group">
-                    <label>Foto de Perfil</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                    />
-                </div>
 
-                {(previewUrl) ? (
-                    <img
-                        className="profile-preview"
-                        src={previewUrl}
-                        alt="Preview"
-                    />
-                ) : (
-                    <p className="no-photo-text">Sem foto</p>
-                )}
+
 
                 <button type="submit" className="primary-btn">
                     Guardar Alterações
@@ -128,7 +177,7 @@ const VerEditarPerfil = () => {
 
                 {message && <p className="form-message">{message}</p>}
             </form>
-        </div>
+        </div >
     );
 };
 
