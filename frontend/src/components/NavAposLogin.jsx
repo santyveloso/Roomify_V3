@@ -1,15 +1,22 @@
 // src/components/Navbar.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import navbarLogo from '../images/navbar-logo.png';
-import perfilImg from '../images/perfil.png'; // import da imagem de perfil
+import perfilImg from '../images/perfil.png';
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   const navLinks = [
     { label: 'Sobre', to: '/sobre' },
     { label: 'Funcionalidades', to: '/funcionalidades' },
     { label: 'Suporte', to: '/suporte' },
   ];
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
 
   return (
     <header className="navbar" role="banner">
@@ -38,8 +45,8 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Ícone do Perfil */}
-        <div className="navbar-actions">
+        {/* Perfil + Logout */}
+        <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <Link
             to="/verperfil"
             className="navbar-profile-icon"
@@ -52,6 +59,9 @@ export default function Navbar() {
               style={{ width: '32px', height: '32px', borderRadius: '50%' }}
             />
           </Link>
+          <button className="navbar-cta-button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
     </header>
