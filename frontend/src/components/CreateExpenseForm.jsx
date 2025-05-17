@@ -155,7 +155,7 @@ const CreateExpenseForm = ({ houseId, onTaskCreated }) => {
 
     const BASE_URL = `http://localhost:8000/backend/houses/${houseId}/expenses/`;
     const BASE_URL_MEMBERS = `http://localhost:8000/backend/houses/${houseId}/members/`;
-    const BASE_URL_SALDO = `http://localhost:8000/backend/houses/${houseId}/expenses/`
+    //const BASE_URL_SALDO = `http://localhost:8000/backend/houses/${houseId}/expenses/`
 
     function getCSRFToken() {
         return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];

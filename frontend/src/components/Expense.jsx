@@ -1,3 +1,5 @@
+//é suposto fazer isto tmb como o post??
+
 import React from 'react';
 
 const Expense = ({ expense }) => {
