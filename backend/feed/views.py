@@ -62,6 +62,27 @@ def post_detail(request, pk):
 
 # Comentários
 
+# @api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+# def comment_list_create(request, post_id):
+#     # Listar comentários do post
+#     if request.method == 'GET':
+#         comments = Comment.objects.filter(post_id=post_id).order_by('created_at')
+#         serializer = CommentSerializer(comments, many=True)
+#         return Response(serializer.data)
+
+#     # Criar comentário no post
+#     elif request.method == 'POST':
+#         data = request.data.copy()
+#         data['post'] = post_id
+#         data['author'] = request.user.id
+#         serializer = CommentSerializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def comment_list_create(request, post_id):
@@ -75,10 +96,9 @@ def comment_list_create(request, post_id):
     elif request.method == 'POST':
         data = request.data.copy()
         data['post'] = post_id
-        data['author'] = request.user.id
         serializer = CommentSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
