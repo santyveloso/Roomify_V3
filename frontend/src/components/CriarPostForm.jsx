@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CriarPostForm = ({ houseId, onPostCreated }) => {
   const [content, setContent] = useState('');
   const [isAviso, setIsAviso] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // para retroceder
 
   const getCSRFToken = () => {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
@@ -21,22 +23,38 @@ const CriarPostForm = ({ houseId, onPostCreated }) => {
         headers: { 'X-CSRFToken': getCSRFToken() }
       });
 
-      console.log("Post criado com sucesso:", response.data); // 👈 DEBUG aqui
+      console.log("Post criado com sucesso:", response.data);
 
       setContent('');
       setIsAviso(false);
       setMessage('✅ Post criado com sucesso!');
 
-      if (onPostCreated) onPostCreated(); // 👈 só chama se estiver definido
+      if (onPostCreated) onPostCreated();
     } catch (err) {
-      console.error("Erro ao criar post:", err); // 👈 DEBUG do erro real
+      console.error("Erro ao criar post:", err);
       setMessage('❌ Erro ao criar o post.');
     }
   };
 
   return (
     <div className="task-form-wrapper">
-      <h2>Criar Post</h2> {/* usa <h2> para alinhar com o estilo */}
+      <button
+        onClick={() => navigate(-1)}
+        style={{
+          alignSelf: 'flex-start',
+          marginBottom: '1rem',
+          background: 'none',
+          border: 'none',
+          color: 'var(--primary-color)',
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          fontSize: '1rem'
+        }}
+      >
+        ← Voltar
+      </button>
+
+      <h2>Criar Post</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Conteúdo</label>

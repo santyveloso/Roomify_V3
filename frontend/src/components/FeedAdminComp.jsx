@@ -192,23 +192,6 @@ const FeedAdminComp = ({ houseId }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const saveHouseEdit = async () => {
     setMessage('');
     try {
