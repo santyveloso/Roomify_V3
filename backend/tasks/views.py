@@ -1,9 +1,12 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,  permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Task
 from .serializers import TaskSerializer, TaskCompletionSerializer
 from django.utils import timezone
+
+
+from rest_framework.permissions import IsAuthenticated
 
 
 # Frontend
@@ -14,23 +17,58 @@ from django.utils import timezone
 # Quando clica, faz POST /api/tasks/<id>/complete/ para marcar a tarefa como concluída.
 
 
+# @api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+# def post_list_create(request, house_id):
+#     # Listar posts da casa
+#     if request.method == 'GET':
+#         posts = Post.objects.filter(house_id=house_id).order_by('-created_at')
+#         serializer = PostSerializer(posts, many=True)
+#         return Response(serializer.data)
+
+#     # Criar novo post na casa
+#     elif request.method == 'POST':
+#         print("POST recebido:", request.data) 
+#         serializer = PostSerializer(data=request.data)
+#         if serializer.is_valid():
+#             house = House.objects.get(pk=house_id) 
+#             serializer.save(author=request.user, house=house)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+# @api_view(['GET', 'POST'])
+# def tasks(request, house_id):
+#     if request.method == 'GET':
+#         # tasks = Task.objects.all()\
+#         #tasks = Task.objects.filter(house__in=request.user.houses.all())  # ou um método alternativo
+#         tasks = Task.objects.filter(house=request.user.house)
+#         serializer = TaskSerializer(tasks, many=True)
+#         return Response(serializer.data)
+
+#     elif request.method == 'POST':
+#         serializer = TaskSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(created_by=request.user)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
-def tasks(request):
+@permission_classes([IsAuthenticated])
+def tasks(request, house_id):
     if request.method == 'GET':
-        # tasks = Task.objects.all()\
-        #tasks = Task.objects.filter(house__in=request.user.houses.all())  # ou um método alternativo
-        tasks = Task.objects.filter(house=request.user.house)
+        tasks = Task.objects.filter(house_id=house_id)
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(created_by=request.user)
+            serializer.save(created_by=request.user, house_id=house_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def task_detail(request, task_id):

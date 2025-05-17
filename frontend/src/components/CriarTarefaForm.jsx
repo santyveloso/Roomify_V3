@@ -267,7 +267,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const CriarTarefaForm = () => {
+const CriarTarefaForm = ({ houseId, onTaskCreated }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -277,9 +277,9 @@ const CriarTarefaForm = () => {
   const [roomies, setRoomies] = useState([]);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const { houseId } = useParams(); // assume que tens houseId para buscar roomies
+  //const { houseId } = useParams(); // assume que tens houseId para buscar roomies
 
-  const BASE_URL = 'http://localhost:8000/backend/tasks/';
+  const BASE_URL = `http://localhost:8000/backend/houses/${houseId}/tasks/`;
   const BASE_URL_MEMBERS = `http://localhost:8000/backend/houses/${houseId}/members/`;
 
 
@@ -304,9 +304,9 @@ const CriarTarefaForm = () => {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
   };
 
+
   const handleSubmit = async e => {
     e.preventDefault();
-    setMessage('');
     try {
       await axios.post(BASE_URL, {
         ...formData,
@@ -316,12 +316,31 @@ const CriarTarefaForm = () => {
         headers: { 'X-CSRFToken': getCSRFToken() },
         withCredentials: true,
       });
+      if (onTaskCreated) onTaskCreated();
       setMessage('Tarefa criada com sucesso!');
-      navigate('/tasks');
+      //navigate('/tasks');
     } catch {
       setMessage('Erro ao criar tarefa.');
     }
+
+    //   if (onTaskCreated) onTaskCreated(); // 👈 só chama se estiver definido
+    // } catch (err) {
+    //   console.error("Erro ao criar post:", err); // 👈 DEBUG do erro real
+    //   setMessage('❌ Erro ao criar o post.');
+    // }
   };
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="task-form-wrapper">
@@ -360,3 +379,4 @@ const CriarTarefaForm = () => {
 };
 
 export default CriarTarefaForm;
+

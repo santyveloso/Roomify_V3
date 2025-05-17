@@ -3,6 +3,7 @@ import axios from 'axios';
 import styles from './FeedAdminComp.module.css';
 import { useNavigate } from 'react-router-dom';
 import Post from './Post';
+import Task from './Task';
 
 const FeedAdminComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
@@ -109,6 +110,7 @@ const FeedAdminComp = ({ houseId }) => {
     }
   };
 
+  //POSTS
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -123,6 +125,38 @@ const FeedAdminComp = ({ houseId }) => {
 
     fetchPosts();
   }, [houseId]);
+
+
+
+
+
+
+  //TASKS
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/houses/${houseId}/tasks/`, { withCredentials: true });
+        setTasks(res.data);
+      } catch {
+        console.error('Erro ao carregar os posts.');
+      }
+    };
+
+    fetchTasks();
+  }, [houseId]);
+
+
+
+
+
+
+
+
+
+
+
 
 
   const saveHouseEdit = async () => {
@@ -229,9 +263,9 @@ const FeedAdminComp = ({ houseId }) => {
           </div>
           {message && <p className={styles.messageText}>{message}</p>}
         </div>
-      <button onClick={() => navigate('/criarpost', { state: { houseId } })}>
-            Criar Post
-          </button>
+        <button onClick={() => navigate('/criarpost', { state: { houseId } })}>
+          Criar Post
+        </button>
 
 
       </div>
@@ -245,6 +279,19 @@ const FeedAdminComp = ({ houseId }) => {
           posts.map((p) => <Post key={p.id} post={p} />)
         )}
       </div>
+
+
+
+      <div className={styles.postsColumn}>
+        <h3>Tarefas da Casa</h3>
+        {tasks.length === 0 ? (
+          <p>Sem tarefas ainda.</p>
+        ) : (
+          tasks.map((t) => <Task key={t.id} task={t} />)
+        )}
+      </div>
+
+
     </div>
   );
 };

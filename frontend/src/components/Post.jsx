@@ -11,7 +11,7 @@ const Post = ({ post }) => {
   return (
     <div className="post-wrapper">
       <div className="post-header">
-        <span className="post-author">{author.username}</span>
+        <span className="post-author">{author?.username || 'Desconhecido'}</span>
         <span>{formatDate(created_at)}</span>
       </div>
       <p className="post-content">{content}</p>
