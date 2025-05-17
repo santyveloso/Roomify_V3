@@ -82,17 +82,17 @@ const FeedAdminComp = ({ houseId }) => {
   }, [houseId]);
 
   useEffect(() => {
-  const getCurrentTimeOfDayGreeting = () => {
-    const currentHour = new Date().getHours();
-    if (currentHour >= 6 && currentHour < 12) return 'Bom dia';
-    else if (currentHour >= 12 && currentHour < 20) return 'Boa tarde';
-    else return 'Boa noite';
-  };
+    const getCurrentTimeOfDayGreeting = () => {
+      const currentHour = new Date().getHours();
+      if (currentHour >= 6 && currentHour < 12) return 'Bom dia';
+      else if (currentHour >= 12 && currentHour < 20) return 'Boa tarde';
+      else return 'Boa noite';
+    };
 
-  if (userName) {
-    setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
-  }
-}, [userName]);
+    if (userName) {
+      setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
+    }
+  }, [userName]);
 
 
   const removeMember = async (userId) => {
@@ -169,7 +169,6 @@ const FeedAdminComp = ({ houseId }) => {
         {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName}</span>!
       </h1>
 
-      <h2>Feed da Casa</h2>
 
       <div className={styles.columnsWrapper}>
         <div className={styles.detailsColumn}>
@@ -226,6 +225,40 @@ const FeedAdminComp = ({ houseId }) => {
         </div>
       </div>
 
+
+
+      <div className={styles.columnsWrapper}>
+
+        <div className={styles.postsColumn}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3>Tarefas da Casa</h3>
+            <button className="primary-btn" onClick={() => navigate('/criartarefa', { state: { houseId } })}>
+              Criar Tarefa
+            </button>
+          </div>
+          {tasks.length === 0 ? (
+            <p>Sem tarefas ainda.</p>
+          ) : (
+            tasks.map((t) => <Task key={t.id} task={t} />)
+          )}
+        </div>
+
+        <div className={styles.postsColumn}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3>Despesas da Casa</h3>
+            <button className="primary-btn" onClick={() => navigate('/criardespesa', { state: { houseId } })}>
+              Criar Despesa
+            </button>
+          </div>
+          {expenses.length === 0 ? (
+            <p>Sem despesas ainda.</p>
+          ) : (
+            expenses.map((expense) => <Task key={expense.id} task={expense} />)
+          )}
+        </div>
+
+      </div>
+
       <div className={styles.postsColumn}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3>Posts da Casa</h3>
@@ -237,34 +270,6 @@ const FeedAdminComp = ({ houseId }) => {
           <p>Sem posts ainda.</p>
         ) : (
           posts.map((p) => <Post key={p.id} post={p} />)
-        )}
-      </div>
-
-      <div className={styles.postsColumn}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3>Tarefas da Casa</h3>
-          <button className="primary-btn" onClick={() => navigate('/criartarefa', { state: { houseId } })}>
-            Criar Tarefa
-          </button>
-        </div>
-        {tasks.length === 0 ? (
-          <p>Sem tarefas ainda.</p>
-        ) : (
-          tasks.map((t) => <Task key={t.id} task={t} />)
-        )}
-      </div>
-
-      <div className={styles.postsColumn}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3>Despesas da Casa</h3>
-          <button className="primary-btn" onClick={() => navigate('/criardespesa', { state: { houseId } })}>
-            Criar Despesa
-          </button>
-        </div>
-        {expenses.length === 0 ? (
-          <p>Sem despesas ainda.</p>
-        ) : (
-          expenses.map((expense) => <Task key={expense.id} task={expense} />)
         )}
       </div>
 

@@ -1,4 +1,6 @@
-body, html, #root {
+body,
+html,
+#root {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -28,7 +30,7 @@ code {
 .primary-btn:hover {
   filter: brightness(0.9);
   transform: translateY(-2px);
-}   
+}
 
 
 /* --- Post Component (estilo integrado com o resto do site) --- */
@@ -39,7 +41,7 @@ code {
   border-radius: 0.5rem;
   padding: 1rem 1.5rem;
   margin-bottom: 1.5rem;
-  max-width: 600px;
+  /* max-width: 600px; */
   width: 100%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
@@ -76,7 +78,7 @@ code {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}  
+}
 
 /* Responsivo */
 @media (max-width: 600px) {
@@ -211,7 +213,7 @@ code {
   background: var(--light-background);
   padding: 1.5rem;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
 }
 
@@ -245,10 +247,12 @@ code {
 
 /* --- Responsividade --- */
 @media (max-width: 480px) {
+
   .create-home-wrapper,
   .create-or-join-wrapper {
     padding: 1rem;
   }
+
   .switcher-buttons {
     flex-direction: column;
   }

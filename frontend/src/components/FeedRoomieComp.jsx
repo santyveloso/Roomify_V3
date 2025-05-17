@@ -128,7 +128,6 @@ const FeedRoomieComp = ({ houseId }) => {
         {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName}</span>!
       </h1>
 
-      <h2>Feed da Casa</h2>
 
       <div className={styles.columnsWrapper}>
         <div className={styles.detailsColumn}>
@@ -156,6 +155,29 @@ const FeedRoomieComp = ({ houseId }) => {
         </div>
       </div>
 
+
+
+      <div className={styles.columnsWrapper}>
+        <div className={styles.postsColumn}>
+          <h3>Tarefas da Casa</h3>
+          {tasks.length === 0 ? (
+            <p>Sem tarefas ainda.</p>
+          ) : (
+            tasks.map((t) => <Task key={t.id} task={t} />)
+          )}
+        </div>
+
+        <div className={styles.postsColumn}>
+          <h3>Despesas da Casa</h3>
+          {expenses.length === 0 ? (
+            <p>Sem despesas ainda.</p>
+          ) : (
+            expenses.map((expense) => <Task key={expense.id} task={expense} />)
+          )}
+        </div>
+
+      </div>
+
       <div className={styles.postsColumn}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3>Posts da Casa</h3>
@@ -170,23 +192,7 @@ const FeedRoomieComp = ({ houseId }) => {
         )}
       </div>
 
-      <div className={styles.postsColumn}>
-        <h3>Tarefas da Casa</h3>
-        {tasks.length === 0 ? (
-          <p>Sem tarefas ainda.</p>
-        ) : (
-          tasks.map((t) => <Task key={t.id} task={t} />)
-        )}
-      </div>
 
-      <div className={styles.postsColumn}>
-        <h3>Despesas da Casa</h3>
-        {expenses.length === 0 ? (
-          <p>Sem despesas ainda.</p>
-        ) : (
-          expenses.map((expense) => <Task key={expense.id} task={expense} />)
-        )}
-      </div>
 
       <div>
         <h3>Saldo do Utilizador</h3>

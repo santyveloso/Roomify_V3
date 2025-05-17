@@ -1,20 +1,39 @@
-/* frontend/src/components/FeedAdminComp.module.css */
+/* .feedContainer {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+} */
+
 .feedContainer {
-  padding: 20px;
-  font-family: var(--font-secondary);
+  padding: 2rem;
+  max-width: 100%;
+  width: 70%;
+  min-height: 100vh;
+  /* ocupa toda a altura da viewport */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
 }
 
 /* Estilo para a saudação dinâmica */
 .dynamicGreeting {
   font-family: var(--font-primary);
-  font-size: 3rem !important; /* Usando px para maior consistência */
+  font-size: 3rem !important;
+  /* Usando px para maior consistência */
   font-weight: 400;
   color: var(--text-color);
-  margin-bottom: 2.5rem; /* Ajustar margem se necessário */
-  line-height: 1.1; /* Ajustar para a fonte Garamond */
-  transform: scaleY(1.4); /* Efeito do hero-title */
-  transform-origin: top left; /* Efeito do hero-title */
-  text-align: left; /* Alinhar à esquerda por padrão */
+  margin-bottom: 2.5rem;
+  /* Ajustar margem se necessário */
+  line-height: 1.1;
+  /* Ajustar para a fonte Garamond */
+  transform: scaleY(1.4);
+  /* Efeito do hero-title */
+  transform-origin: top left;
+  /* Efeito do hero-title */
+  text-align: left;
+  /* Alinhar à esquerda por padrão */
 }
 
 .italicUsername {
@@ -29,9 +48,10 @@
   color: var(--text-color);
 }
 
-.feedContainer h1 {
+/* .feedContainer h1 {
   margin-bottom: 1.5rem;
-  font-size: 2.2rem; /* Ajustar conforme hierarquia global */
+  font-size: 2.2rem;
+
 }
 
 .feedContainer h2 {
@@ -42,73 +62,118 @@
 .feedContainer h3 {
   margin-bottom: 0.75rem;
   font-size: 1.5rem;
-}
+} */
 
 .columnsWrapper {
   display: flex;
-  gap: 20px;
+  gap: 2rem;
+  flex-wrap: flex;
+  align-items: flex-start;
 }
 
 .detailsColumn {
-  flex-basis: 50%;
-  width: 50%; /* Reforçar a largura */
-  display: flex;
-  flex-direction: column;
-  background-color: var(--light-background); /* Adicionar um fundo leve para destacar a coluna */
-  padding: 15px;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  min-width: 0; /* Permitir encolher se necessário */
+  flex: 1;
+  min-width: 300px;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
-.membersColumn,
-.inviteColumn {
-  flex-basis: 25%;
-  width: 25%; /* Reforçar a largura */
-  background-color: var(--light-background); /* Adicionar um fundo leve */
-  padding: 15px;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  min-width: 0; /* Permitir encolher se necessário */
-  /* Adicionar flex-grow e flex-shrink pode ser uma opção se isto não resolver */
-  /* flex-grow: 0; */
-  /* flex-shrink: 0; */
+.membersColumn {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.postsColumn {
+
+  flex: 1;
+  min-width: 300px;
+  background-color: #f0f0f0;
+
+  border-radius: 10px;
+
+
+
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.membersList {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.memberItem {
+  margin-bottom: 10px;
+  /* Aumentar espaçamento */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  /* Aumentar padding */
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  /* Fundo para cada item */
+  border-radius: 0.25rem;
+}
+
+.memberItem:last-child {
+  border-bottom: none;
+}
+
+.memberItem span {
+  color: var(--text-color);
+}
+
+
+.removeButton {
+  background-color: #E53E3E;
+  /* Tom de vermelho mais alinhado com cores de erro/alerta */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  /* Ajustar padding */
+  border-radius: 0.375rem;
+  /* Alinhar com outros botões/inputs */
+  font-family: var(--font-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.removeButton:hover {
+  background-color: #C53030;
+}
+
+.formLabel {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 500;
 }
 
 .formInput,
 .formTextarea {
   width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1rem; /* Aumentar um pouco a margem */
-  border: 1px solid var(--border-color);
-  border-radius: 0.375rem; /* Alinhar com .register-form input */
-  font-size: 1rem;
-  font-family: var(--font-secondary);
-  background-color: var(--background-color); /* Inputs geralmente têm fundo branco */
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-.formInput:focus,
-.formTextarea:focus {
-  border-color: var(--primary-color);
-  outline: none;
-}
-
-.formLabel {
-  display: block;
-  margin-bottom: 0.25rem;
-  font-weight: 500;
-  color: var(--text-color);
+  margin-top: 0.2rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .buttonGroup {
-  margin-top: 1rem; /* Espaço acima do grupo de botões */
+  margin-top: 1rem;
+  /* Espaço acima do grupo de botões */
 }
 
 .buttonGroup button {
   margin-right: 10px;
 }
+
 .buttonGroup button:last-child {
   margin-right: 0;
 }
@@ -118,9 +183,11 @@
   display: inline-block;
   background-color: var(--primary-color);
   color: white;
-  padding: 0.75rem 1.5rem; /* Alinhado com .primary-btn */
+  padding: 0.75rem 1.5rem;
+  /* Alinhado com .primary-btn */
   border: none;
-  border-radius: 0.5rem; /* Alinhado com .primary-btn */
+  border-radius: 0.5rem;
+  /* Alinhado com .primary-btn */
   font-weight: 600;
   font-family: var(--font-secondary);
   cursor: pointer;
@@ -129,7 +196,8 @@
 }
 
 .primaryButton:hover {
-  background-color: var(--secondary-color); /* Ou usar filter: brightness(0.9) como no global */
+  background-color: var(--secondary-color);
+  /* Ou usar filter: brightness(0.9) como no global */
   transform: translateY(-1px);
 }
 
@@ -137,6 +205,7 @@
   background-color: var(--border-color);
   cursor: not-allowed;
 }
+
 
 /* Botão secundário/cancelar */
 .secondaryButton {
@@ -156,99 +225,3 @@
   background-color: var(--border-color);
   transform: translateY(-1px);
 }
-
-.membersList {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.memberItem {
-  margin-bottom: 10px; /* Aumentar espaçamento */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px; /* Aumentar padding */
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--background-color); /* Fundo para cada item */
-  border-radius: 0.25rem;
-}
-.memberItem:last-child {
-  border-bottom: none;
-}
-
-.memberItem span {
-  color: var(--text-color);
-}
-
-.removeButton {
-  background-color: #E53E3E; /* Tom de vermelho mais alinhado com cores de erro/alerta */
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem; /* Ajustar padding */
-  border-radius: 0.375rem; /* Alinhar com outros botões/inputs */
-  font-family: var(--font-secondary);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.removeButton:hover {
-  background-color: #C53030;
-}
-
-.messageText {
-  color: #C53030; /* Tom de vermelho para erro */
-  background-color: #FED7D7; /* Fundo claro para erro */
-  padding: 0.75rem;
-  border-radius: 0.375rem;
-  margin-top: 1.5rem;
-  font-weight: 500;
-  border: 1px solid #FBC2C2;
-  text-align: center;
-}
-
-/* Estilos para o Modal de Confirmação */
-.modalOverlay {
-  position: fixed; /* Cobrir a tela inteira */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente */
-  display: flex;
-  align-items: center; /* Centralizar verticalmente */
-  justify-content: center; /* Centralizar horizontalmente */
-  z-index: 1000; /* Garantir que fica por cima de outros conteúdos */
-}
-
-.modalContent {
-  background-color: var(--background-color);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  width: 90%;
-  max-width: 450px; /* Largura máxima para o modal */
-  text-align: center;
-}
-
-.modalContent h4 {
-  font-family: var(--font-primary);
-  color: var(--text-color);
-  font-size: 1.5rem; /* Tamanho do título do modal */
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.modalContent p {
-  font-family: var(--font-secondary);
-  color: var(--light-text);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.modalActions {
-  display: flex;
-  justify-content: flex-end; /* Alinhar botões à direita */
-  gap: 1rem; /* Espaço entre os botões */
-  margin-top: 1.5rem;
-}
-
