@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './FeedAdminComp.module.css';
 
 
 export default function CommentSection({ postId }) {
@@ -32,15 +33,15 @@ export default function CommentSection({ postId }) {
         const payload = { content: newComment };
 
         try {
-            await axios.post(BASE_URL, payload, {
+            const response = await axios.post(BASE_URL, payload, {
                 headers: { 'X-CSRFToken': getCSRFToken() },
                 withCredentials: true,
             });
 
-
+            const createdComment = response.data;
             // Adiciona o novo comentário à lista existente
-            setComments(prev => [...prev, payload]);
-            //setNewComment('');
+            setComments(prev => [...prev, createdComment]);
+            setNewComment('');
             setMessage('Comentario criada com sucesso!');
 
             //navigate('/dashboard');
@@ -85,16 +86,32 @@ export default function CommentSection({ postId }) {
 
 
             <form onSubmit={handleSubmit} className="mt-3">
-                <textarea
+                <textarea className="w-full p-2 border rounded"
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Escreve um comentário..."
-                    className="w-full p-2 border rounded mb-2"
                     rows={2}
+                    style={{
+                        width: '95%',
+                        padding: '12px 14px',
+                        border: '1.5px solid #ccc',
+                        borderRadius: '8px',
+                        fontSize: '1rem',
+                        resize: 'vertical',
+                        fontFamily: 'inherit',
+                        transition: 'border-color 0.3s ease',
+                        outline: 'none',
+                        marginTop: '50px',
+                    }}
+                    onFocus={e => e.target.style.borderColor = '#3b82f6'}
+                    onBlur={e => e.target.style.borderColor = '#ccc'}
                 />
-                <button type="submit" className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                    Comentar
-                </button>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                    <button type="submit" className={styles.primaryButton} >
+                        Enviar
+                    </button>
+                </div>
             </form>
         </div>
     );
