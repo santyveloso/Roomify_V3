@@ -18,8 +18,8 @@ const FeedAdminComp = ({ houseId }) => {
   const [houseRules, setHouseRules] = useState('');
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState(null);
   const [timeOfDayGreeting, setTimeOfDayGreeting] = useState('');
-
 
   const navigate = useNavigate();
 
@@ -56,6 +56,7 @@ const FeedAdminComp = ({ houseId }) => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
         setUserName(res.data.username || 'Utilizador');
+        setUserId(res.data.id);
       } catch {
         setUserName('Utilizador');
         console.error('Erro ao carregar o perfil do utilizador.');
@@ -76,9 +77,23 @@ const FeedAdminComp = ({ houseId }) => {
     fetchHouseData();
     fetchMembers();
     fetchUserProfile();
-    setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
+    //setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
 
   }, [houseId]);
+
+  useEffect(() => {
+  const getCurrentTimeOfDayGreeting = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 6 && currentHour < 12) return 'Bom dia';
+    else if (currentHour >= 12 && currentHour < 20) return 'Boa tarde';
+    else return 'Boa noite';
+  };
+
+  if (userName) {
+    setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
+  }
+}, [userName]);
+
 
   const removeMember = async (userId) => {
     setMessage('');
@@ -199,7 +214,11 @@ const FeedAdminComp = ({ houseId }) => {
           <ul className={styles.membersList}>
             {members.map(member => (
               <li key={member.id} className={styles.memberItem}>
-                <span>{member.username} ({member.email})</span>
+                <span>
+                  {member.username} ({member.email})
+                  {member.id === house.admin ? ' [admin]' : ' [roomie]'}
+                  {member.id === userId ? ' (You)' : ''}
+                </span>
                 <button onClick={() => removeMember(member.id)} className={styles.removeButton}>Remover</button>
               </li>
             ))}
