@@ -135,6 +135,12 @@ const FeedAdminComp = ({ houseId }) => {
     fetchTasks();
   }, [houseId]);
 
+
+  const handleDeleteTask = (deletedId) => {
+  setTasks(prevTasks => prevTasks.filter(task => task.id !== deletedId));
+};
+
+
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -239,8 +245,17 @@ const FeedAdminComp = ({ houseId }) => {
           {tasks.length === 0 ? (
             <p>Sem tarefas ainda.</p>
           ) : (
-            tasks.map((t) => <Task key={t.id} task={t} />)
+            tasks.map((t) => (
+              <Task
+                key={t.id}
+                task={t}
+                onDelete={handleDeleteTask}
+                userId={userId} //ve o user type
+                isAdmin={userId === house.admin.id} //ve se é admin ou roomie
+              />
+            ))
           )}
+
         </div>
 
         <div className={styles.postsColumn}>
@@ -253,8 +268,14 @@ const FeedAdminComp = ({ houseId }) => {
           {expenses.length === 0 ? (
             <p>Sem despesas ainda.</p>
           ) : (
-            expenses.map((expense) => <Task key={expense.id} task={expense} />)
-          )}
+            expenses.map((expense) => (
+              <Expense
+                key={expense.id}
+                expense={expense}
+                onDelete={(id) => setExpenses(prev => prev.filter(e => e.id !== id))}
+                isAdmin={userId === house.admin.id}
+              />
+            )))}
         </div>
 
       </div>

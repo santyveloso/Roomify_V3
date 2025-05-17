@@ -94,6 +94,7 @@ def task_detail(request, task_id):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])  # <- esta linha é ESSENCIAL
 def complete_task(request, task_id):
     try:
         task = Task.objects.get(pk=task_id)
@@ -107,11 +108,6 @@ def complete_task(request, task_id):
     task.completed_at = timezone.now()
     task.completed_by = request.user
     task.save()
-
-    # TaskCompletion.objects.create(
-    #     task=task,
-    #     completed_by=request.user
-    # )
 
     return Response({'detail': 'Tarefa concluída com sucesso!'}, status=status.HTTP_200_OK)
 

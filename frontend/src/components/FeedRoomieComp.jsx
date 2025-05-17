@@ -172,8 +172,13 @@ const FeedRoomieComp = ({ houseId }) => {
           {expenses.length === 0 ? (
             <p>Sem despesas ainda.</p>
           ) : (
-            expenses.map((expense) => <Task key={expense.id} task={expense} />)
-          )}
+            expenses.map((expense) => (
+              <Expense
+                key={expense.id}
+                expense={expense}
+                isAdmin={false} // se quiseres, podes também não passar nada aqui
+              />
+            )))}
         </div>
 
       </div>
