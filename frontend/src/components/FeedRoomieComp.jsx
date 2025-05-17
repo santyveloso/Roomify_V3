@@ -15,6 +15,7 @@ const FeedRoomieComp = ({ houseId }) => {
   const [houseRules, setHouseRules] = useState('');
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState(null);
   const [timeOfDayGreeting, setTimeOfDayGreeting] = useState('');
   const navigate = useNavigate();
 
@@ -47,6 +48,7 @@ const FeedRoomieComp = ({ houseId }) => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
         setUserName(res.data.username || 'Utilizador');
+        setUserId(res.data.id);
       } catch {
         setUserName('Utilizador');
         console.error('Erro ao carregar o perfil do utilizador.');
@@ -146,7 +148,7 @@ const FeedRoomieComp = ({ houseId }) => {
                 <span>
                   {member.username} ({member.email})
                   {member.id === house.admin ? ' [admin]' : ' [roomie]'}
-                  {member.username === userName ? ' (you)' : ''}
+                  {member.id === userId ? ' (you)' : ''}
                 </span>
               </li>
             ))}

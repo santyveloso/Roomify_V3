@@ -15,7 +15,6 @@ function FeedAdmin() {
       <main className="login-container">
         {/* 👇 passas o ID como prop para o componente */}
         <FeedAdminComp houseId={houseId} />
-        <CriarTarefaForm houseId={houseId} />
       </main>
       <Footer />
     </div>

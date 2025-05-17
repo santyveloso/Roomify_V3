@@ -29,11 +29,7 @@ const FeedAdminComp = ({ houseId }) => {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
   };
 
-
-
   useEffect(() => {
-
-    // CASA
     const fetchHouseData = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/`, { withCredentials: true });
@@ -47,7 +43,6 @@ const FeedAdminComp = ({ houseId }) => {
       }
     };
 
-    // MEMBROS DA CASA
     const fetchMembers = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/members/`, { withCredentials: true });
@@ -57,7 +52,6 @@ const FeedAdminComp = ({ houseId }) => {
       }
     };
 
-    // PERFIL
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
@@ -67,7 +61,6 @@ const FeedAdminComp = ({ houseId }) => {
         console.error('Erro ao carregar o perfil do utilizador.');
       }
     };
-
 
     const getCurrentTimeOfDayGreeting = () => {
       const currentHour = new Date().getHours();
@@ -87,27 +80,6 @@ const FeedAdminComp = ({ houseId }) => {
 
   }, [houseId]);
 
-
-  // CONVITES
-  const generateInvite = async () => {
-    setMessage('');
-    try {
-      const res = await axios.post(
-        `${BASE_URL}/houses/${houseId}/generate_invite/`,
-        {},
-        {
-          withCredentials: true,
-          headers: { 'X-CSRFToken': getCSRFToken() },
-        }
-      );
-      setNewInviteCode(res.data.code);
-      setMessage('Convite gerado com sucesso.');
-    } catch {
-      setMessage('Erro ao gerar convite.');
-    }
-  };
-
-  // REMOVER MEMBROS
   const removeMember = async (userId) => {
     setMessage('');
     try {
@@ -122,9 +94,7 @@ const FeedAdminComp = ({ houseId }) => {
     }
   };
 
-  //POSTS
   const [posts, setPosts] = useState([]);
-
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -134,49 +104,36 @@ const FeedAdminComp = ({ houseId }) => {
         console.error('Erro ao carregar os posts.');
       }
     };
-
     fetchPosts();
   }, [houseId]);
 
-
-  //TASKS
   const [tasks, setTasks] = useState([]);
-
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/tasks/`, { withCredentials: true });
         setTasks(res.data);
       } catch {
-        console.error('Erro ao carregar os posts.');
+        console.error('Erro ao carregar as tarefas.');
       }
     };
-
     fetchTasks();
   }, [houseId]);
 
-
-  //DESPESAS
-
   const [expenses, setExpenses] = useState([]);
-
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/expenses/`, { withCredentials: true });
         setExpenses(res.data);
       } catch {
-        console.error('Erro ao carregar os posts.');
+        console.error('Erro ao carregar as despesas.');
       }
     };
-
     fetchExpenses();
   }, [houseId]);
 
-  //SALDO
-
   const [saldo, setSaldo] = useState([]);
-
   useEffect(() => {
     const fetchSaldo = async () => {
       try {
@@ -186,41 +143,8 @@ const FeedAdminComp = ({ houseId }) => {
         console.error('Erro ao carregar o saldo.');
       }
     };
-
     fetchSaldo();
   }, []);
-
-
-
-  const saveHouseEdit = async () => {
-    setMessage('');
-    try {
-      const res = await axios.put(
-        `${BASE_URL}/houses/${houseId}/`,
-        {
-          name: houseName,
-          address: houseAddress,
-          description: houseDescription,
-          rules: houseRules
-        },
-        {
-          withCredentials: true,
-          headers: { 'X-CSRFToken': getCSRFToken() },
-        }
-      );
-      setHouse(res.data);
-      setEditMode(false);
-      setMessage('Casa atualizada com sucesso.');
-    } catch (err) {
-      if (err.response?.data?.detail) {
-        setMessage(err.response.data.detail);
-      } else if (err.response?.data) {
-        setMessage(JSON.stringify(err.response.data));
-      } else {
-        setMessage('Erro ao atualizar a casa.');
-      }
-    }
-  };
 
   if (!house) return <div>A carregar...</div>;
 
@@ -233,7 +157,6 @@ const FeedAdminComp = ({ houseId }) => {
       <h2>Feed da Casa</h2>
 
       <div className={styles.columnsWrapper}>
-        {/* Coluna 1: Detalhes da Casa */}
         <div className={styles.detailsColumn}>
           {editMode ? (
             <div>
@@ -255,7 +178,6 @@ const FeedAdminComp = ({ houseId }) => {
                 <textarea id={`houseRules-${houseId}`} className={styles.formTextarea} value={houseRules} onChange={e => setHouseRules(e.target.value)} />
               </div>
               <div className={styles.buttonGroup}>
-                <button onClick={saveHouseEdit} className={styles.primaryButton}>Guardar</button>
                 <button onClick={() => setEditMode(false)} className={styles.secondaryButton}>Cancelar</button>
               </div>
             </div>
@@ -272,7 +194,6 @@ const FeedAdminComp = ({ houseId }) => {
           )}
         </div>
 
-        {/* Coluna 2: Membros */}
         <div className={styles.membersColumn}>
           <h3>Membros</h3>
           <ul className={styles.membersList}>
@@ -284,31 +205,15 @@ const FeedAdminComp = ({ houseId }) => {
             ))}
           </ul>
         </div>
-
-        {/* Coluna 3: Gerar Convite & Mensagens */}
-        <div className={styles.inviteColumn}>
-          <div>
-            <h3>Gerar Convite</h3>
-            <button onClick={generateInvite} className={styles.primaryButton}>Gerar Código</button>
-            {newInviteCode && (
-              <p>Código do convite: <strong>{newInviteCode}</strong></p>
-            )}
-          </div>
-          {message && <p className={styles.messageText}>{message}</p>}
-        </div>
-        <button onClick={() => navigate('/criarpost', { state: { houseId } })}>
-          Criar Post
-        </button>
-        <button onClick={() => navigate('/criardespesa', { state: { houseId } })}>
-          Criar Despesa
-        </button>
-
-
       </div>
 
-
       <div className={styles.postsColumn}>
-        <h3>Posts da Casa</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3>Posts da Casa</h3>
+          <button className="primary-btn" onClick={() => navigate('/criarpost', { state: { houseId } })}>
+            Criar Post
+          </button>
+        </div>
         {posts.length === 0 ? (
           <p>Sem posts ainda.</p>
         ) : (
@@ -316,10 +221,13 @@ const FeedAdminComp = ({ houseId }) => {
         )}
       </div>
 
-
-
       <div className={styles.postsColumn}>
-        <h3>Tarefas da Casa</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3>Tarefas da Casa</h3>
+          <button className="primary-btn" onClick={() => navigate('/criartarefa', { state: { houseId } })}>
+            Criar Tarefa
+          </button>
+        </div>
         {tasks.length === 0 ? (
           <p>Sem tarefas ainda.</p>
         ) : (
@@ -327,26 +235,24 @@ const FeedAdminComp = ({ houseId }) => {
         )}
       </div>
 
-
       <div className={styles.postsColumn}>
-        <h3>Despesas da Casa</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3>Despesas da Casa</h3>
+          <button className="primary-btn" onClick={() => navigate('/criardespesa', { state: { houseId } })}>
+            Criar Despesa
+          </button>
+        </div>
         {expenses.length === 0 ? (
           <p>Sem despesas ainda.</p>
         ) : (
-          expenses.map((expense) => <Task key={expense.id} task={expense} />)
+          expenses.map((expense) => <Expense key={expense.id} task={expense} />)
         )}
       </div>
 
       <div>
         <h3>Saldo do Utilizador</h3>
         <p>Saldo em dívida: € {saldo.total_due !== undefined ? Number(saldo.total_due).toFixed(2) : '0.00'}</p>
-        {/* <p>Saldo em dívida: € {saldo.total_due.toFixed(2)}</p> */}
-        {/* <p>Total pago: € {saldo.total_paid.toFixed(2)}</p>
-        <p>Saldo atual: € {saldo.balance.toFixed(2)}</p> */}
       </div>
-
-
-
     </div>
   );
 };
