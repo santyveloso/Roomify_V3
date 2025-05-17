@@ -177,6 +177,24 @@ const FeedAdminComp = ({ houseId }) => {
 
   if (!house) return <div>A carregar...</div>;
 
+
+  const handleGenerateInvite = async () => {
+    try {
+      const res = await axios.post(`${BASE_URL}/houses/${houseId}/generate_invite/`, {}, {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': getCSRFToken()
+        }
+      });
+
+      const novoCodigo = res.data.code;
+      setHouse(prev => ({ ...prev, invite_code: novoCodigo }));
+      setMessage('Novo código de convite gerado!');
+    } catch (error) {
+      console.error('Erro ao gerar código:', error);
+      setMessage('Erro ao gerar código de convite.');
+    }
+  };
   return (
     <div className={styles.feedContainer}>
       <h1 className={styles.dynamicGreeting}>
@@ -224,6 +242,17 @@ const FeedAdminComp = ({ houseId }) => {
 
         <div className={styles.membersColumn}>
           <h3>Membros</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <p><strong>Código de Convite:</strong> {house.invite_code || 'Nenhum'}</p>
+            <button
+              className="primary-btn"
+              style={{ padding: '6px 12px', fontSize: '0.9rem' }}
+              onClick={handleGenerateInvite}
+            >
+              Gerar Código
+            </button>
+          </div>
+
           <ul className={styles.membersList}>
             {members.map(member => (
               <li key={member.id} className={styles.memberItem}>
