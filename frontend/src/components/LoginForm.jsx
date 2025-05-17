@@ -39,11 +39,26 @@ const LoginForm = () => {
           headers: { 'X-CSRFToken': getCSRFToken() },
           withCredentials: true
         }
+
       );
+
+      if (response.data.profile_picture) {
+        const fullUrl = 'http://localhost:8000' + response.data.profile_picture;
+        //setPreviewUrl(fullUrl);
+        localStorage.setItem('profilePicture', fullUrl);
+      } else {
+        localStorage.removeItem('profilePicture');
+      }
+      localStorage.setItem('username', response.data.username || '')
+
+
+
+
+
 
       // Sucesso
       setMessage('Login bem-sucedido!');
-      
+
       // 2. Vai buscar o perfil
       const profileRes = await axios.get('http://localhost:8000/backend/users/profile/', {
         withCredentials: true,
@@ -69,7 +84,7 @@ const LoginForm = () => {
       } else {
         setMessage('Tipo de utilizador desconhecido.');
       }
-  
+
     } catch (error) {
       if (error.response && error.response.data) {
         const result = error.response.data;

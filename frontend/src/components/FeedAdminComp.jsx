@@ -264,7 +264,7 @@ const FeedAdminComp = ({ houseId }) => {
         {expenses.length === 0 ? (
           <p>Sem despesas ainda.</p>
         ) : (
-          expenses.map((expense) => <Expense key={expense.id} task={expense} />)
+          expenses.map((expense) => <Task key={expense.id} task={expense} />)
         )}
       </div>
 

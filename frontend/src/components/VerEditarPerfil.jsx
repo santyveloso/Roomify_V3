@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import perfilImg from '../images/perfil.png';
 
 const VerEditarPerfil = () => {
     const [username, setUsername] = useState('');
@@ -28,6 +29,7 @@ const VerEditarPerfil = () => {
                 }
             })
             .catch(() => setMessage('Erro ao carregar perfil'));
+
     }, []);
 
     const handleImageChange = (e) => {
@@ -94,11 +96,11 @@ const VerEditarPerfil = () => {
                             height: 120,
                             borderRadius: '50%',
                             backgroundColor: '#ddd',
-                            backgroundImage: previewUrl ? `url(${previewUrl})` : 'url(https://cdn-icons-png.flaticon.com/512/1077/1077114.png)', // boneco default
-                            backgroundSize: 'cover',
+                            backgroundImage: previewUrl ? `url(${previewUrl})` : `url(${perfilImg})`, // boneco default
+                            backgroundSize: '95%',
                             backgroundPosition: 'center',
                             cursor: 'pointer',
-                            border: '2px solid #aaa',
+                            border: '1px solid #aaa',
                         }}
                     >
                         {/* "+" na bolinha */}
