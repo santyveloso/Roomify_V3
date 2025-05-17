@@ -5,6 +5,8 @@ const FeedRoomieComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
   const [members, setMembers] = useState([]);
   const [message, setMessage] = useState('');
+  const [saldo, setSaldo] = useState([]);
+
 
   const BASE_URL = 'http://localhost:8000/backend';
 
@@ -26,6 +28,18 @@ const FeedRoomieComp = ({ houseId }) => {
         setMessage('Erro ao carregar os membros.');
       }
     };
+
+
+    const fetchSaldo = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/balance/`, { withCredentials: true });
+        setSaldo(res.data);
+      } catch {
+        console.error('Erro ao carregar o saldo.');
+      }
+    };
+
+    fetchSaldo();
 
     fetchHouse();
     fetchMembers();
@@ -59,8 +73,18 @@ const FeedRoomieComp = ({ houseId }) => {
         </ul>
       </div>
 
+      <div>
+        <h3>Saldo do Utilizador</h3>
+        {/* <p>Total devido: € {saldo.total_due !== undefined ? Number(saldo.total_due).toFixed(2) : '0.00'}</p> */}
+        <p>Saldo em dívida: € {saldo.total_due.toFixed(2)}</p>
+        {/* <p>Total pago: € {saldo.total_paid.toFixed(2)}</p>
+        <p>Saldo atual: € {saldo.balance.toFixed(2)}</p> */}
+      </div>
+
       {message && <p style={{ color: 'darkred' }}>{message}</p>}
     </div>
+
+
   );
 };
 

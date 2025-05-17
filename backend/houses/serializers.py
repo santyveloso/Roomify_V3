@@ -13,6 +13,7 @@ class HouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
         fields = ['id', 'name', 'address', 'description', 'rules', 'created_at', 'updated_at', 'admin', 'invite_code']
+        
 class InvitationSerializer(serializers.ModelSerializer):
     house = HouseSerializer()  # Exibe os dados da casa relacionada
 

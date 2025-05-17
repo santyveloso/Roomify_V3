@@ -4,6 +4,8 @@ import styles from './FeedAdminComp.module.css';
 import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import Task from './Task';
+import Expense from './Expense';
+
 
 const FeedAdminComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
@@ -27,7 +29,11 @@ const FeedAdminComp = ({ houseId }) => {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
   };
 
+
+
   useEffect(() => {
+
+    // CASA
     const fetchHouseData = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/`, { withCredentials: true });
@@ -41,6 +47,7 @@ const FeedAdminComp = ({ houseId }) => {
       }
     };
 
+    // MEMBROS DA CASA
     const fetchMembers = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/houses/${houseId}/members/`, { withCredentials: true });
@@ -50,6 +57,7 @@ const FeedAdminComp = ({ houseId }) => {
       }
     };
 
+    // PERFIL
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
@@ -59,6 +67,7 @@ const FeedAdminComp = ({ houseId }) => {
         console.error('Erro ao carregar o perfil do utilizador.');
       }
     };
+
 
     const getCurrentTimeOfDayGreeting = () => {
       const currentHour = new Date().getHours();
@@ -78,6 +87,8 @@ const FeedAdminComp = ({ houseId }) => {
 
   }, [houseId]);
 
+
+  // CONVITES
   const generateInvite = async () => {
     setMessage('');
     try {
@@ -96,6 +107,7 @@ const FeedAdminComp = ({ houseId }) => {
     }
   };
 
+  // REMOVER MEMBROS
   const removeMember = async (userId) => {
     setMessage('');
     try {
@@ -127,10 +139,6 @@ const FeedAdminComp = ({ houseId }) => {
   }, [houseId]);
 
 
-
-
-
-
   //TASKS
   const [tasks, setTasks] = useState([]);
 
@@ -146,6 +154,48 @@ const FeedAdminComp = ({ houseId }) => {
 
     fetchTasks();
   }, [houseId]);
+
+
+  //DESPESAS
+
+  const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/houses/${houseId}/expenses/`, { withCredentials: true });
+        setExpenses(res.data);
+      } catch {
+        console.error('Erro ao carregar os posts.');
+      }
+    };
+
+    fetchExpenses();
+  }, [houseId]);
+
+  //SALDO
+
+  const [saldo, setSaldo] = useState([]);
+
+  useEffect(() => {
+    const fetchSaldo = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/balance/`, { withCredentials: true });
+        setSaldo(res.data);
+      } catch {
+        console.error('Erro ao carregar o saldo.');
+      }
+    };
+
+    fetchSaldo();
+  }, []);
+
+
+
+
+
+
+
 
 
 
@@ -266,6 +316,9 @@ const FeedAdminComp = ({ houseId }) => {
         <button onClick={() => navigate('/criarpost', { state: { houseId } })}>
           Criar Post
         </button>
+        <button onClick={() => navigate('/criardespesa', { state: { houseId } })}>
+          Criar Despesa
+        </button>
 
 
       </div>
@@ -290,6 +343,25 @@ const FeedAdminComp = ({ houseId }) => {
           tasks.map((t) => <Task key={t.id} task={t} />)
         )}
       </div>
+
+
+      <div className={styles.postsColumn}>
+        <h3>Despesas da Casa</h3>
+        {expenses.length === 0 ? (
+          <p>Sem despesas ainda.</p>
+        ) : (
+          expenses.map((expense) => <Task key={expense.id} task={expense} />)
+        )}
+      </div>
+
+      <div>
+        <h3>Saldo do Utilizador</h3>
+        <p>Saldo em dívida: € {saldo.total_due !== undefined ? Number(saldo.total_due).toFixed(2) : '0.00'}</p>
+        {/* <p>Saldo em dívida: € {saldo.total_due.toFixed(2)}</p> */}
+        {/* <p>Total pago: € {saldo.total_paid.toFixed(2)}</p>
+        <p>Saldo atual: € {saldo.balance.toFixed(2)}</p> */}
+      </div>
+
 
 
     </div>

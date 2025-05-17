@@ -5,6 +5,7 @@ from users.models import CustomUser
 from houses.serializers import HouseSerializer  # importa o serializer da house
 
 
+
 class CustomUserSerializer(serializers.ModelSerializer):
 
     # campos que temos que ir buscar ao user

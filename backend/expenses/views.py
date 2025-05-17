@@ -1,57 +1,48 @@
 from decimal import Decimal
 from django.shortcuts import render
-from requests import Response
 
-from backend.expenses.serializers import ExpenseSerializer, ExpenseShareSerializer
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Expense, ExpenseShare
-from .serializers import ExpenseShareSerializer
+from .serializers import ExpenseShareSerializer, ExpenseSerializer
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
 
 
 # no frontend ele escolhe se quer dividir igual (automatico) ou personalizado mas só muda o JSON enviado (calcula os valores no frontend do js) o código é igual
-
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def expenses_list_create(request):
+def expenses(request, house_id):
     user = request.user
+    print(user)
 
-    # ver isto
+    # Verifica se o user pertence à casa
+    # if not user.housemembership_set.filter(house_id=house_id).exists():
+    #     return Response({'error': 'Sem permissão para esta casa'}, status=403)
+
     if request.method == 'GET':
-        houses = [m.house for m in user.housemembership_set.all()]
-        expenses = Expense.objects.filter(house__in=houses).order_by('-date')
+        expenses = Expense.objects.filter(house_id=house_id).order_by('-date')
         serializer = ExpenseSerializer(expenses, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
         data = request.data
-
         assigned_roomies = data.get('assigned_roomies', [])
 
         if not assigned_roomies:
             return Response({'error': 'Deves indicar pelo menos um Roomie para esta despesa'}, status=400)
 
         total_amount = Decimal(str(data.get('amount')))
-        total_due = sum(Decimal(str(share['amount_due'])) for share in assigned_roomies) # vai buscar os roomies assigned e os valores q cada um paga
+        total_due = sum(Decimal(str(share['amount_due'])) for share in assigned_roomies)
 
-        # se ele vai dizer manualmente a divisao tem  a bater certo com o total (isto ta a ser visto no frontend supostamente)
         if total_due != total_amount:
             return Response({'error': 'A soma dos valores atribuídos não bate com o total'}, status=400)
 
-        # Verifica que o user é admin da casa
-        house_id = data.get('house')
-        # if not HouseMembership.objects.filter(user=user, house_id=house_id, role='admin').exists():
-        #     return Response({'error': 'Só admins podem criar despesas'}, status=403)
-
         expense_data = {
             'house': house_id,
-            'created_by': user.id,
             'title': data.get('title'),
             'category': data.get('category'),
             'amount': total_amount,
@@ -61,13 +52,11 @@ def expenses_list_create(request):
 
         expense_serializer = ExpenseSerializer(data=expense_data)
         if not expense_serializer.is_valid():
+            print(expense_serializer.errors)  # ← mostra no terminal o erro
             return Response(expense_serializer.errors, status=400)
-        expense = expense_serializer.save()
+        expense = expense_serializer.save(created_by=user)
 
         for share in assigned_roomies:
-            # if not HouseMembership.objects.filter(user_id=share['user'], house_id=house_id).exists():
-            #     expense.delete()
-            #     return Response({'error': f"User {share['user']} não pertence a casa"}, status=400)
             share['expense'] = expense.id
             share['paid'] = False
             share_serializer = ExpenseShareSerializer(data=share)
@@ -77,6 +66,28 @@ def expenses_list_create(request):
             share_serializer.save()
 
         return Response(ExpenseSerializer(expense).data, status=201)
+
+# @api_view(['GET', 'POST'])
+# @permission_classes([IsAuthenticated])
+# def expenses(request, house_id):
+#     if request.method == 'GET':
+#         expenses = Expense.objects.filter(house_id=house_id)
+#         serializer = ExpenseSerializer(expenses, many=True)
+#         return Response(serializer.data)
+
+#     elif request.method == 'POST':
+#         serializer = ExpenseSerializer(data=request.data)
+#         if serializer.is_valid():
+            
+#             expense = serializer.save(created_by=request.user, house_id=house_id)
+#             # criar ExpenseShares aqui, se necessário
+#             return Response(ExpenseSerializer(expense).data, status=status.HTTP_201_CREATED)
+#         print(serializer.errors) 
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -130,7 +141,7 @@ def mark_expense_share_paid(request, pk):
 def user_balance(request):
     user = request.user
     shares = ExpenseShare.objects.filter(user=user)
-
+    print ('olaaaaaaaa')
     total_due = Decimal('0.00')
     total_paid = Decimal('0.00')
 
@@ -140,9 +151,11 @@ def user_balance(request):
             total_paid += share.amount_due
 
     saldo = total_due - total_paid
+    print (saldo)
 
     return Response({
         'total_due': total_due,
         'total_paid': total_paid,
         'balance': saldo,
     })
+    

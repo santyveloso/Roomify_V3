@@ -43,7 +43,7 @@ function App() {
         <Route path="/ups" element={<Ups />} />
         <Route path="/editarperfil" element={<EditarPerfil />} />
         <Route path="/criartarefa" element={<CriarTarefa />} />
-        <Route path="/criardespesa" element={<CreateExpenseForm />} />
+        <Route path="/criardespesa" element={<CriarDespesa />} />
         <Route path="/criarcasa" element={<CriarCasa />} />
         <Route path="/houses/:houseId" element={<FeedAdmin />} />
         <Route path="/houses/:houseId/roomie" element={<FeedRoomie />} />

@@ -14,6 +14,14 @@ class Task(models.Model):
         ('completed', 'Concluída'),
     )
 
+    TASK_CATEGORY_CHOICES = [
+        ('compras', 'Compras'),
+        ('limpeza', 'Limpeza'),
+        ('manutenção', 'Manutenção'),
+        ('geral', 'Geral')
+        
+    ]
+
     #por mim simplificamos tiramos isto
 
     # TASK_TYPE_CHOICES = (
@@ -30,6 +38,8 @@ class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='tasks')
+    category = models.CharField(max_length=20, choices=TASK_CATEGORY_CHOICES, default='geral')
+
 
 
 

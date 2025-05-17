@@ -33,7 +33,7 @@ urlpatterns = [
     path('backend/', include('tasks.urls')),
     path('backend/', include('feed.urls')),
 
-    #path('expenses/', include('expenses.urls')),
+    path('backend/', include('expenses.urls')),
     #path('feed/', include('feed.urls')),
    
    

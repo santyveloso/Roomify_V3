@@ -1,3 +1,5 @@
+// isto n ta a ser usado?
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -88,35 +90,35 @@ const EditarPerfil = () => {
       <h2 className="create-or-join-title">Editar Perfil</h2>
 
       <form onSubmit={handleSubmit} className="register-form" encType="multipart/form-data">
-            <div className="form-group">
-                <label>Username</label>
-                <input type="text" name="username" value={user.username} onChange={handleChange} />
-            </div>
+        <div className="form-group">
+          <label>Username</label>
+          <input type="text" name="username" value={user.username} onChange={handleChange} />
+        </div>
 
-            <div className="form-group">
-                <label>Email</label>
-                <input type="email" name="email" value={user.email} onChange={handleChange} />
-            </div>
+        <div className="form-group">
+          <label>Email</label>
+          <input type="email" name="email" value={user.email} onChange={handleChange} />
+        </div>
 
-            <div className="form-group">
-                <label>Telemóvel</label>
-                <input type="text" name="phone" value={user.phone || ''} onChange={handleChange} />
-            </div>
+        <div className="form-group">
+          <label>Telemóvel</label>
+          <input type="text" name="phone" value={user.phone || ''} onChange={handleChange} />
+        </div>
 
-            <div className="form-group">
-                <label>Foto de Perfil</label>
-                <input type="file" accept="image/*" onChange={handleFileChange} />
-            </div>
+        <div className="form-group">
+          <label>Foto de Perfil</label>
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+        </div>
 
-            {(preview || user.profile_picture) ? (
-                <img
-                className="profile-preview"
-                src={preview || `http://localhost:8000${user.profile_picture}`}
-                alt="Preview"
-                />
-            ) : (
-                <p className="no-photo-text">Sem foto</p>
-            )}
+        {(preview || user.profile_picture) ? (
+          <img
+            className="profile-preview"
+            src={preview || `http://localhost:8000${user.profile_picture}`}
+            alt="Preview"
+          />
+        ) : (
+          <p className="no-photo-text">Sem foto</p>
+        )}
 
         <button type="submit" className="primary-btn">
           Guardar Alterações

@@ -273,6 +273,7 @@ const CriarTarefaForm = ({ houseId, onTaskCreated }) => {
     description: '',
     assigned_to: '',
     due_date: '',
+    category: '',
   });
   const [roomies, setRoomies] = useState([]);
   const [message, setMessage] = useState('');
@@ -299,6 +300,11 @@ const CriarTarefaForm = ({ houseId, onTaskCreated }) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  // const handleTaskCreated = async () => {
+  //   const updatedTasks = await axios.get(`http://localhost:8000/backend/houses/${houseId}/tasks/`, { withCredentials: true });
+  //   setTasks(updatedTasks.data);
+  // };
 
   const getCSRFToken = () => {
     return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
@@ -354,6 +360,17 @@ const CriarTarefaForm = ({ houseId, onTaskCreated }) => {
         <div>
           <label>Descrição</label>
           <textarea name="description" value={formData.description} onChange={handleChange} />
+        </div>
+
+        <div>
+          <label>Categoria</label>
+          <select name="category" value={formData.category} onChange={handleChange} required>
+            <option value="">Selecione uma categoria</option>
+            <option value="limpeza">Limpeza</option>
+            <option value="manutenção">Manutenção</option>
+            <option value="compras">Compras</option>
+            {/* adiciona as categorias que quiseres */}
+          </select>
         </div>
 
         <div>

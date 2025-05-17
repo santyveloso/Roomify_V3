@@ -4,14 +4,18 @@ import Footer from '../components/Footer';
 import RegisterForm from '../components/RegisterForm';
 import CriarTarefaForm from '../components/CriarTarefaForm';
 import NavAposLogin from '../components/NavAposLogin';
-import CriarDespesaForm from '../components/CriarDespesaForm';
+import CreateExpenseForm from '../components/CreateExpenseForm';
+import { useLocation } from 'react-router-dom';
 
 function CriarDespesa() {
+  const location = useLocation();
+  const houseId = location.state?.houseId;
   return (
     <div className="page-wrapper">
       <NavAposLogin />
       <main className="register-container">
-        <CriarDespesaForm />
+        <CreateExpenseForm houseId={houseId} />
+
       </main>
       <Footer />
     </div>

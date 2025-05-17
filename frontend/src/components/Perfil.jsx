@@ -1,3 +1,5 @@
+// isto n ta a ser usado?
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,10 +13,10 @@ const UserProfile = () => {
       const token = localStorage.getItem('token');
 
       try {
-       const response = await fetch('http://localhost:8000/backend/users/me/', {
-            headers: {
-                Authorization: `Bearer ${token}`, 
-            },
+        const response = await fetch('http://localhost:8000/backend/users/me/', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
 

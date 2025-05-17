@@ -4,10 +4,17 @@ from houses.models import House
 from django.contrib.auth import get_user_model
 
 class TaskSerializer(serializers.ModelSerializer):
+
+
+    #assigned_to = serializers.SerializerMethodField()
+    # house = serializers.PrimaryKeyRelatedField(read_only=True)
+    # comments = CommentSerializer(many=True, read_only=True)
+  
+
     class Meta:
         model = Task
         fields = [
-            'id', 'title', 'description', 'house', 'assigned_to', 
+            'id', 'title', 'description', 'house', 'assigned_to', 'category',
             'created_by', 'status', 'due_date', 
             'created_at', 'updated_at', 'completed_at', 'completed_by'
         ]
