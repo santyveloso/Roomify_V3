@@ -33,7 +33,7 @@ export default function JoinHome() {
       const casaId = res.data.house?.id;
 
       if (casaId) {
-        nav(`/houses/${casaId}`);
+        nav(`/houses/${casaId}/roomie`);
       } else {
         setMessage("Entraste, mas não conseguimos encontrar a casa associada.");
       }

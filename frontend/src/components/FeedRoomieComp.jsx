@@ -4,6 +4,7 @@ import styles from './FeedAdminComp.module.css';
 import Post from './Post';
 import Task from './Task';
 import Expense from './Expense';
+import { useNavigate } from 'react-router-dom';
 
 const FeedRoomieComp = ({ houseId }) => {
   const [house, setHouse] = useState(null);
@@ -15,6 +16,7 @@ const FeedRoomieComp = ({ houseId }) => {
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
   const [timeOfDayGreeting, setTimeOfDayGreeting] = useState('');
+  const navigate = useNavigate();
 
   const BASE_URL = 'http://localhost:8000/backend';
 
@@ -153,7 +155,12 @@ const FeedRoomieComp = ({ houseId }) => {
       </div>
 
       <div className={styles.postsColumn}>
-        <h3>Posts da Casa</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3>Posts da Casa</h3>
+          <button className="primary-btn" onClick={() => navigate('/criarpost', { state: { houseId } })}>
+            Criar Post
+          </button>
+        </div>
         {posts.length === 0 ? (
           <p>Sem posts ainda.</p>
         ) : (
