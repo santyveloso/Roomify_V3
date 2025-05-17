@@ -19,14 +19,17 @@ class ExpenseShareSerializer(serializers.ModelSerializer):
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
-    shares = ExpenseShareSerializer(many=True, read_only=True)  # ou required=False se for para escrita
-
+    shares = ExpenseShareSerializer(many=True, read_only=True)
     created_by_username = serializers.ReadOnlyField(source='created_by.username', read_only=True)
 
     class Meta:
         model = Expense
-        fields = ['id', 'house', 'title', 'amount', 'date', 'created_by', 'created_by_username', 'shares']
-        read_only_fields = ['id', 'created_by', 'created_by_username']  # <-- adiciona isto
+        fields = [
+            'id', 'house', 'title', 'category',  
+            'amount', 'date', 'description', 'created_by',
+            'created_by_username', 'shares'
+        ]
+        read_only_fields = ['id', 'created_by', 'created_by_username']
 
 
     #     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='expenses')

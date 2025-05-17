@@ -14,7 +14,15 @@ class Expense(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     #agua luz comida etc? tabela a parte?
-    category = models.CharField(max_length=50)  # nova categoria
+    EXPENSE_CATEGORY_CHOICES = [
+        ('comida', 'Comida'),
+        ('agua', 'Água'),
+        ('luz', 'Luz'),
+        ('gas', 'Gás'),
+        ('outros', 'Outros'),
+    ]
+
+    category = models.CharField(max_length=20, choices=EXPENSE_CATEGORY_CHOICES, default='outros')
 
     def __str__(self):
         return f"{self.title} - {self.amount}€"

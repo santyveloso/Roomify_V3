@@ -189,13 +189,24 @@ const CreateExpenseForm = ({ houseId, onTaskCreated }) => {
     className="w-full p-2 border rounded"
   />
 
-  <input
+  <div>
+  <label>Categoria</label>
+  <select
     name="category"
-    placeholder="Categoria"
     value={formData.category}
     onChange={handleFormChange}
+    required
     className="w-full p-2 border rounded"
-  />
+  >
+    <option value="">Selecione uma categoria</option>
+    <option value="comida">Comida</option>
+    <option value="agua">Água</option>
+    <option value="luz">Luz</option>
+    <option value="gas">Gás</option>
+    <option value="outros">Outros</option>
+  </select>
+</div>
+
 
   <input
     name="amount"
