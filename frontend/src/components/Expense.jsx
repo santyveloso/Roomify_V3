@@ -4,7 +4,7 @@ import React from 'react';
 import axios from 'axios';
 
 const Expense = ({ expense, currentUserId, onDelete, isAdmin, onRefresh }) => {
-    const { id, title, amount, date, category, description, shares, created_at, } = expense;
+    const { id, title, amount, date, category, description, shares, created_at } = expense;
 
     console.log("CurrentUserId:", currentUserId);
     console.log("Shares:", shares);
