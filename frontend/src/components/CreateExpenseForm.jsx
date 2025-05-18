@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -292,9 +291,11 @@ const CreateExpenseForm = ({ houseId, onExpenseCreated }) => {
                 ))}
             </div>
 
-            <button type="submit" className="primary-btn" style={{ marginTop: '1rem' }}>
-                Criar Despesa
-            </button>
+            <div className="expense-btn-center">
+                <button type="submit" className="primary-btn expense-btn-large">
+                    Criar Despesa
+                </button>
+            </div>
 
             {message && <p className="form-message">{message}</p>}
         </form>
