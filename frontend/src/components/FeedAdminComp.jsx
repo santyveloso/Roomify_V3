@@ -58,7 +58,6 @@ const FeedAdminComp = ({ houseId }) => {
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
-        setMessage('Perfil do utilizador (res.data):' + JSON.stringify(res.data));
 
 
         setUserName(res.data.username || 'Utilizador');

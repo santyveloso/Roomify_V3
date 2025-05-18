@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import keyImg from "../images/home-key.png";
-import "../index.css";
+import "../styles/index.css";
 import Navbar from "../components/Navbar";
 
 function DashboardAdminComp() {

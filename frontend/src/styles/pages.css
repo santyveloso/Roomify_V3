@@ -1,0 +1,750 @@
+/* --- Estilo para o formulário de criar despesa --- */
+.expense-form-wrapper {
+    background: var(--light-background);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 640px;
+    margin: 2rem auto;
+    box-sizing: border-box;
+  }
+  
+  .expense-form-wrapper h2 {
+    font-family: var(--font-primary);
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .expense-form-wrapper input,
+  .expense-form-wrapper textarea,
+  .expense-form-wrapper select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .expense-form-wrapper label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--text-color);
+    display: block;
+  }
+  
+  .expense-form-wrapper .checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .expense-form-wrapper .checkbox-row input[type="number"] {
+    width: 100px;
+  }
+  
+  .expense-form-wrapper .form-message {
+    margin-top: 1rem;
+    color: darkred;
+    text-align: center;
+  }
+  
+  .expense-form-wrapper .radio-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+  /* Inputs radio e checkbox alinhados bonitinhos */
+  .expense-form-wrapper .radio-option,
+  .expense-form-wrapper .checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-color);
+  }
+  
+  .expense-form-wrapper .checkbox-list {
+    margin-top: 1rem;
+    padding-left: 0.5rem;
+  }
+  
+  .expense-form-wrapper button[type="submit"] {
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .expense-form-wrapper button[type="submit"]:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  /* --- Post Component (estilo integrado com o resto do site) --- */
+  
+  .post-wrapper {
+    background-color: var(--light-background);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    /* max-width: 600px; */
+    width: 100%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--light-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .post-author {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+  
+  .post-content {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    white-space: pre-wrap;
+  }
+  
+  .post-aviso {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Criar Tarefa Page (igual ao estilo do register-form) --- */
+.task-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: var(--background-color);
+    text-align: center;
+  }
+  
+  .task-form-wrapper h2 {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+  
+  .task-form-wrapper form {
+    background: var(--light-background);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  .task-form-wrapper form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .task-form-wrapper label {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: var(--text-color);
+  }
+  
+  .task-form-wrapper input,
+  .task-form-wrapper textarea,
+  .task-form-wrapper select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+  }
+  
+  .task-form-wrapper .primary-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .task-form-wrapper .form-message {
+    margin-top: 1rem;
+    color: darkred;
+    text-align: center;
+  }
+  
+  /* --- CreateHome Page --- */
+  .create-home-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    background: var(--background-color);
+  }
+  
+  .create-home-img {
+    width: 260px;
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+  
+  .create-home-title {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+  }
+  
+  .create-home-sub {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--light-text);
+    max-width: 360px;
+    line-height: 1.5;
+  }
+  
+  /* --- CreateOrJoin Page --- */
+  .create-or-join-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+    background: var(--background-color);
+  }
+  
+  .create-or-join-title {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+  
+  
+  /* --- HouseSwitcher Component --- */
+  .house-switcher {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background: var(--light-background);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+  
+  .switcher-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .switcher-buttons button {
+    flex: 1;
+    padding: 0.75rem;
+    font-weight: 600;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: none;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    color: var(--text-color);
+  }
+  
+  .switcher-buttons button.active {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #fff;
+  }
+  
+  .form-container {
+    text-align: left;
+  }
+  
+  /* --- Responsividade --- */
+  @media (max-width: 480px) {
+  
+    .create-home-wrapper,
+    .create-or-join-wrapper {
+      padding: 1rem;
+    }
+  
+    .switcher-buttons {
+      flex-direction: column;
+    }
+  }
+
+  /* Estilos base dos formulários de autenticação (login e registo) */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 100px 2rem 2rem;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+  }
+  
+  .login-form {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    animation: fadeInUpScale 0.6s ease-out;
+  }
+  
+  .login-form h2 {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--text-color);
+  }
+  
+  .login-form form {
+    width: 100%;
+    padding: 0 1rem; 
+    box-sizing: border-box;
+  }
+  
+  .login-form form div {
+    margin-bottom: 1.25rem;
+  }
+  
+  .login-form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    font-family: var(--font-secondary);
+    color: var(--text-color);
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    background-color: var(--light-background);
+    transition: border 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .login-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  
+  .login-form button {
+    width: 25%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-form button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .login-form p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: darkred;
+  }
+  
+  
+  /* Estilos para o Formulário de Registo */
+  .register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 100px 2rem 2rem;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+  }
+
+  .register-form {
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    animation: fadeInUpScale 0.6s ease-out; 
+  }
+
+  .register-form h2 {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--text-color);
+  }
+
+  .register-form form {
+    width: 100%;
+    padding: 0 1rem; 
+    box-sizing: border-box;
+  }
+  
+  .register-form form div {
+    margin-bottom: 1.25rem;
+  }
+  
+  .register-form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    font-family: var(--font-secondary);
+    color: var(--text-color);
+  }
+  
+  .register-form input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    background-color: var(--light-background);
+    transition: border 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .register-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  
+  .register-form button {
+    width: auto; 
+    min-width: 120px; 
+    padding: 0.75rem 1.5rem; 
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-form button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .register-form p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: darkred; 
+  }
+
+  .auth-redirect-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .auth-redirect-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .auth-redirect-link a:hover {
+    text-decoration: underline;
+  }
+  
+  .form-input {
+    width: 100%;
+    max-width: 320px; 
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+  }
+  
+  /* --- Criar Tarefa Page (igual ao estilo do register-form) --- */
+.task-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: var(--background-color);
+    text-align: center;
+  }
+  
+  .task-form-wrapper h2 {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+  
+  .task-form-wrapper form {
+    background: var(--light-background);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    /* max-width: 400px; */
+    box-sizing: border-box;
+  }
+  
+  .task-form-wrapper form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .task-form-wrapper label {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: var(--text-color);
+  }
+  
+  .task-form-wrapper input,
+  .task-form-wrapper textarea,
+  .task-form-wrapper select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+  }
+  
+  .task-form-wrapper .primary-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .task-form-wrapper .form-message {
+    margin-top: 1rem;
+    color: darkred;
+    text-align: center;
+  }
+  
+  /* --- CreateHome Page --- */
+  .create-home-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    background: var(--background-color);
+  }
+  
+  .create-home-img {
+    width: 260px;
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+  
+  .create-home-title {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+  }
+  
+  .create-home-sub {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--light-text);
+    max-width: 360px;
+    line-height: 1.5;
+  }
+  
+  /* --- CreateOrJoin Page --- */
+  .create-or-join-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+    background: var(--background-color);
+  }
+  
+  .create-or-join-title {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+  
+  /* --- HouseSwitcher Component --- */
+  .house-switcher {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background: var(--light-background);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+  
+  .switcher-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .switcher-buttons button {
+    flex: 1;
+    padding: 0.75rem;
+    font-weight: 600;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: none;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    color: var(--text-color);
+  }
+  
+  .switcher-buttons button.active {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #fff;
+  }
+  
+  .form-container {
+    text-align: left;
+  }
+  
+  /* --- JoinHome Page Styles (Movido de JoinHome.css) --- */
+  .join-home-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    margin-top: var(--navbar-height);
+    /* Espaço para a Navbar fixa */
+    min-height: calc(100vh - var(--navbar-height));
+    box-sizing: border-box;
+    background: var(--background-color);
+  }
+  
+  .join-home-wrapper>* {
+    margin-bottom: 1.5rem;
+  }
+  
+  .join-home-img {
+    width: 300px;
+    max-width: 60%;
+    height: auto;
+  }
+  
+  .join-home-title {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  
+  .join-home-sub {
+    font-size: 1rem;
+    color: var(--light-text);
+    max-width: 360px;
+    text-align: center;
+  }
+  
+  /* Estilo para o botão primário especificamente dentro do join-home-wrapper */
+  .join-home-wrapper .primary-btn {
+    width: 100%;
+    max-width: 200px;
+    margin-top: 1rem;
+  }
+  
+  .info-box {
+    /* Movido de JoinHome.css */
+    max-width: 360px;
+    padding: 1rem;
+    background: var(--light-background);
+    border-radius: 0.5rem;
+    color: var(--text-color);
+    line-height: 1.5;
+    text-align: left;
+  }
+
+    /* --- Responsividade --- */
+    @media (max-width: 480px) {
+  
+        .create-home-wrapper,
+        .create-or-join-wrapper {
+          padding: 1rem;
+        }
+      
+        .switcher-buttons {
+          flex-direction: column;
+        }
+      }

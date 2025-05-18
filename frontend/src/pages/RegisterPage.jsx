@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RegisterForm from '../components/RegisterForm';
-import '../Auth.css'
+import "../styles/index.css";
 
 function RegisterPage() {
   return (
