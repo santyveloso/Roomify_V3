@@ -44,11 +44,14 @@ const FeedRoomieComp = ({ houseId }) => {
       }
     };
 
+
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
+        setMessage('Perfil do utilizador (res.data):' + JSON.stringify(res.data));
         setUserName(res.data.username || 'Utilizador');
         setUserId(res.data.id);
+
       } catch {
         setUserName('Utilizador');
         console.error('Erro ao carregar o perfil do utilizador.');
@@ -95,30 +98,36 @@ const FeedRoomieComp = ({ houseId }) => {
   }, [houseId]);
 
   const [expenses, setExpenses] = useState([]);
+
+  const fetchExpenses = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/houses/${houseId}/expenses/`, { withCredentials: true });
+      setExpenses(res.data);
+    } catch {
+      console.error('Erro ao carregar as despesas.');
+    }
+  };
+
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/houses/${houseId}/expenses/`, { withCredentials: true });
-        setExpenses(res.data);
-      } catch {
-        console.error('Erro ao carregar as despesas.');
-      }
-    };
     fetchExpenses();
   }, [houseId]);
 
+
   const [saldo, setSaldo] = useState([]);
+  const fetchSaldo = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/balance/`, { withCredentials: true });
+      setSaldo(res.data);
+    } catch {
+      console.error('Erro ao carregar o saldo.');
+    }
+  };
+
   useEffect(() => {
-    const fetchSaldo = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/balance/`, { withCredentials: true });
-        setSaldo(res.data);
-      } catch {
-        console.error('Erro ao carregar o saldo.');
-      }
-    };
+
     fetchSaldo();
   }, []);
+
 
   if (!house) return <div>A carregar...</div>;
 
@@ -127,6 +136,8 @@ const FeedRoomieComp = ({ houseId }) => {
       <h1 className={styles.dynamicGreeting}>
         {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName}</span>!
       </h1>
+
+      <div>{message}</div>
 
 
       <div className={styles.columnsWrapper}>
@@ -170,16 +181,37 @@ const FeedRoomieComp = ({ houseId }) => {
 
         <div className={styles.postsColumn}>
           <h3>Despesas da Casa</h3>
+
+
+          <div>
+            <h2>SALDO EM DÍVIDA: {saldo.balance !== undefined ? Number(saldo.balance).toFixed(2) : '0.00'} €</h2>
+
+          </div>
           {expenses.length === 0 ? (
             <p>Sem despesas ainda.</p>
           ) : (
             expenses.map((expense) => (
               <Expense
+
+
+
+
                 key={expense.id}
+
                 expense={expense}
-                isAdmin={false} // se quiseres, podes também não passar nada aqui
+                currentUserId={userId}
+                onDelete={(id) => setExpenses(prev => prev.filter(e => e.id !== id))}
+                isAdmin={userId === house.admin.id}
+                onRefresh={() => {
+                  fetchSaldo();
+                  fetchExpenses();
+
+                }}
+
               />
+
             )))}
+
         </div>
 
       </div>
@@ -200,10 +232,6 @@ const FeedRoomieComp = ({ houseId }) => {
 
 
 
-      <div>
-        <h3>Saldo do Utilizador</h3>
-        <p>Saldo em dívida: € {saldo.total_due !== undefined ? Number(saldo.total_due).toFixed(2) : '0.00'}</p>
-      </div>
     </div>
   );
 };

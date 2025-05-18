@@ -1,13 +1,49 @@
 from rest_framework import serializers
 from .models import Expense, ExpenseShare
 
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # ver os campos dps 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')  # ou outros campos que queiras expor
+
+
 class ExpenseShareSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    # user = UserSerializer(read_only=True) # inclui dados do user
+    user_name = serializers.CharField(source='user.username', read_only=True)  # para conveniência no frontend
+    user_id = serializers.IntegerField(source='user.profile.id', read_only=True)
+    
+
     class Meta:
         model = ExpenseShare
-        fields = '__all__'
+        
+        fields = ('id', 'user','user_id','user_name', 'amount_due', 'paid', 'expense')
+
+
+
+class ExpenseSerializer(serializers.ModelSerializer):
+    shares = ExpenseShareSerializer(source='assigned_roomies', many=True, read_only=True)
+    created_by_username = serializers.ReadOnlyField(source='created_by.username', read_only=True)
+    all_paid = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Expense
+        fields = [
+            'id', 'house', 'title', 'category',  
+            'amount', 'date', 'description', 'created_by',
+            'created_by_username', 'shares', 'all_paid',
+        ]
+        read_only_fields = ['id', 'created_by', 'created_by_username']
+
+
+    def get_all_paid(self, obj):
+        return obj.all_paid
 
 # class ExpenseSerializer(serializers.ModelSerializer):
 #     shares = ExpenseShareSerializer(many=True, read_only=True)  # ou required=False se for para escrita
@@ -18,18 +54,6 @@ class ExpenseShareSerializer(serializers.ModelSerializer):
 #         #read_only_fields = ['created_by']  # normalmente queres que este seja só leitura
 
 
-class ExpenseSerializer(serializers.ModelSerializer):
-    shares = ExpenseShareSerializer(many=True, read_only=True)
-    created_by_username = serializers.ReadOnlyField(source='created_by.username', read_only=True)
-
-    class Meta:
-        model = Expense
-        fields = [
-            'id', 'house', 'title', 'category',  
-            'amount', 'date', 'description', 'created_by',
-            'created_by_username', 'shares'
-        ]
-        read_only_fields = ['id', 'created_by', 'created_by_username']
 
 
     #     house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='expenses')

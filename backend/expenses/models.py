@@ -24,6 +24,12 @@ class Expense(models.Model):
 
     category = models.CharField(max_length=20, choices=EXPENSE_CATEGORY_CHOICES, default='outros')
 
+
+    # so ve se ja foi tudo pago
+    @property
+    def all_paid(self):
+        return not self.assigned_roomies.filter(paid=False).exists()
+
     def __str__(self):
         return f"{self.title} - {self.amount}€"
 

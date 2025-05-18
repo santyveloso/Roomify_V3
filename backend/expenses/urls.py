@@ -13,7 +13,7 @@ urlpatterns = [
     # path('shares/', views.user_shares_list, name='user_shares_list'),
 
     # Marcar parte (do roomie) da despesa como paga 
-    path('shares/<int:pk>/pay/', views.mark_expense_share_paid, name='mark_expense_share_paid'),
+    path('expenses/<int:pk>/pay/', views.mark_expense_share_paid, name='mark_expense_share_paid'),
     
     # ver o saldo (pode aparecer logo no dashboard) 
     path('balance/', views.user_balance, name='user_balance'),

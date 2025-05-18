@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import CustomUser
 
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('get_username', 'get_email', 'user_type', 'phone')
+    list_display = ('id','get_username', 'get_email', 'user_type', 'phone')
 
     def get_username(self, obj):
         return obj.user.username

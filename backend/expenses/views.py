@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Expense, ExpenseShare
 from .serializers import ExpenseShareSerializer, ExpenseSerializer
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 
@@ -16,8 +18,14 @@ from .serializers import ExpenseShareSerializer, ExpenseSerializer
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def expenses(request, house_id):
+    # u = User.objects.first()
+    # print(type(u))  # deve mostrar o teu custom user
+
+    # print('CHAMADO')
     user = request.user
-    print(user)
+    # print(type(request.user))
+    # print(type(user._wrapped)) 
+    # print(user)
 
     # Verifica se o user pertence à casa
     # if not user.housemembership_set.filter(house_id=house_id).exists():
@@ -61,9 +69,12 @@ def expenses(request, house_id):
             share['paid'] = False
             share_serializer = ExpenseShareSerializer(data=share)
             if not share_serializer.is_valid():
+                print("Erro ExpenseShareSerializer:", share_serializer.errors)
                 expense.delete()
                 return Response(share_serializer.errors, status=400)
             share_serializer.save()
+
+        
 
         return Response(ExpenseSerializer(expense).data, status=201)
 
@@ -99,8 +110,8 @@ def expense_detail(request, pk):
         return Response({'error': 'Despesa não encontrada'}, status=404)
 
     # Verifica se o user pertence à casa da despesa
-    if not request.user.housemembership_set.filter(house=expense.house).exists():
-        return Response({'error': 'Sem permissão'}, status=403)
+    # if not request.user.housemembership_set.filter(house=expense.house).exists():
+    #     return Response({'error': 'Sem permissão'}, status=403)
 
     if request.method == 'GET':
         serializer = ExpenseSerializer(expense)
@@ -119,19 +130,77 @@ def expense_detail(request, pk):
 
 
 # pro user dizer que ja pagou (só a parte dele)
-@api_view(['PATCH']) # Patch atualização parcial so altera o estado pra pago
+# @api_view(['PATCH']) # Patch atualização parcial so altera o estado pra pago
+# @permission_classes([IsAuthenticated])
+# def mark_expense_share_paid(request, pk):
+#     try:
+#         share = ExpenseShare.objects.get(pk=pk, user=request.user)
+#     except ExpenseShare.DoesNotExist:
+#         return Response({'error': 'Share não encontrado ou acesso negado'}, status=status.HTTP_404_NOT_FOUND)
+
+#     # Atualizar só o campo paid para True user respetivo
+#     share.paid = True
+#     share.save()
+#     serializer = ExpenseShareSerializer(share)
+#     return Response(serializer.data)
+
+
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])  # <- esta linha é ESSENCIAL
+# def mark_expense_share_paid(request, pk):
+#     print(f"User: {request.user}, pk: {pk}")
+#     try:
+        
+#         expenseshare = ExpenseShare.objects.get(pk=pk)
+#         print(f"Expense found: {expenseshare}")
+        
+#     except ExpenseShare.DoesNotExist:
+#         print('errrrrrrro4')
+#         return Response({'detail': 'Despesa não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+    
+
+#     expenseshare.paid = True
+#     expenseshare.save()
+#     print(f"Estado atualizado: {expenseshare.paid}")
+#     serializer = ExpenseShareSerializer(expenseshare)
+#     return Response(serializer.data)
+
+
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def mark_expense_share_paid(request, pk):
     try:
-        share = ExpenseShare.objects.get(pk=pk, user=request.user)
+        expenseshare = ExpenseShare.objects.get(pk=pk)
     except ExpenseShare.DoesNotExist:
-        return Response({'error': 'Share não encontrado ou acesso negado'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': 'Despesa não encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+    
+    # Verifica se o user autenticado é o dono da share
+    if expenseshare.user != request.user:
+        return Response({'detail': 'Não autorizado.'}, status=status.HTTP_403_FORBIDDEN)
 
-    # Atualizar só o campo paid para True user respetivo
-    share.paid = True
-    share.save()
-    serializer = ExpenseShareSerializer(share)
+    expenseshare.paid = True
+    expenseshare.save()
+    
+    serializer = ExpenseShareSerializer(expenseshare)
     return Response(serializer.data)
+
+    #VER SALDO 
+
+
+
+
+
+    # task.status = 'completed'
+    # task.completed_at = timezone.now()
+    # task.completed_by = request.user
+    # task.save()
+
+    # return Response({'detail': 'Tarefa concluída com sucesso!'}, status=status.HTTP_200_OK)
+
+
+
+
 
 
 
