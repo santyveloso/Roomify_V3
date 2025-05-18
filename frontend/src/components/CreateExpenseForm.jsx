@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const CreateExpenseForm = ({ houseId, onTaskCreated }) => {
+const CreateExpenseForm = ({ houseId, onExpenseCreated }) => {
     const [formData, setFormData] = useState({
         title: '',
         category: '',
         amount: '',
         date: '',
+        created_at: '',
         description: '',
     });
     const [divisionMode, setDivisionMode] = useState('igual'); // 'igual' ou 'personalizado'
@@ -122,6 +123,15 @@ const CreateExpenseForm = ({ houseId, onTaskCreated }) => {
         if (divisionMode === 'igual') {
             const shareValue = parseFloat((total / selectedRoomies.length).toFixed(2));
             assigned_roomies = selectedRoomies.map(uid => ({ user: uid, amount_due: shareValue }));
+
+            // Calcular soma atual
+            const somaAtual = shareValue * selectedRoomies.length;
+            const diferenca = parseFloat((total - somaAtual).toFixed(2));
+
+            // Ajustar o último roomie para corrigir diferença
+            assigned_roomies[assigned_roomies.length - 1].amount_due = parseFloat(
+                (assigned_roomies[assigned_roomies.length - 1].amount_due + diferenca).toFixed(2)
+            );
         } else {
             // divisão personalizada
             let somaShares = 0;
@@ -152,142 +162,143 @@ const CreateExpenseForm = ({ houseId, onTaskCreated }) => {
                 headers: { 'X-CSRFToken': getCSRFToken() },
                 withCredentials: true,
             });
+
             setMessage('Despesa criada com sucesso!');
 
             //navigate('/dashboard');
         } catch (err) {
             console.error(err);
-            setMessage('Erro ao criar despesa.');
+            setMessage('Erro ao criar despesa.' + JSON.stringify(payload));
         }
     };
 
-  return (
-  <form onSubmit={handleSubmit} className="post-wrapper expense-form-wrapper">
-  <h2 className="create-home-title">Criar Nova Despesa</h2>
+    return (
+        <form onSubmit={handleSubmit} className="post-wrapper expense-form-wrapper">
+            <h2 className="create-home-title">Criar Nova Despesa</h2>
 
-  {/* Botão Voltar */}
-  <button
-    type="button"
-    className="primary-btn"
-    style={{
-      backgroundColor: '#f2f2f2',
-      color: '#333',
-      border: '1px solid var(--border-color)',
-      marginBottom: '1rem'
-    }}
-    onClick={() => navigate(-1)}
-  >
-    ← Voltar
-  </button>
+            {/* Botão Voltar */}
+            <button
+                type="button"
+                className="primary-btn"
+                style={{
+                    backgroundColor: '#f2f2f2',
+                    color: '#333',
+                    border: '1px solid var(--border-color)',
+                    marginBottom: '1rem'
+                }}
+                onClick={() => navigate(-1)}
+            >
+                ← Voltar
+            </button>
 
-  <input
-    name="title"
-    placeholder="Título"
-    value={formData.title}
-    onChange={handleFormChange}
-    required
-    className="w-full p-2 border rounded"
-  />
+            <input
+                name="title"
+                placeholder="Título"
+                value={formData.title}
+                onChange={handleFormChange}
+                required
+                className="w-full p-2 border rounded"
+            />
 
-  <div>
-  <label>Categoria</label>
-  <select
-    name="category"
-    value={formData.category}
-    onChange={handleFormChange}
-    required
-    className="w-full p-2 border rounded"
-  >
-    <option value="">Selecione uma categoria</option>
-    <option value="comida">Comida</option>
-    <option value="agua">Água</option>
-    <option value="luz">Luz</option>
-    <option value="gas">Gás</option>
-    <option value="outros">Outros</option>
-  </select>
-</div>
+            <div>
+                <label>Categoria</label>
+                <select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleFormChange}
+                    required
+                    className="w-full p-2 border rounded"
+                >
+                    <option value="">Selecione uma categoria</option>
+                    <option value="comida">Comida</option>
+                    <option value="agua">Água</option>
+                    <option value="luz">Luz</option>
+                    <option value="gas">Gás</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
 
 
-  <input
-    name="amount"
-    type="number"
-    step="0.01"
-    placeholder="Valor (€)"
-    value={formData.amount}
-    onChange={handleFormChange}
-    required
-    className="w-full p-2 border rounded"
-  />
+            <input
+                name="amount"
+                type="number"
+                step="0.01"
+                placeholder="Valor (€)"
+                value={formData.amount}
+                onChange={handleFormChange}
+                required
+                className="w-full p-2 border rounded"
+            />
 
-  <input
-    name="date"
-    type="date"
-    value={formData.date}
-    onChange={handleFormChange}
-    required
-    className="w-full p-2 border rounded"
-  />
+            <input
+                name="date"
+                type="date"
+                value={formData.date}
+                onChange={handleFormChange}
+                required
+                className="w-full p-2 border rounded"
+            />
 
-  <textarea
-    name="description"
-    placeholder="Descrição"
-    value={formData.description}
-    onChange={handleFormChange}
-    className="w-full p-2 border rounded"
-  />
+            <textarea
+                name="description"
+                placeholder="Descrição"
+                value={formData.description}
+                onChange={handleFormChange}
+                className="w-full p-2 border rounded"
+            />
 
-  <div className="radio-group" style={{ marginTop: '1rem' }}>
-    <label className="radio-option">
-      <input
-        type="radio"
-        checked={divisionMode === 'igual'}
-        onChange={() => handleDivisionModeChange('igual')}
-      />
-      Igual
-    </label>
-    <label className="radio-option">
-      <input
-        type="radio"
-        checked={divisionMode === 'personalizado'}
-        onChange={() => handleDivisionModeChange('personalizado')}
-      />
-      Personalizada
-    </label>
-  </div>
+            <div className="radio-group" style={{ marginTop: '1rem' }}>
+                <label className="radio-option">
+                    <input
+                        type="radio"
+                        checked={divisionMode === 'igual'}
+                        onChange={() => handleDivisionModeChange('igual')}
+                    />
+                    Igual
+                </label>
+                <label className="radio-option">
+                    <input
+                        type="radio"
+                        checked={divisionMode === 'personalizado'}
+                        onChange={() => handleDivisionModeChange('personalizado')}
+                    />
+                    Personalizada
+                </label>
+            </div>
 
-  <div className="checkbox-list">
-    <p className="font-medium mb-2">Seleciona os Roomies:</p>
-    {roomies.length === 0 && <p>Nenhum roomie encontrado.</p>}
-    {roomies.map(roomie => (
-      <label key={roomie.id} className="checkbox-option">
-        <input
-          type="checkbox"
-          checked={selectedRoomies.includes(roomie.id)}
-          onChange={() => handleRoomieToggle(roomie.id)}
-        />
-        {roomie.username}
-        {divisionMode === 'personalizado' && selectedRoomies.includes(roomie.id) && (
-          <input
-            type="number"
-            step="0.01"
-            placeholder="€"
-            className="w-24 p-1 border rounded"
-            value={customShares[roomie.id] || ''}
-            onChange={e => handleCustomAmountChange(roomie.id, e.target.value)}
-            required
-          />
-        )}
-      </label>
-    ))}
-  </div>
+            <div className="checkbox-list">
+                <p className="font-medium mb-2">Seleciona os Roomies:</p>
+                {roomies.length === 0 && <p>Nenhum roomie encontrado.</p>}
+                {roomies.map(roomie => (
+                    <label key={roomie.id} className="checkbox-option">
+                        <input
+                            type="checkbox"
+                            checked={selectedRoomies.includes(roomie.id)}
+                            onChange={() => handleRoomieToggle(roomie.id)}
+                        />
+                        {roomie.username}
+                        {divisionMode === 'personalizado' && selectedRoomies.includes(roomie.id) && (
+                            <input
+                                type="number"
+                                step="0.01"
+                                placeholder="€"
+                                className="w-24 p-1 border rounded"
+                                value={customShares[roomie.id] || ''}
+                                onChange={e => handleCustomAmountChange(roomie.id, e.target.value)}
+                                required
+                            />
+                        )}
+                    </label>
+                ))}
+            </div>
 
-  <button type="submit" className="primary-btn" style={{ marginTop: '1rem' }}>
-    Criar Despesa
-  </button>
+            <button type="submit" className="primary-btn" style={{ marginTop: '1rem' }}>
+                Criar Despesa
+            </button>
 
-  {message && <p className="form-message">{message}</p>}
-</form>
-  );
+            {message && <p className="form-message">{message}</p>}
+        </form>
+    );
 };
 
 export default CreateExpenseForm;

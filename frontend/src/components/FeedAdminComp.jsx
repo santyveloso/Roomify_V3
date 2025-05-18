@@ -58,6 +58,9 @@ const FeedAdminComp = ({ houseId }) => {
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/users/profile/`, { withCredentials: true });
+        setMessage('Perfil do utilizador (res.data):' + JSON.stringify(res.data));
+
+
         setUserName(res.data.username || 'Utilizador');
         setUserId(res.data.id);
       } catch {
@@ -77,9 +80,11 @@ const FeedAdminComp = ({ houseId }) => {
       }
     };
 
+    fetchUserProfile();
     fetchHouseData();
     fetchMembers();
-    fetchUserProfile();
+
+
     //setTimeOfDayGreeting(getCurrentTimeOfDayGreeting());
 
   }, [houseId]);
@@ -150,28 +155,32 @@ const FeedAdminComp = ({ houseId }) => {
 
 
   const [expenses, setExpenses] = useState([]);
+
+  const fetchExpenses = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/houses/${houseId}/expenses/`, { withCredentials: true });
+      setExpenses(res.data);
+    } catch {
+      console.error('Erro ao carregar as despesas.');
+    }
+  };
+
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/houses/${houseId}/expenses/`, { withCredentials: true });
-        setExpenses(res.data);
-      } catch {
-        console.error('Erro ao carregar as despesas.');
-      }
-    };
     fetchExpenses();
   }, [houseId]);
 
   const [saldo, setSaldo] = useState([]);
+  const fetchSaldo = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/balance/`, { withCredentials: true });
+      setSaldo(res.data);
+    } catch {
+      console.error('Erro ao carregar o saldo.');
+    }
+  };
+
   useEffect(() => {
-    const fetchSaldo = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/balance/`, { withCredentials: true });
-        setSaldo(res.data);
-      } catch {
-        console.error('Erro ao carregar o saldo.');
-      }
-    };
+
     fetchSaldo();
   }, []);
 
@@ -194,12 +203,24 @@ const FeedAdminComp = ({ houseId }) => {
       console.error('Erro ao gerar código:', error);
       setMessage('Erro ao gerar código de convite.');
     }
+
   };
+
+  // if (userId === null) {
+  //   return <div>A carregar perfil do utilizador...</div>;
+  // } else {
+  //   return <div>ID do utilizador inválido: {String(userId)}</div>;
+  //   console.log('userId:', userId, 'typeof:', typeof userId, 'JSON.stringify:', JSON.stringify(userId));
+  // }
+
+
+
   return (
     <div className={styles.feedContainer}>
       <h1 className={styles.dynamicGreeting}>
-        {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName}</span>!
+        {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName} </span>!
       </h1>
+      <div>{message}</div>
 
 
       <div className={styles.columnsWrapper}>
@@ -254,11 +275,13 @@ const FeedAdminComp = ({ houseId }) => {
           </div>
 
           <ul className={styles.membersList}>
+
             {members.map(member => (
               <li key={member.id} className={styles.memberItem}>
                 <span>
                   {member.username} ({member.email})
                   {member.username === house.admin ? ' [admin]' : ' [roomie]'}
+
                   {Number(member.id) === Number(userId) && ' [you]'}
                 </span>
 
@@ -310,6 +333,7 @@ const FeedAdminComp = ({ houseId }) => {
           </div>
           {tasks.length === 0 ? (
             <p>Sem tarefas ainda.</p>
+
           ) : (
             tasks.map((t) => (
               <Task
@@ -327,21 +351,37 @@ const FeedAdminComp = ({ houseId }) => {
         <div className={styles.postsColumn}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3>Despesas da Casa</h3>
+
             <button className="primary-btn" onClick={() => navigate('/criardespesa', { state: { houseId } })}>
               Criar Despesa
             </button>
+
+
+
           </div>
+          <h2>SALDO EM DÍVIDA: {saldo.balance !== undefined ? Number(saldo.balance).toFixed(2) : '0.00'} €</h2>
+
           {expenses.length === 0 ? (
             <p>Sem despesas ainda.</p>
           ) : (
             expenses.map((expense) => (
               <Expense
+
                 key={expense.id}
+
                 expense={expense}
+                currentUserId={userId}
                 onDelete={(id) => setExpenses(prev => prev.filter(e => e.id !== id))}
                 isAdmin={userId === house.admin.id}
+                onRefresh={() => {
+                  fetchSaldo();
+                  fetchExpenses();
+                }}
+
               />
+
             )))}
+
         </div>
 
       </div>

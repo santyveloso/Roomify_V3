@@ -71,6 +71,7 @@ def tasks(request, house_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def task_detail(request, task_id):
     try:
         task = Task.objects.get(pk=task_id)

@@ -17,7 +17,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         
 
-        fields = ['username', 'email', 'phone', 'user_type', 'profile_picture', 'house']
+        fields = ['id','username', 'email', 'phone', 'user_type', 'profile_picture', 'house']
        # fields = ['username', 'email', 'phone', 'user_type', 'profile_picture', 'house']
 
     def update(self, instance, validated_data):
