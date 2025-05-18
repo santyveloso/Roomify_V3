@@ -54,7 +54,11 @@ const CriarTarefaForm = ({ houseId, onTaskCreated }) => {
     <div className="task-form-wrapper">
       <h2>Criar Nova Tarefa</h2>
 
-      <button className="primary-btn" onClick={() => navigate(-1)} style={{ marginBottom: '1rem' }}>
+      <button
+        className="primary-btn"
+        onClick={() => navigate(-1)}
+        style={{ marginBottom: '1rem' }}
+      >
         ← Voltar
       </button>
 

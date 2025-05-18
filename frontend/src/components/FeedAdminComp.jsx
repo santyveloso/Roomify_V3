@@ -214,7 +214,8 @@ const FeedAdminComp = ({ houseId }) => {
   // }
 
 
-
+  console.log("userId:", userId);
+  console.log("house.admin:", house?.admin?.id);
   return (
     <div className={styles.feedContainer}>
       <h1 className={styles.dynamicGreeting}>
@@ -331,6 +332,7 @@ const FeedAdminComp = ({ houseId }) => {
               Criar Tarefa
             </button>
           </div>
+          
           {tasks.length === 0 ? (
             <p>Sem tarefas ainda.</p>
 
@@ -341,7 +343,7 @@ const FeedAdminComp = ({ houseId }) => {
                 task={t}
                 onDelete={handleDeleteTask}
                 userId={userId} //ve o user type
-                isAdmin={userId === house.admin.id} //ve se é admin ou roomie
+                isAdmin={userId === house.admin}
               />
             ))
           )}
