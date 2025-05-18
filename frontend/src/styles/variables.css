@@ -1,0 +1,16 @@
+/* Variáveis de cores e tipografia */
+:root {
+    --primary-color: #616E9B;
+    --secondary-color: #94a5e2;
+    --text-color: #1F2937;
+    --light-text: #6B7280;
+    --background-color: #FFFFFF;
+    --light-background: #F3F4F6;
+    --border-color: #E5E7EB;
+    --navbar-height: 70px;
+    /* DEFAULT NAVBAR HEIGHT - AJUSTAR SE NECESSÁRIO */
+  
+    /* Tipografia */
+    --font-primary: 'EB Garamond', serif;
+    --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
