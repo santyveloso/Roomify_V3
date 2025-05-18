@@ -136,7 +136,7 @@ const FeedRoomieComp = ({ houseId }) => {
         {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName}</span>!
       </h1>
 
-      <div>{message}</div>
+
 
 
       <div className={styles.columnsWrapper}>

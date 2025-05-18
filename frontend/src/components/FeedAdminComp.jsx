@@ -219,7 +219,7 @@ const FeedAdminComp = ({ houseId }) => {
       <h1 className={styles.dynamicGreeting}>
         {timeOfDayGreeting}, <span className={styles.italicUsername}>{userName} </span>!
       </h1>
-      <div>{message}</div>
+
 
 
       <div className={styles.columnsWrapper}>
@@ -406,10 +406,7 @@ const FeedAdminComp = ({ houseId }) => {
         )}
       </div>
 
-      <div>
-        <h3>Saldo do Utilizador</h3>
-        <p>Saldo em dívida: € {saldo.total_due !== undefined ? Number(saldo.total_due).toFixed(2) : '0.00'}</p>
-      </div>
+
     </div>
   );
 };
