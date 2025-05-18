@@ -37,7 +37,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'house', 'title', 'category',  
             'amount', 'date', 'description', 'created_by',
-            'created_by_username', 'shares', 'all_paid',
+            'created_by_username', 'shares', 'all_paid', 'created_at'
         ]
         read_only_fields = ['id', 'created_by', 'created_by_username']
 

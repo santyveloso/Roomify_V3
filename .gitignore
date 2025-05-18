@@ -24,6 +24,7 @@ yarn-error.log*
 
 __pycache__/
 *.pyc
+/pycache/*
 
 # Cursor-specific files
 .cursor/
