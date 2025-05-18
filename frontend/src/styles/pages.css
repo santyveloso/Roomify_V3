@@ -63,12 +63,12 @@
     align-items: center;
     font-size: 0.95rem;
   }
-  /* Inputs radio e checkbox alinhados bonitinhos */
+
   .expense-form-wrapper .radio-option,
   .expense-form-wrapper .checkbox-option {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
     color: var(--text-color);
@@ -83,9 +83,15 @@
   }
   
   .expense-form-wrapper .checkbox-option {
-    justify-content: flex-start;
-    width: 100%;
-    text-align: left;
+    display: flex;
+    align-items: center;       
+    justify-content: flex-start; 
+    gap: 0.7rem;               
+    width: auto; 
+  }
+
+  .expense-form-wrapper .checkbox-option input[type="checkbox"]{
+    transform: translateY(6.5px); 
   }
   
   .expense-form-wrapper button[type="submit"] {
