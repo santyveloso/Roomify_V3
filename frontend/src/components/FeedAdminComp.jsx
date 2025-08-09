@@ -291,9 +291,9 @@ const FeedAdminComp = ({ houseId }) => {
                 <button
                   onClick={() => removeMember(member.id)}
                   style={{
-                    backgroundColor: '#fcebea',
-                    color: '#c0392b',
-                    border: '1px solid #c0392b',
+                    backgroundColor: 'var(--light-background)',
+                    color: 'var(--error-color)',
+                    border: '1px solid var(--error-color)',
                     padding: '6px 10px',
                     borderRadius: '4px',
                     cursor: 'pointer',
@@ -302,12 +302,12 @@ const FeedAdminComp = ({ houseId }) => {
                     marginLeft: '10px'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#f8d7da';
+                    e.target.style.backgroundColor = 'var(--background-color)';
                     e.target.style.transform = 'translateY(-1px)';
                     e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#fcebea';
+                    e.target.style.backgroundColor = 'var(--light-background)';
                     e.target.style.transform = 'translateY(0)';
                     e.target.style.boxShadow = 'none';
                   }}

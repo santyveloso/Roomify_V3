@@ -180,8 +180,8 @@ const CreateExpenseForm = ({ houseId, onExpenseCreated }) => {
                 type="button"
                 className="primary-btn"
                 style={{
-                    backgroundColor: '#f2f2f2',
-                    color: '#333',
+                    backgroundColor: 'var(--light-background)',
+                    color: 'var(--text-color)',
                     border: '1px solid var(--border-color)',
                     marginBottom: '1rem'
                 }}

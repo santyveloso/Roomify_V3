@@ -87,7 +87,7 @@ const Expense = ({ expense, currentUserId, onDelete, isAdmin, onRefresh }) => {
                                 {share.user_name} — € {parseFloat(share.amount_due).toFixed(2)} — {share.paid ? "✅ Pago" : "❌ Por pagar"}
 
                                 {/*                                
-                                <div style={{ fontSize: "0.8em", color: "gray" }}>
+                                <div style={{ fontSize: "0.8em", color: "var(--light-text)" }}>
                                     <div>Share ID: {share.id}</div>
                                     <div>Utilizador da share: {share.user_id}</div>
                                     <div>User atual: {currentUserId}</div>
@@ -115,6 +115,7 @@ const Expense = ({ expense, currentUserId, onDelete, isAdmin, onRefresh }) => {
                                     //     Marcar como pago
                                     // </button>
 
+
                                     <button className={styles.primaryButton}
                                         style={{ marginLeft: '10px' }}
                                         onClick={() => {
@@ -137,7 +138,7 @@ const Expense = ({ expense, currentUserId, onDelete, isAdmin, onRefresh }) => {
                     onClick={handleDelete}
                     style={{
                         marginTop: '10px',
-                        backgroundColor: '#fcebea',
+                        backgroundColor: 'var(--light-background)',
                         color: '#c0392b',
                         border: '1px solid #c0392b',
                         padding: '6px 12px',
@@ -147,12 +148,12 @@ const Expense = ({ expense, currentUserId, onDelete, isAdmin, onRefresh }) => {
                         transition: 'all 0.2s ease-in-out',
                     }}
                     onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#f8d7da';
+                        e.target.style.backgroundColor = 'var(--background-color)';
                         e.target.style.transform = 'translateY(-1px)';
                         e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
                     }}
                     onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#fcebea';
+                        e.target.style.backgroundColor = 'var(--light-background)';
                         e.target.style.transform = 'translateY(0)';
                         e.target.style.boxShadow = 'none';
                     }}

@@ -37,12 +37,12 @@ const Post = ({ post, isAdmin, onDelete }) => {
       <div className="post-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span className="post-author">{author?.username || 'Desconhecido'}</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '0.9rem', color: '#555' }}>{formatDate(created_at)}</span>
+          <span style={{ fontSize: '0.9rem', color: 'var(--light-text)' }}>{formatDate(created_at)}</span>
           {isAdmin && (
             <button
               onClick={handleDelete}
               style={{
-                backgroundColor: '#fcebea',
+                backgroundColor: 'var(--light-background)',
                 color: '#c0392b',
                 border: '1px solid #c0392b',
                 padding: '6px 10px',
@@ -53,12 +53,12 @@ const Post = ({ post, isAdmin, onDelete }) => {
                 transition: 'all 0.2s ease-in-out'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#f8d7da';
+                e.target.style.backgroundColor = 'var(--background-color)';
                 e.target.style.transform = 'translateY(-1px)';
                 e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#fcebea';
+                e.target.style.backgroundColor = 'var(--light-background)';
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = 'none';
               }}

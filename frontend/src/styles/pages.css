@@ -52,7 +52,7 @@
   
   .expense-form-wrapper .form-message {
     margin-top: 1rem;
-    color: darkred;
+    color: var(--error-color);
     text-align: center;
   }
   
@@ -217,7 +217,7 @@
   
   .task-form-wrapper .form-message {
     margin-top: 1rem;
-    color: darkred;
+    color: var(--error-color);
     text-align: center;
   }
   
@@ -421,7 +421,7 @@
     text-align: center;
     margin-top: 1rem;
     font-size: 0.9rem;
-    color: darkred;
+    color: var(--error-color);
   }
   
   
@@ -511,7 +511,7 @@
     text-align: center;
     margin-top: 1rem;
     font-size: 0.9rem;
-    color: darkred; 
+    color: var(--error-color); 
   }
 
   .auth-redirect-link {
@@ -599,7 +599,7 @@
   
   .task-form-wrapper .form-message {
     margin-top: 1rem;
-    color: darkred;
+    color: var(--error-color);
     text-align: center;
   }
   

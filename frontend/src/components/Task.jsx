@@ -53,8 +53,6 @@ const Task = ({ task, onDelete, userId, isAdmin }) => {
 
 
 
-
-
     const handleComplete = async () => {
         if (taskStatus === 'completed') {
             alert("Esta tarefa já foi concluída.");
@@ -101,7 +99,7 @@ const Task = ({ task, onDelete, userId, isAdmin }) => {
                     onClick={handleComplete}
                     style={{
                         marginTop: '10px',
-                        backgroundColor: '#e3fbe6',
+                        backgroundColor: 'var(--light-background)',
                         color: '#1e8449',
                         border: '1px solid #1e8449',
                         padding: '6px 12px',
@@ -111,12 +109,12 @@ const Task = ({ task, onDelete, userId, isAdmin }) => {
                         transition: 'all 0.2s ease-in-out'
                     }}
                     onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#d4efdf';
+                        e.target.style.backgroundColor = 'var(--background-color)';
                         e.target.style.transform = 'translateY(-1px)';
                         e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
                     }}
                     onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#e3fbe6';
+                        e.target.style.backgroundColor = 'var(--light-background)';
                         e.target.style.transform = 'translateY(0)';
                         e.target.style.boxShadow = 'none';
                     }}
@@ -132,7 +130,7 @@ const Task = ({ task, onDelete, userId, isAdmin }) => {
                     style={{
                         marginTop: '10px',
                         marginLeft: '10px',
-                        backgroundColor: '#fcebea',
+                        backgroundColor: 'var(--light-background)',
                         color: '#c0392b',
                         border: '1px solid #c0392b',
                         padding: '6px 12px',
@@ -142,12 +140,12 @@ const Task = ({ task, onDelete, userId, isAdmin }) => {
                         transition: 'all 0.2s ease-in-out'
                     }}
                     onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = '#f8d7da';
+                        e.target.style.backgroundColor = 'var(--background-color)';
                         e.target.style.transform = 'translateY(-1px)';
                         e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
                     }}
                     onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = '#fcebea';
+                        e.target.style.backgroundColor = 'var(--light-background)';
                         e.target.style.transform = 'translateY(0)';
                         e.target.style.boxShadow = 'none';
                     }}

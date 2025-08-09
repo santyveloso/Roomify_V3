@@ -74,7 +74,7 @@
 .detailsColumn {
   flex: 1;
   min-width: 300px;
-  background-color: #f5f5f5;
+  background-color: var(--light-background);
   padding: 1.5rem;
   border-radius: 10px;
 }
@@ -82,7 +82,7 @@
 .membersColumn {
   flex: 1;
   min-width: 300px;
-  background-color: #f0f0f0;
+  background-color: var(--light-background);
   padding: 1rem;
   border-radius: 10px;
 }
@@ -91,13 +91,13 @@
 
   flex: 1;
   min-width: 300px;
-  background-color: #f0f0f0;
+  background-color: var(--light-background);
 
   border-radius: 10px;
 
 
 
-  background-color: #ffffff;
+  background-color: var(--background-color);
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -132,7 +132,7 @@
 
 
 .removeButton {
-  background-color: #E53E3E;
+  background-color: var(--error-color);
   /* Tom de vermelho mais alinhado com cores de erro/alerta */
   color: white;
   border: none;
@@ -147,7 +147,8 @@
 }
 
 .removeButton:hover {
-  background-color: #C53030;
+  background-color: var(--error-color);
+  filter: brightness(0.9);
 }
 
 .formLabel {
@@ -164,8 +165,10 @@
   padding: 0.5rem;
   padding-right: 1rem;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   box-sizing: border-box;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .buttonGroup {

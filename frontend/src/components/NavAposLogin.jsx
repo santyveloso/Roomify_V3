@@ -5,13 +5,12 @@ import navbarLogo from '../images/navbar-logo.png';
 import perfilImg from '../images/perfil.png';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   const navigate = useNavigate();
 
   // dados do user de sessao a aparecer no nav
-
-
 
   const navLinks = [
     { label: 'Sobre', to: '/sobre' },
@@ -40,7 +39,6 @@ export default function Navbar() {
         console.error('Erro a obter perfil:', err);
       });
   }, []);
-
 
   const handleLogout = () => {
     localStorage.clear();
@@ -74,30 +72,12 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Perfil + Logout */}
-        {/* <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link
-            to="/verperfil"
-            className="navbar-profile-icon"
-            scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
-            aria-label="Ver perfil"
-          >
-            <img
-              src={perfilImg}
-              alt="Perfil"
-              style={{ width: '32px', height: '32px', borderRadius: '50%' }}
-            />
-          </Link>
-          <button className="navbar-cta-button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div> */}
-
-
+        {/* Perfil + Logout + Theme Toggle */}
         <div
           className="navbar-actions"
           style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
         >
+          <ThemeToggle />
           <button className="navbar-cta-button" onClick={handleLogout}>
             Logout
           </button>
@@ -115,91 +95,9 @@ export default function Navbar() {
               alt="Perfil"
               style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
             />
-
           </Link>
-
         </div>
       </div>
     </header>
   );
 }
-
-
-
-
-// src/components/Navbar.jsx
-// import React from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
-// import navbarLogo from '../images/navbar-logo.png';
-
-// export default function Navbar() {
-//   const navigate = useNavigate();
-
-//   const navLinks = [
-//     { label: 'Sobre', to: '/sobre' },
-//     { label: 'Funcionalidades', to: '/funcionalidades' },
-//     { label: 'Suporte', to: '/suporte' },
-//   ];
-
-//   const handleLogout = () => {
-//     localStorage.clear();
-//     navigate('/landingpage');
-//   };
-
-//   // Pega a imagem de perfil e username do localStorage
-//   const perfilImgUrl = localStorage.getItem('profilePicture') || 'https://cdn-icons-png.flaticon.com/512/1077/1077114.png';
-//   const username = localStorage.getItem('username') || 'Utilizador';
-
-//   return (
-//     <header className="navbar" role="banner">
-//       <div className="navbar-container">
-//         {/* Logo */}
-//         <Link
-//           to="/#"
-//           className="navbar-logo"
-//           scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
-//           aria-label="RoomiFy – início"
-//         >
-//           <img src={navbarLogo} alt="RoomiFy logo" />
-//         </Link>
-
-//         {/* Navegação desktop */}
-//         <nav className="navbar-links" aria-label="Navegação principal">
-//           {navLinks.map(({ label, to }) => (
-//             <Link
-//               key={to}
-//               to={to}
-//               scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
-//             >
-//               {label}
-//             </Link>
-//           ))}
-//         </nav>
-
-//         {/* Perfil + Logout */}
-//         <div
-//           className="navbar-actions"
-//           style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
-//         >
-//           <Link
-//             to="/verperfil"
-//             className="navbar-profile-icon"
-//             scroll={el => el.scrollIntoView({ behavior: 'smooth' })}
-//             aria-label="Ver perfil"
-//             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-//           >
-//             <img
-//               src={perfilImgUrl}
-//               alt="Perfil"
-//               style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
-//             />
-//             <span style={{ color: '#fff', fontWeight: '500' }}>{username}</span>
-//           </Link>
-//           <button className="navbar-cta-button" onClick={handleLogout}>
-//             Logout
-//           </button>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }

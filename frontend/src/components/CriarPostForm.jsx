@@ -68,7 +68,7 @@ const CriarPostForm = ({ houseId, onPostCreated }) => {
         </div>
         <button className="primary-btn" type="submit">Publicar</button>
         {message && (
-          <p className="form-message" style={{ color: message.includes('sucesso') ? 'green' : 'darkred' }}>
+          <p className="form-message" style={{ color: message.includes('sucesso') ? 'green' : 'var(--error-color)' }}>
             {message}
           </p>
         )}

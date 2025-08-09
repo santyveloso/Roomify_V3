@@ -109,7 +109,7 @@
   }
   
   .navbar-cta-button:hover {
-    background-color: #909ACA;
+    background-color: var(--secondary-color);
   }
   
   /* Hero Section */
@@ -184,11 +184,11 @@
   }
   
   .hero-cta-button:hover {
-    background-color: #909ACA;
+    background-color: var(--secondary-color);
   }
   
   .hero-sign-button:hover {
-    background-color: #909ACA;
+    background-color: var(--secondary-color);
   }
   
   .hero-image {
@@ -243,7 +243,7 @@
   /* Steps Section */
   .steps-section {
     padding: 5rem 1rem 6rem;
-    background-color: #909ACA;
+    background-color: var(--primary-color);
   }
   
   .steps-title {
@@ -281,7 +281,7 @@
   }
   
   .step-card {
-    background-color: white;
+    background-color: var(--background-color);
     padding: 2rem;
     border-radius: 1.5rem;
     position: relative;
@@ -295,7 +295,7 @@
   
   .step-number {
     font-size: 1rem;
-    color: #909ACA;
+    color: var(--primary-color);
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;

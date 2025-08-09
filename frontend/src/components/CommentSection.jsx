@@ -61,7 +61,7 @@ export default function CommentSection({ postId }) {
                 <div
                     key={comment.id}
                     style={{
-                        backgroundColor: '#f9f9f9',
+                        backgroundColor: 'var(--light-background)',
                         borderRadius: '12px',
                         padding: '12px 16px',
                         marginBottom: '10px',
@@ -74,7 +74,7 @@ export default function CommentSection({ postId }) {
                         <p style={{ fontWeight: '600', margin: 0 }}>
                             {comment.author?.username || 'Utilizador'}
                         </p>
-                        <p style={{ fontSize: '0.75rem', color: '#666', margin: 0 }}>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--light-text)', margin: 0 }}>
                             {new Date(comment.created_at).toLocaleString()}
                         </p>
                     </div>

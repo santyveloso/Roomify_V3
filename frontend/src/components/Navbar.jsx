@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import navbarLogo from '../images/navbar-logo.png';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   const navLinks = [
@@ -39,6 +40,7 @@ export default function Navbar() {
 
         {/* Ações */}
         <div className="navbar-actions">
+          <ThemeToggle />
           <Link
             to="/login"
             className="sign-in-button"

@@ -76,8 +76,8 @@ const VerEditarPerfil = () => {
         type="button"
         className="primary-btn"
         style={{
-          backgroundColor: '#f2f2f2',
-          color: '#333',
+          backgroundColor: 'var(--light-background)',
+          color: 'var(--text-color)',
           border: '1px solid var(--border-color)',
           marginBottom: '1rem'
         }}
@@ -97,12 +97,12 @@ const VerEditarPerfil = () => {
               width: 120,
               height: 120,
               borderRadius: '50%',
-              backgroundColor: '#ddd',
+              backgroundColor: 'var(--light-background)',
               backgroundImage: previewUrl ? `url(${previewUrl})` : `url(${perfilImg})`,
               backgroundSize: '95%',
               backgroundPosition: 'center',
               cursor: 'pointer',
-              border: '1px solid #aaa',
+              border: '1px solid var(--border-color)',
             }}
           >
             <div
@@ -112,7 +112,7 @@ const VerEditarPerfil = () => {
                 right: 0,
                 width: 32,
                 height: 32,
-                backgroundColor: '#909ACA',
+                backgroundColor: 'var(--primary-color)',
                 borderRadius: '50%',
                 color: 'white',
                 fontWeight: 'bold',
